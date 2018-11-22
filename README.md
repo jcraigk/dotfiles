@@ -1,3 +1,11 @@
+Tools
+-------
+* [Brew](https://brew.sh/)
+* [Docker](https://www.docker.com/)
+* [nvm](https://github.com/creationix/nvm)
+* [rvm](https://rvm.io/rvm/install)
+* [Sublime Text](https://www.sublimetext.com/)
+
 Brew
 ----
 
