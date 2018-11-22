@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/jcraigk/.oh-my-zsh
+export ZSH=/Users/jcraigkuhn/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -101,9 +101,10 @@ source $ZSH/oh-my-zsh.sh
 # jcraigk config
 
 export CLICOLOR=1;
-export PATH=/Users/jcraigk/bin:/htdocs/scripts:$PATH:
+export PATH=/Users/jcraigkuhn/bin:/j/scripts:$PATH:
 
 # Aliases
+alias cj='cd /j; l'
 alias ll='ls -al'
 alias gs="git status"
 alias gd="git diff"
@@ -161,11 +162,9 @@ alias dspec='RAILS_ENV=test docker-compose run app rspec'
 alias dbash='docker-compose run --service-ports app bash'
 alias dvolprune="docker volume rm $(docker volume ls -q | awk '!/_/' | tr '\n' ' ')"
 
-export rvm_archflags="-arch x86_64"
-
-export NVM_DIR="$HOME/.nvm"
-. "/usr/local/opt/nvm/nvm.sh"
-
 fpath=(/usr/local/share/zsh-completions $fpath)
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

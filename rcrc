@@ -1,2 +1,0 @@
-EXCLUDES="README*.md LICENSE Gemfile Gemfile.lock Gitfile Brewfile"
-DOTFILES_DIRS="$HOME/src/dotfiles"
