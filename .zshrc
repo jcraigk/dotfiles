@@ -1,8 +1,7 @@
 export ZSH=/Users/jcraigkuhn/.oh-my-zsh
 ZSH_THEME="muse"
 
-ENABLE_CORRECTION="true"
-COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS=false
 
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 plugins=(git)
