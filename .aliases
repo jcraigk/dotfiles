@@ -1,5 +1,4 @@
-alias cj='cd /j; l'
-alias ll='ls -al'
+# Git
 alias gs="git status"
 alias gd="git diff"
 alias ga="git add -A"
@@ -30,26 +29,23 @@ alias gsq=git_squash
 alias gr="git rebase"
 alias gcss="git commit --amend --no-edit"
 
-alias capstag="cap staging deploy"
-alias caplive="cap live deploy"
-
-# DB Reset test database (Rails)
+# Rails
+alias bx="bundle exec"
 rake_db_test_rebuild() {
   bundle exec rake db:drop RAILS_ENV=test
   bundle exec rake db:create RAILS_ENV=test
   bundle exec rake db:schema:load RAILS_ENV=test
 }
 alias db-test-rebuild=rake_db_test_rebuild
-alias dc="docker-compose"
-alias bx="bundle exec"
 
+# Docker
+alias dc="docker-compose"
 alias dstop='docker stop $(docker ps -aq)'
 alias dps='docker ps --format "table {{.Names}}\t{{.ID}}\t{{.Image}}\t{{.Ports}}"'
 alias dpsa='docker ps --format "table {{.Names}}\t{{.ID}}\t{{.Image}}\t{{.Ports}}" -a'
 alias dx='docker exec -it'
 alias dxa='docker-compose exec app'
 alias dcu='docker-compose up'
-# alias dcd='docker-compose down'
 alias dcb='docker-compose build'
 alias dca='docker-compose run app'
 alias dspec='RAILS_ENV=test docker-compose run app rspec'
