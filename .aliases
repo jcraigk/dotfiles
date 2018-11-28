@@ -31,12 +31,12 @@ alias gcss="git commit --amend --no-edit"
 
 # Rails
 alias bx="bundle exec"
-rake_db_test_rebuild() {
-  bundle exec rake db:drop RAILS_ENV=test
-  bundle exec rake db:create RAILS_ENV=test
-  bundle exec rake db:schema:load RAILS_ENV=test
+rails_db_test_rebuild() {
+  bundle exec rails db:drop RAILS_ENV=test
+  bundle exec rails db:create RAILS_ENV=test
+  bundle exec rails db:schema:load RAILS_ENV=test
 }
-alias db-test-rebuild=rake_db_test_rebuild
+alias db-test-rebuild=rails_db_test_rebuild
 
 # Docker
 alias dc="docker-compose"
