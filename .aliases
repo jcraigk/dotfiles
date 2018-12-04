@@ -1,3 +1,9 @@
+# Shell
+alias ll="ls -al"
+
+# Capistrano
+alias caplive="cap live deploy"
+
 # Git
 alias gs="git status"
 alias gd="git diff"

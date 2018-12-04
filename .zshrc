@@ -1,4 +1,4 @@
-export ZSH=/Users/jcraigkuhn/.oh-my-zsh
+export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="muse"
 
 COMPLETION_WAITING_DOTS=false
@@ -18,6 +18,6 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export CLICOLOR=1;
 export PATH=/Users/jcraigkuhn/bin:/j/scripts:$PATH:
 
-source .aliases
+source "$HOME/.aliases"
 
 export PATH="$PATH:$HOME/.rvm/bin"
