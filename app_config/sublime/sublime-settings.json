@@ -1,6 +1,7 @@
 {
   "folder_exclude_patterns":
   [
+    ".git",
     "node_modules",
     "log",
     "coverage"
