@@ -4,10 +4,10 @@ Pry.config.theme = 'xoria256'
 Pry.config.pager = false
 Pry.config.editor = 'subl'
 
-Pry.commands.alias_command 'c',  'continue'
-Pry.commands.alias_command 's',  'step'
-Pry.commands.alias_command 'n',  'next'
-Pry.commands.alias_command 'f',  'finish'
+Pry.commands.alias_command 'cc',  'continue'
+Pry.commands.alias_command 'ss',  'step'
+Pry.commands.alias_command 'nn',  'next'
+Pry.commands.alias_command 'ff',  'finish'
 Pry.commands.alias_command 'ss', 'show-source'
 Pry.commands.alias_command 'xx', 'exit-program'
 
