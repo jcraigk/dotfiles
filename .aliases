@@ -57,3 +57,8 @@ alias dca='docker-compose run app'
 alias dspec='RAILS_ENV=test docker-compose run app rspec'
 alias dbash='docker-compose run --service-ports app bash'
 alias dvolprune="docker volume rm $(docker volume ls -q | awk '!/_/' | tr '\n' ' ')"
+alias dokpub="git push dokku master"
+drestart() {
+  docker-compose stop app
+  docker-compose start app
+}
