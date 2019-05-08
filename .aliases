@@ -62,3 +62,7 @@ drestart() {
   docker-compose stop app
   docker-compose start app
 }
+
+# Tools
+alias s="atom"
+alias ss="atom ."

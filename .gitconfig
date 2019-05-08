@@ -1,3 +1,5 @@
 [user]
 	email = jcraigk@gmail.com
 	name = Justin Craig-Kuhn (JCK)
+[core]
+	editor = vim
