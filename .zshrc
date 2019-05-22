@@ -21,3 +21,4 @@ export PATH=/Users/jcraigkuhn/bin:/j/scripts:$PATH:
 source "$HOME/.aliases"
 
 export PATH="$PATH:$HOME/.rvm/bin"
+export EDITOR="atom"
