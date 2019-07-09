@@ -67,3 +67,4 @@ drestart() {
 # Tools
 alias aa="atom"
 alias a="atom ."
+alias grok="ngrok http -subdomain=jcktest 3000"
