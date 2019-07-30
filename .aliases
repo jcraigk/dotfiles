@@ -68,3 +68,10 @@ drestart() {
 alias aa="atom"
 alias a="atom ."
 alias grok="ngrok http -subdomain=jcktest 3000"
+
+# Macros
+gpucore() {
+  git pull
+  bundle exec rails db:migrate
+  git checkout db/schema.rb
+}
