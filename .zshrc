@@ -22,3 +22,6 @@ source "$HOME/.aliases"
 
 export PATH="$PATH:$HOME/.rvm/bin"
 export EDITOR="atom --wait"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
