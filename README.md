@@ -4,7 +4,9 @@ Tools
 * [Docker](https://www.docker.com/)
 * [nvm](https://github.com/creationix/nvm)
 * [rvm](https://rvm.io/rvm/install)
+* [Atom Text Editor](https://atom.io/)
 * [Sublime Text](https://www.sublimetext.com/)
+
 
 Brew
 ----
@@ -14,7 +16,13 @@ Brew
 * zsh-completions
 * zsh-syntax-highlighting
 
-Sublime Packages
+
+Atom Config
+-----------
+sync-settings (Gist ID 8797919a51616933ba14e306b57902d4)
+
+
+Sublime Packages (Legacy)
 ----------------
 
 * ApacheConf
