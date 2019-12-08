@@ -44,6 +44,14 @@ rails_db_test_rebuild() {
   bundle exec rails db:schema:load RAILS_ENV=test
 }
 alias db-test-rebuild=rails_db_test_rebuild
+alias rclean=make_clean_with_rails_reset
+make_clean_with_rails_reset() {
+  make cleanforce
+  make services
+  rails db:create
+  rails db:migrate
+  rails s
+}
 
 # Docker
 alias dc="docker-compose"
