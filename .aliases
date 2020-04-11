@@ -52,6 +52,7 @@ make_clean_with_rails_reset() {
   rails db:migrate
   rails s
 }
+alias spec="RUBYOPT='-W0' rspec"
 
 # Docker
 alias dc="docker-compose"
@@ -83,3 +84,7 @@ gpucore() {
   bundle exec rails db:migrate
   git checkout db/schema.rb
 }
+
+# Current projects
+alias sshp="ssh jcraigk@ssh.phish.in"
+alias sshk="ssh jcraigk@ssh.karmachest.com"
