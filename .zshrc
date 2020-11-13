@@ -16,7 +16,7 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # jck config
 
 export CLICOLOR=1;
-export PATH=/Users/jcraigkuhn/bin:/j/scripts:$PATH:
+export PATH=/Users/jcraigkuhn/bin:/Users/jcraigkuhn/code/scripts:$PATH:
 
 source "$HOME/.aliases"
 
