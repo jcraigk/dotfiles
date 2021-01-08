@@ -81,8 +81,10 @@ alias grok="ngrok http -subdomain=jcktest 3000"
 # Macros
 gpucore() {
   git pull
+  bundle
   bundle exec rails db:migrate
   git checkout db/schema.rb
+  git checkout db/insights_schema.rb
 }
 
 # Current projects

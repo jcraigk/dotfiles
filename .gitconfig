@@ -5,3 +5,5 @@
 	editor = vim
 	pager = diff-so-fancy | less --tabs=4 -RFX
 	autocrlf = input
+[pull]
+	rebase = false
