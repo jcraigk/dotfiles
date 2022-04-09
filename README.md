@@ -1,23 +1,30 @@
 Tools
 -------
 * [Atom Text Editor](https://atom.io)
-* [asdf](https://asdf-vm.com)
+* [rvm](https://rvm.io/)
 
 
 Brew
 ----
-* fzf
 * awscli
+* diff-so-fancy
+* fzf
+* lsd
 * zsh
 * zsh-completions
 * zsh-syntax-highlighting
 
 
-Misc CLI
---------
-* [diff-so-fancy](https://github.com/so-fancy/diff-so-fancy)
-
-
 Atom Config
 -----------
 sync-settings (Gist ID 8797919a51616933ba14e306b57902d4)
+
+
+```
+ln ~/dotfiles/.aliases ./.aliases
+ln ~/dotfiles/.fzf.zsh ./.fzf.zsh
+ln ~/dotfiles/.gemrc ./.gemrc
+ln ~/dotfiles/.gitconfig ./.gitconfig
+ln ~/dotfiles/.pryrc ./.pryrc
+ln ~/dotfiles/.zshrc ./.zshrc
+```

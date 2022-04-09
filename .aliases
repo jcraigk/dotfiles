@@ -1,5 +1,5 @@
 # Shell
-alias ll="exa -al"
+alias ll="lsd -la"
 
 # Capistrano
 alias caplive="cap live deploy"
@@ -53,6 +53,7 @@ make_clean_with_rails_reset() {
   rails s
 }
 alias spec="RUBYOPT='-W0' rspec"
+alias br="bundle exec rspec"
 
 # Docker
 alias dc="docker-compose"
