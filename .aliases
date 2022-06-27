@@ -1,5 +1,5 @@
 # Shell
-alias ll="lsd -la"
+alias ll="exa -al"
 
 # Capistrano
 alias caplive="cap live deploy"
@@ -48,12 +48,12 @@ alias rclean=make_clean_with_rails_reset
 make_clean_with_rails_reset() {
   make cleanforce
   make services
+  sleep 3
   rails db:create
   rails db:migrate
   rails s
 }
 alias spec="RUBYOPT='-W0' rspec"
-alias br="bundle exec rspec"
 
 # Docker
 alias dc="docker-compose"
@@ -68,15 +68,14 @@ alias dca='docker-compose run app'
 alias dspec='RAILS_ENV=test docker-compose run app rspec'
 alias dbash='docker-compose run --service-ports app bash'
 alias dvolprune="docker volume rm $(docker volume ls -q | awk '!/_/' | tr '\n' ' ')"
-alias dokpub="git push dokku master"
+alias dokpub="git push dokku main:master"
 drestart() {
   docker-compose stop app
   docker-compose start app
 }
 
 # Tools
-alias aa="atom"
-alias a="atom ."
+alias a="code ."
 alias grok="ngrok http -subdomain=jcktest 3000"
 
 # Macros
@@ -90,4 +89,5 @@ gpucore() {
 
 # Current projects
 alias sshp="ssh jcraigk@ssh.phish.in"
-alias sshk="ssh jcraigk@ssh.karmachest.com"
+alias wik="gollum ~/code/dd-wiki --allow-uploads dir --ref main"
+alias blog="jekyll serve --port 3000"
