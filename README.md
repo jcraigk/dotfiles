@@ -1,6 +1,6 @@
 Tools
 -------
-* [Atom Text Editor](https://atom.io)
+* [Visual Studio Code](https://code.visualstudio.com/)
 * [rvm](https://rvm.io/)
 
 
@@ -9,15 +9,11 @@ Brew
 * awscli
 * diff-so-fancy
 * fzf
+* lazydocker
 * lsd
 * zsh
 * zsh-completions
 * zsh-syntax-highlighting
-
-
-Atom Config
------------
-sync-settings (Gist ID 8797919a51616933ba14e306b57902d4)
 
 
 ```

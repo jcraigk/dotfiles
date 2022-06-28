@@ -21,7 +21,7 @@ export PATH="/Users/jcraigkuhn/bin:/Users/jcraigkuhn/code/scripts:$PATH:"
 
 source "$HOME/.aliases"
 
-export EDITOR="atom --wait"
+export EDITOR="code"
 
 # RVM
 export PATH="$PATH:$HOME/.rvm/bin"
