@@ -37,6 +37,7 @@ alias gr="git rebase"
 alias gcss="git commit --amend --no-edit"
 
 # Rails
+alias br="bundle exec rspec"
 alias bx="bundle exec"
 rails_db_test_rebuild() {
   bundle exec rails db:drop RAILS_ENV=test
