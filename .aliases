@@ -58,19 +58,20 @@ make_clean_with_rails_reset() {
 alias spec="RUBYOPT='-W0' rspec"
 
 # Docker
+alias dbash="docker-compose run --service-ports app bash"
 alias dc="docker-compose"
-alias dstop='docker stop $(docker ps -aq)'
+alias dca="docker-compose run app"
+alias dcb="docker-compose build"
+alias dcu="docker-compose up"
+alias dokpub="git push dokku main:master"
 alias dps='docker ps --format "table {{.Names}}\t{{.ID}}\t{{.Image}}\t{{.Ports}}"'
 alias dpsa='docker ps --format "table {{.Names}}\t{{.ID}}\t{{.Image}}\t{{.Ports}}" -a'
-alias dx='docker exec -it'
-alias dxa='docker-compose exec app'
-alias dcu='docker-compose up'
-alias dcb='docker-compose build'
-alias dca='docker-compose run app'
-alias dspec='RAILS_ENV=test docker-compose run app rspec'
-alias dbash='docker-compose run --service-ports app bash'
+alias dspec="RAILS_ENV=test docker-compose run app rspec"
+alias dstop="docker stop $(docker ps -aq)"
 alias dvolprune="docker volume rm $(docker volume ls -q | awk '!/_/' | tr '\n' ' ')"
-alias dokpub="git push dokku main:master"
+alias dx="docker exec -it"
+alias dxa="docker-compose exec app"
+alias ld="lazydocker"
 drestart() {
   docker-compose stop app
   docker-compose start app

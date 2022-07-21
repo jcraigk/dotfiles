@@ -13,15 +13,11 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-#########################
-# jck config
-
-export CLICOLOR=1;
-export PATH="/Users/jcraigkuhn/bin:/Users/jcraigkuhn/code/scripts:$PATH:"
-
-source "$HOME/.aliases"
-
-export EDITOR="code"
-
 # RVM
 export PATH="$PATH:$HOME/.rvm/bin"
+
+# JCK
+export CLICOLOR=1;
+export PATH="$HOME/bin:$HOME/code/scripts:$PATH:"
+source "$HOME/.aliases"
+export EDITOR="code"

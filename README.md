@@ -13,7 +13,7 @@ Brew
 * lsd
 * zsh
 * zsh-completions
-* zsh-syntax-highlighting
+* zsh-fast-syntax-highlighting
 
 
 ```
