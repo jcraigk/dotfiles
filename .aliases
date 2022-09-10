@@ -63,7 +63,7 @@ alias dc="docker-compose"
 alias dca="docker-compose run app"
 alias dcb="docker-compose build"
 alias dcu="docker-compose up"
-alias dokpub="git push dokku main:master"
+alias dokpub="git push dokku main:main"
 alias dps='docker ps --format "table {{.Names}}\t{{.ID}}\t{{.Image}}\t{{.Ports}}"'
 alias dpsa='docker ps --format "table {{.Names}}\t{{.ID}}\t{{.Image}}\t{{.Ports}}" -a'
 alias dspec="RAILS_ENV=test docker-compose run app rspec"
@@ -79,7 +79,7 @@ drestart() {
 
 # Tools
 alias a="code ."
-alias grok="ngrok http -subdomain=jcktest 3000"
+alias grok="ngrok http --subdomain=jcktest 3000"
 
 # Macros
 gpucore() {
