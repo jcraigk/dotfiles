@@ -88,9 +88,14 @@ gpucore() {
   bundle exec rails db:migrate
   git checkout db/schema.rb
   git checkout db/insights_schema.rb
+  git checkout db/audits_schema.rb
 }
 
-# Current projects
+# Active projects
 alias sshp="ssh jcraigk@ssh.phish.in"
-alias wik="gollum ~/code/dd-wiki --allow-uploads dir --ref main"
+alias ddwik="gollum ~/code/dd-wiki --allow-uploads dir --ref main"
+alias mmwik="gollum ~/code/mm-wiki --allow-uploads dir --ref main"
 alias blog="jekyll serve --port 3000"
+
+# Kube
+alias kubecore="kubectl -n core exec -ti $(kubectl -n core get pods -l app.kubernetes.io/name=core-utility -o jsonpath='{.items[0].metadata.name}') -- /vault/vault-env /weedmaps/bin/rails c"
