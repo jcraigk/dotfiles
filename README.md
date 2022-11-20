@@ -17,10 +17,10 @@ Brew
 
 
 ```
-ln ~/dotfiles/.aliases ./.aliases
-ln ~/dotfiles/.fzf.zsh ./.fzf.zsh
-ln ~/dotfiles/.gemrc ./.gemrc
-ln ~/dotfiles/.gitconfig ./.gitconfig
-ln ~/dotfiles/.pryrc ./.pryrc
-ln ~/dotfiles/.zshrc ./.zshrc
+ln -s ~/code/dotfiles/.aliases ./.aliases
+ln -s ~/dotfiles/.fzf.zsh ./.fzf.zsh
+ln -s ~/dotfiles/.gemrc ./.gemrc
+ln -s ~/dotfiles/.gitconfig ./.gitconfig
+ln -s ~/dotfiles/.pryrc ./.pryrc
+ln -s ~/dotfiles/.zshrc ./.zshrc
 ```
