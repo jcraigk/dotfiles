@@ -96,6 +96,3 @@ alias sshp="ssh jcraigk@ssh.phish.in"
 alias ddwik="gollum ~/code/dd-wiki --allow-uploads dir --ref main"
 alias mmwik="gollum ~/code/mm-wiki --allow-uploads dir --ref main"
 alias blog="jekyll serve --port 3000"
-
-# Kube
-alias kubecore="kubectl -n core exec -ti $(kubectl -n core get pods -l app.kubernetes.io/name=core-utility -o jsonpath='{.items[0].metadata.name}') -- /vault/vault-env /weedmaps/bin/rails c"
