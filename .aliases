@@ -51,8 +51,7 @@ make_clean_with_rails_reset() {
   make cleanforce
   make services
   sleep 3
-  rails db:create
-  rails db:migrate
+  rails db:reset
   rails s
 }
 alias spec="RUBYOPT='-W0' rspec"
@@ -95,4 +94,9 @@ gpucore() {
 alias sshp="ssh jcraigk@ssh.phish.in"
 alias ddwik="gollum ~/code/dd-wiki --allow-uploads dir --ref main"
 alias mmwik="gollum ~/code/mm-wiki --allow-uploads dir --ref main"
-alias blog="jekyll serve --port 3000"
+
+blog() {
+  cd ~/code/blog || return 1
+  code --disable-extension GitHub.copilot . &
+  bundle exec jekyll serve --port 3000 --livereload
+}

@@ -1,12 +1,11 @@
 Tools
 -------
 * [Visual Studio Code](https://code.visualstudio.com/)
-* [rvm](https://rvm.io/)
+* [asdf](https://asdf-vm.com/)
 
 Fonts
 -----
 * [JetBrains Mono](https://www.jetbrains.com/lp/mono/)
-* [iA Writer](https://github.com/iaolo/iA-Fonts)
 
 Brew
 ----
