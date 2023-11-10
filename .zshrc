@@ -25,3 +25,5 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
 
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
+
+eval "$(/opt/homebrew/bin/brew shellenv)"

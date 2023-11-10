@@ -11,6 +11,7 @@ Brew
 ----
 * awscli
 * diff-so-fancy
+* exa
 * fzf
 * lazydocker
 * lsd
@@ -21,9 +22,9 @@ Brew
 
 ```
 ln -s ~/code/dotfiles/.aliases ./.aliases
-ln -s ~/dotfiles/.fzf.zsh ./.fzf.zsh
-ln -s ~/dotfiles/.gemrc ./.gemrc
-ln -s ~/dotfiles/.gitconfig ./.gitconfig
-ln -s ~/dotfiles/.pryrc ./.pryrc
-ln -s ~/dotfiles/.zshrc ./.zshrc
+ln -s ~/code/dotfiles/.fzf.zsh ./.fzf.zsh
+ln -s ~/code/dotfiles/.gemrc ./.gemrc
+ln -s ~/code/dotfiles/.gitconfig ./.gitconfig
+ln -s ~/code/dotfiles/.pryrc ./.pryrc
+ln -s ~/code/dotfiles/.zshrc ./.zshrc
 ```
