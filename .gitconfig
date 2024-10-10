@@ -7,3 +7,11 @@
 	autocrlf = input
 [pull]
 	rebase = false
+[push]
+	default = current
+[init]
+	defaultBranch = main
+[diff]
+	algorithm = histogram
+[url "git@github.com:"]
+	insteadOf = "https://github.com/"
