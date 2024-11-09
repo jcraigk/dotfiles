@@ -13,7 +13,7 @@ Fonts
 Brew
 ----
 * awscli
-* diff-so-fancy
+* delta
 * exa
 * fzf
 * zsh

@@ -3,7 +3,7 @@
 	name = Justin Craig-Kuhn (JCK)
 [core]
 	editor = vim
-	pager = diff-so-fancy | less --tabs=4 -RFX
+	pager = delta
 	autocrlf = input
 [pull]
 	rebase = false
@@ -15,3 +15,10 @@
 	algorithm = histogram
 [url "git@github.com:"]
 	insteadOf = "https://github.com/"
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    navigate = true
+		line-numbers = true
+[merge]
+    conflictstyle = zdiff3
