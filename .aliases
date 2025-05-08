@@ -1,5 +1,5 @@
 # Shell
-alias ll="exa -al"
+alias ll="eza -al"
 
 # Capistrano
 alias caplive="cap live deploy"

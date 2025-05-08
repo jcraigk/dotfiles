@@ -14,7 +14,7 @@ Brew
 ----
 * awscli
 * delta
-* exa
+* eza
 * fzf
 * zsh
 * zsh-completions
