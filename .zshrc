@@ -17,7 +17,7 @@ source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-high
 export CLICOLOR=1;
 export PATH="$HOME/bin:$HOME/code/scripts:$PATH:"
 source "$HOME/.aliases"
-export EDITOR="code --wait"
+export EDITOR="cursor --wait"
 
 # NVM
 export NVM_DIR="$HOME/.nvm"

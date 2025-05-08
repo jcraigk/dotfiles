@@ -77,7 +77,7 @@ drestart() {
 }
 
 # Tools
-alias a="code ."
+alias a="cursor ."
 alias grok="ngrok http --subdomain=jcktest 3000"
 alias ggrok="ngrok http --subdomain=jcktest 4567"
 
@@ -99,6 +99,6 @@ alias mmwik="gollum ~/code/mm-wiki --allow-uploads dir --ref main"
 
 blog() {
   cd ~/code/blog || return 1
-  code --disable-extension GitHub.copilot . &
-  bundle exec jekyll serve --port 3000 --livereload
+  cursor . &
+  bundle exec jekyll serve --drafts --port 3000 --livereload
 }
