@@ -1,7 +1,7 @@
 Tools
 -------
 * [VSCode](https://code.visualstudio.com/)
-* [asdf](https://asdf-vm.com/)
+* mise
 * [nvm](https://github.com/nvm-sh/nvm)
 
 Fonts
