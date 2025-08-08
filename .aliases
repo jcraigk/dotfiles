@@ -52,7 +52,7 @@ make_clean_with_rails_reset() {
   make services
   sleep 3
   rails db:reset
-  rails s
+  make dev
 }
 alias spec="RUBYOPT='-W0' rspec"
 

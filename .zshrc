@@ -15,7 +15,7 @@ source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-high
 
 # JCK
 export CLICOLOR=1;
-export PATH="$HOME/bin:$HOME/code/scripts:$PATH:"
+export PATH="$HOME/bin:$HOME/code/scripts:$HOME/.local/bin:$PATH"
 source "$HOME/.aliases"
 export EDITOR="cursor --wait"
 
