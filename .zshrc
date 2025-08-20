@@ -6,6 +6,10 @@ source "$ZSH/oh-my-zsh.sh"
 # Prompt
 source "$HOME/code/dotfiles/zsh_config/prompt.zsh"
 
+# Tools
+fpath=(/usr/local/share/zsh-completions $fpath)
+source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+
 # Environment
 export CLICOLOR=1;
 export PATH="$HOME/bin:$HOME/code/scripts:$HOME/.local/bin:$PATH"

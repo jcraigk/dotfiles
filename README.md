@@ -13,6 +13,10 @@ Brew
 ----
 * awscli
 * delta
+* eza
+* zsh
+* zsh-completions
+* zsh-fast-syntax-highlighting
 
 
 ```
