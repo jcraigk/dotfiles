@@ -1,7 +1,6 @@
 [user]
 	email = jcraigk@gmail.com
 	name = Justin Craig-Kuhn (JCK)
-	signingkey = /Users/justin.craigkuhn/.ssh/id_ed25519.pub
 [core]
 	editor = vim
 	pager = delta
@@ -23,11 +22,5 @@
 		line-numbers = true
 [merge]
     conflictstyle = zdiff3
-[credential]
-        helper = osxkeychain
-[maintenance]
-        repo = /Users/justin.craigkuhn/workspace/zenpayroll
-[commit]
-	gpgsign = true
-[gpg]
-	format = ssh
+[include]
+	path = ~/.gitconfig.local
