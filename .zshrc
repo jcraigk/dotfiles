@@ -13,6 +13,6 @@ source "$HOME/.aliases"
 export EDITOR="cursor --wait"
 
 # Load work configuration if it exists
-if [[ -f "$HOME/code/dotfiles/zsh_config/work.zsh" ]]; then
-  source "$HOME/code/dotfiles/zsh_config/work.zsh"
+if [[ -f "$HOME/code/dotfiles/zsh_config/employer.zsh" ]]; then
+  source "$HOME/code/dotfiles/zsh_config/employer.zsh"
 fi
