@@ -8,7 +8,7 @@ source "$HOME/code/dotfiles/zsh_config/prompt.zsh"
 
 # Environment
 export CLICOLOR=1;
-export PATH="$HOME/bin:$HOME/code/scripts:$PATH:"
+export PATH="$HOME/bin:$HOME/code/scripts:$HOME/.local/bin:$PATH"
 source "$HOME/.aliases"
 export EDITOR="cursor --wait"
 
