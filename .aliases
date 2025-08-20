@@ -11,6 +11,10 @@ alias ga="git add -A"
 git_commit() {
   git commit -m "$1"
 }
+git_commit_no_verify() {
+  git commit --no-verify -m "$1"
+}
+alias gcn=git_commit_no_verify
 alias gc=git_commit
 alias gp="git push"
 alias gpp="git push -u origin HEAD"
@@ -34,7 +38,7 @@ git_squash() {
 }
 alias gsq=git_squash
 alias gr="git rebase"
-alias gcss="git commit --amend --no-edit"
+alias gcss="git commit --amend --no-edit --no-verify"
 
 # Rails
 alias br="bundle exec rspec"
@@ -55,6 +59,7 @@ make_clean_with_rails_reset() {
   rails s
 }
 alias spec="RUBYOPT='-W0' rspec"
+alias railsc="bundle exec rails console"
 
 # Docker
 alias dbash="docker compose run --service-ports app bash"
