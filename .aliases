@@ -1,3 +1,5 @@
+alias dotfiles="cd ~/code/dotfiles && cursor ."
+
 # Shell
 alias ll="eza -al"
 
