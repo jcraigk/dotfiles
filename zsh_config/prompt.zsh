@@ -30,9 +30,9 @@ git_info() {
     local git_icon=$'\ue0a0'
     local branch=$(git_current_branch 2>/dev/null)
     
-    # Check if there are any changes (unstaged or staged)
-    if ! git diff --quiet 2>/dev/null || ! git diff --cached --quiet 2>/dev/null; then
-      echo " ${FG[088]}${git_icon} %{$reset_color%}${FG[245]}${branch}"  # Red icon for dirty
+    # Check if there are any changes (unstaged, staged, or untracked)
+    if ! git diff --quiet 2>/dev/null || ! git diff --cached --quiet 2>/dev/null || [ -n "$(git ls-files --others --exclude-standard 2>/dev/null)" ]; then
+      echo " ${FG[088]}${git_icon} %{$reset_color%}${FG[245]}${branch}"  # Red icon for dirty or untracked
     else
       echo " ${FG[245]}${git_icon} %{$reset_color%}${FG[245]}${branch}"  # Light grey icon for clean
     fi
