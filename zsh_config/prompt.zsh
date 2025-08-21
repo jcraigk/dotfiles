@@ -12,32 +12,63 @@ ZSH_THEME_GIT_PROMPT_UNTRACKED=""
 # Enable prompt substitution
 setopt promptsubst
 
-# Custom function to show full path when not in git repo, last segment when in git
-prompt_dir() {
-  if git rev-parse --git-dir > /dev/null 2>&1; then
-    # In a git repo - show only last segment
-    echo "%1~"
-  else
-    # Not in a git repo - show full path
-    echo "%~"
-  fi
-}
+# Git fork icon using Unicode point U+E0A0
+typeset -g GIT_ICON=$'\ue0a0'
 
-# Custom function to handle all git info with proper spacing
-git_info() {
-  if git rev-parse --git-dir > /dev/null 2>&1; then
-    # Git fork icon using Unicode point U+E0A0
-    local git_icon=$'\ue0a0'
-    local branch=$(git_current_branch 2>/dev/null)
+# Cache variables
+typeset -g _PROMPT_IN_GIT=""
+typeset -g _PROMPT_GIT_BRANCH=""
+typeset -g _PROMPT_GIT_DIRTY=""
+
+# Fast git info function - only updates when needed
+fast_git_info() {
+  # Check if we're in a git repo
+  local git_dir=$(git rev-parse --git-dir 2>/dev/null)
+  
+  if [[ -n "$git_dir" ]]; then
+    _PROMPT_IN_GIT="1"
+    # Get branch name efficiently
+    _PROMPT_GIT_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)
     
-    # Check if there are any changes (unstaged, staged, or untracked)
-    if ! git diff --quiet 2>/dev/null || ! git diff --cached --quiet 2>/dev/null || [ -n "$(git ls-files --others --exclude-standard 2>/dev/null)" ]; then
-      echo " ${FG[088]}${git_icon} %{$reset_color%}${FG[245]}${branch}"  # Red icon for dirty or untracked
+    # Check if repo is dirty (limit to first result for speed)
+    if [[ -n "$(git status --porcelain 2>/dev/null | head -1)" ]]; then
+      _PROMPT_GIT_DIRTY="1"
     else
-      echo " ${FG[245]}${git_icon} %{$reset_color%}${FG[245]}${branch}"  # Light grey icon for clean
+      _PROMPT_GIT_DIRTY=""
     fi
+  else
+    _PROMPT_IN_GIT=""
+    _PROMPT_GIT_BRANCH=""
+    _PROMPT_GIT_DIRTY=""
   fi
 }
 
-PROMPT='${FG[068]}$(prompt_dir)%{$reset_color%}$(git_info) %(?.${FG[245]}➜.${FG[088]}➜)%{$reset_color%} '
+# Build prompt string
+build_prompt() {
+  local dir_part
+  local git_part=""
+  
+  # Directory part
+  if [[ -n "$_PROMPT_IN_GIT" ]]; then
+    dir_part="${FG[068]}%1~%{$reset_color%}"  # Just last segment in git repos
+    
+    # Git part
+    if [[ -n "$_PROMPT_GIT_DIRTY" ]]; then
+      git_part=" ${FG[088]}${GIT_ICON} %{$reset_color%}${FG[245]}${_PROMPT_GIT_BRANCH}"
+    else
+      git_part=" ${FG[245]}${GIT_ICON} %{$reset_color%}${FG[245]}${_PROMPT_GIT_BRANCH}"
+    fi
+  else
+    dir_part="${FG[068]}%~%{$reset_color%}"  # Full path when not in git
+  fi
+  
+  echo -n "${dir_part}${git_part}"
+}
+
+# Pre-command hook to update git info
+precmd() {
+  fast_git_info
+}
+
+PROMPT='$(build_prompt) ${FG[245]}➜%{$reset_color%} '
 RPROMPT=''
