@@ -90,5 +90,5 @@ precmd() {
   fast_git_info
 }
 
-PROMPT='$(build_prompt) ${FG[245]}➜%{$reset_color%} '
+PROMPT='$(build_prompt) ${FG[250]}➜%{$reset_color%} '
 RPROMPT=''
