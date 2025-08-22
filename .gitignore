@@ -1,3 +1,4 @@
 .CFUserTextEncoding
 .DS_Store
 zsh_config/employer.zsh
+zsh_config/claude_code.zsh
