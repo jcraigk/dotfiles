@@ -15,9 +15,10 @@ export CLICOLOR=1;
 export PATH="$HOME/bin:$HOME/code/scripts:$HOME/.local/bin:$PATH"
 source "$HOME/.aliases"
 export EDITOR="cursor --wait"
-eval "$(mise activate zsh)"
 
-# Load work configuration if it exists
+# Load work configuration if it exists, otherwise activate mise
 if [[ -f "$HOME/code/dotfiles/zsh_config/employer.zsh" ]]; then
   source "$HOME/code/dotfiles/zsh_config/employer.zsh"
+else
+  eval "$(mise activate zsh)"
 fi
