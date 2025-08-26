@@ -13,7 +13,7 @@
 
 [delta]
   syntax-theme = OneHalfDark
-  file-style = "#ff8272"
+  file-style = "bold #ff8272"
   file-decoration-style = "#ff8272 ol"
   hunk-header-style = "bold reverse #bbbbbb"
   hunk-header-decoration-style = "none"
@@ -27,6 +27,17 @@
 
 [url "git@github.com:"]
   insteadOf = "https://github.com/"
+
+[color]
+  ui = auto
+
+[color "status"]
+  added = 28 bold
+  changed = 167 bold
+  untracked = 167 bold
+  branch = blue bold
+  header = white dim
+  unmerged = 167 bold
 
 [include]
   path = ~/.gitconfig.local
