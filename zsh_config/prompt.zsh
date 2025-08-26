@@ -74,7 +74,7 @@ build_prompt() {
     
     # Git part
     if [[ -n "$_PROMPT_GIT_DIRTY" ]]; then
-      git_part=" ${FG[088]}${GIT_ICON} %{$reset_color%}${FG[245]}${_PROMPT_GIT_BRANCH}"
+      git_part=" ${FG[167]}${GIT_ICON} %{$reset_color%}${FG[245]}${_PROMPT_GIT_BRANCH}"
     else
       git_part=" ${FG[245]}${GIT_ICON} %{$reset_color%}${FG[245]}${_PROMPT_GIT_BRANCH}"
     fi

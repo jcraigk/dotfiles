@@ -12,13 +12,15 @@
   default = current
 
 [delta]
-  dark = true
   syntax-theme = OneHalfDark
-  minus-style = "syntax #140003"
+  file-style = "#ff8272"
+  file-decoration-style = "#ff8272 ol"
+  hunk-header-style = "bold reverse #bbbbbb"
+  hunk-header-decoration-style = "none"
+  minus-style = "syntax #0c0000"
   minus-emph-style = "syntax #590102"
-  plus-style = "syntax #001402"
+  plus-style = "syntax #000800"
   plus-emph-style = "syntax #01590a"
-  hunk-header-decoration-style = "#444444 box"
 
 [init]
   defaultBranch = main
