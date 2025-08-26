@@ -19,7 +19,7 @@
   hunk-header-decoration-style = "none"
   minus-style = "syntax #1f0000"
   minus-emph-style = "syntax #590102"
-  plus-style = "syntax #000f00"
+  plus-style = "syntax #001400"
   plus-emph-style = "syntax #01590a"
 
 [init]
