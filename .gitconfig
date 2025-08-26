@@ -17,9 +17,9 @@
   file-decoration-style = "#ff8272 ol"
   hunk-header-style = "bold reverse #bbbbbb"
   hunk-header-decoration-style = "none"
-  minus-style = "syntax #0c0000"
+  minus-style = "syntax #1f0000"
   minus-emph-style = "syntax #590102"
-  plus-style = "syntax #000800"
+  plus-style = "syntax #000f00"
   plus-emph-style = "syntax #01590a"
 
 [init]
