@@ -18,7 +18,7 @@
   hunk-header-decoration-style = "box #666666"
   hunk-header-line-number-style="#dddddd bold"
   hunk-header-file-style="#dddddd bold"
-  hunk-label = " 📖"
+  hunk-label = " ➤"
   minus-style = "syntax #1f0000"
   minus-emph-style = "syntax #590102"
   plus-style = "syntax #001400"
