@@ -4,7 +4,7 @@ alias dotfiles="cd ~/code/dotfiles && cursor ."
 alias ll="eza -al"
 
 # Git
-alias gs="git status"
+alias gs="git status --short"
 alias gd="git diff"
 alias gdl="git diff | delta --line-numbers"
 alias ga="git add -A"
