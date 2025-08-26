@@ -3,12 +3,10 @@ alias dotfiles="cd ~/code/dotfiles && cursor ."
 # Shell
 alias ll="eza -al"
 
-# Capistrano
-alias caplive="cap live deploy"
-
 # Git
 alias gs="git status"
 alias gd="git diff"
+alias gdl="git diff | delta --line-numbers"
 alias ga="git add -A"
 git_commit() {
   git commit -m "$1"
@@ -85,27 +83,3 @@ drestart() {
 
 # Tools
 alias a="cursor ."
-alias grok="ngrok http --subdomain=jcktest 3000"
-alias ggrok="ngrok http --subdomain=jcktest 4567"
-
-# Macros
-gpucore() {
-  git pull
-  bundle
-  bundle exec rails db:migrate
-  git checkout db/schema.rb
-  git checkout db/insights_schema.rb
-  git checkout db/audits_schema.rb
-}
-
-# Active projects
-alias sshg="ssh jcraigk@gigtablet.com"
-alias sshp="ssh jcraigk@ssh.phish.in"
-alias ddwik="gollum ~/code/dd-wiki --allow-uploads dir --ref main"
-alias mmwik="gollum ~/code/mm-wiki --allow-uploads dir --ref main"
-
-blog() {
-  cd ~/code/blog || return 1
-  cursor . &
-  bundle exec jekyll serve --drafts --port 3000 --livereload
-}

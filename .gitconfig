@@ -1,26 +1,30 @@
 [user]
-	email = jcraigk@gmail.com
-	name = Justin Craig-Kuhn
+  email = jcraigk@gmail.com
+  name = Justin Craig-Kuhn (JCK)
+
 [core]
-	editor = vim
-	pager = delta
-	autocrlf = input
+  pager = delta
+
 [pull]
-	rebase = false
+  rebase = false
+
 [push]
-	default = current
-[init]
-	defaultBranch = main
-[diff]
-	algorithm = histogram
-[url "git@github.com:"]
-	insteadOf = "https://github.com/"
-[interactive]
-    diffFilter = delta --color-only
+  default = current
+
 [delta]
-    navigate = true
-		line-numbers = true
-[merge]
-    conflictstyle = zdiff3
+  dark = true
+  syntax-theme = OneHalfDark
+  minus-style = "syntax #140003"
+  minus-emph-style = "syntax #590102"
+  plus-style = "syntax #001402"
+  plus-emph-style = "syntax #01590a"
+  hunk-header-decoration-style = "#444444 box"
+
+[init]
+  defaultBranch = main
+
+[url "git@github.com:"]
+  insteadOf = "https://github.com/"
+
 [include]
-	path = ~/.gitconfig.local
+  path = ~/.gitconfig.local

@@ -12,15 +12,13 @@ Fonts
 Brew
 ----
 * awscli
-* delta
-* eza
+* delta (diffs)
+* eza (ls)
 * zsh
-* zsh-completions
 * zsh-fast-syntax-highlighting
 
 
 ```
-ln -s ~/code/dotfiles/.aliases ./.aliases
 ln -s ~/code/dotfiles/.gitconfig ./.gitconfig
 ln -s ~/code/dotfiles/.irbrc ./.irbrc
 ln -s ~/code/dotfiles/.zshrc ./.zshrc

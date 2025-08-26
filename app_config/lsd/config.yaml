@@ -1,7 +1,0 @@
-blocks:
-  - date
-  - size
-  - name
-date: '+%b %d %Y'
-sorting:
-  dir-grouping: first
