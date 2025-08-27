@@ -3,6 +3,8 @@
   name = Justin Craig-Kuhn (JCK)
 
 [core]
+  excludesfile = ~/.gitignore.global
+  editor = vim
   pager = delta
 
 [pull]
