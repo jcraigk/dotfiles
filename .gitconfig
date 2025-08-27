@@ -1,17 +1,18 @@
-[user]
-  email = jcraigk@gmail.com
-  name = Justin Craig-Kuhn (JCK)
+[color]
+  ui = auto
+
+[color "status"]
+  added = 28 bold
+  changed = 167 bold
+  untracked = 167 bold
+  branch = blue bold
+  header = white dim
+  unmerged = 167 bold
 
 [core]
   excludesfile = ~/.gitignore.global
   editor = vim
   pager = delta
-
-[pull]
-  rebase = false
-
-[push]
-  default = current
 
 [delta]
   syntax-theme = OneHalfDark
@@ -26,22 +27,21 @@
   plus-style = "syntax #001400"
   plus-emph-style = "syntax #01590a"
 
+[include]
+  path = ~/.gitconfig.local
+
 [init]
   defaultBranch = main
 
 [url "git@github.com:"]
   insteadOf = "https://github.com/"
 
-[color]
-  ui = auto
+[user]
+  email = jcraigk@gmail.com
+  name = Justin Craig-Kuhn (JCK)
 
-[color "status"]
-  added = 28 bold
-  changed = 167 bold
-  untracked = 167 bold
-  branch = blue bold
-  header = white dim
-  unmerged = 167 bold
+[pull]
+  rebase = false
 
-[include]
-  path = ~/.gitconfig.local
+[push]
+  default = current
