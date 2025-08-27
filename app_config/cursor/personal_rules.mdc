@@ -1,0 +1,27 @@
+---
+description: Rules to apply to all projects
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Git
+
+NEVER use git or any other version control system to commit or push code without explicit instructions.
+
+When running a local git diff, use "git --no-pager -c pager.diff=false -c color.ui=never diff --no-ext-diff" 
+
+
+# Terminal
+
+Do not "cd" into the current project directory - you're already there!
+
+To interact with Jira, use the "jira" CLI command. To view an issue use the "--raw" option as in "jira issue view MYTICKET-100 --raw"
+
+When using CLI tools that may use a pager (like gh, git, kubectl, etc.), prefix with PAGER=cat to disable paging.
+
+When running a Rails command use "rails runner" and pass it the code instead of "rails console" which does not allow input from Cursor.
+
+
+# Coding style
+
+Use comments sparingly when writing code. Well written code speaks for itself.

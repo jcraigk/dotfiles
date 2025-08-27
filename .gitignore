@@ -1,4 +1,3 @@
 .CFUserTextEncoding
 .DS_Store
-zsh_config/employer.zsh
-zsh_config/private.zsh
+zsh_config/local.zsh

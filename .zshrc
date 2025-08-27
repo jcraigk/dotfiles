@@ -16,11 +16,6 @@ export PATH="$HOME/bin:$HOME/code/scripts:$HOME/.local/bin:/opt/homebrew/bin/:$P
 export EDITOR="cursor --wait"
 
 # Device-specific config
-if [[ -f "${0:A:h}/zsh_config/employer.zsh" ]]; then
-  source "${0:A:h}/zsh_config/employer.zsh"
-else
-  if [[ -f "${0:A:h}/zsh_config/private.zsh" ]]; then
-    source "${0:A:h}/zsh_config/private.zsh"
-  fi
-  eval "$(mise activate zsh)"
+if [[ -f "${0:A:h}/zsh_config/local.zsh" ]]; then
+  source "${0:A:h}/zsh_config/local.zsh"
 fi
