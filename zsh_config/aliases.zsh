@@ -20,7 +20,9 @@ alias gp="git push"
 alias gpp="git push -u origin HEAD"
 alias gpu="git pull"
 alias gb="git branch"
+alias gbd="git branch -D"
 alias gco="git checkout"
+alias gcob="git checkout -b"
 git_log() {
   git log -${1:-3}
 }
