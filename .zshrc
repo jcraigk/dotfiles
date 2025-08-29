@@ -15,6 +15,16 @@ export CLICOLOR=1;
 export PATH="$HOME/bin:$HOME/code/scripts:$HOME/.local/bin:/opt/homebrew/bin/:$PATH"
 export EDITOR="cursor --wait"
 
+# Cursor-only: kill pagers so tools print plain output
+if [ "$TERM_PROGRAM" = "vscode" ]; then
+  export PAGER=cat
+  export GIT_PAGER=cat
+  export MANPAGER=cat
+  export PSQL_PAGER=cat
+  export DELTA_PAGER=cat
+  export LESS=
+fi
+
 # Device-specific config
 if [[ -f "${0:A:h}/zsh_config/local.zsh" ]]; then
   source "${0:A:h}/zsh_config/local.zsh"

@@ -23,6 +23,7 @@ alias gb="git branch"
 alias gbd="git branch -D"
 alias gco="git checkout"
 alias gcob="git checkout -b"
+alias greset="git reset --hard"
 git_log() {
   git log -${1:-3}
 }

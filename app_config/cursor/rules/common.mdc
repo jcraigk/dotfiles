@@ -8,21 +8,17 @@ alwaysApply: true
 
 NEVER use git or any other version control system to commit or push code without explicit instructions.
 
-When running a local git diff, use "git --no-pager -c pager.diff=false -c color.ui=never diff --no-ext-diff" 
-
-A commit message must be a single line less than 100 characters.
+A commit message MUST be a single line between 20 and 100 characters. Be as concise as possible. Use imperative mood.
 
 When updating a PR description on GitHub:
 - First fetch the current PR content
-- Preserve any existing elements like images, links, or formatting that the user might have added beyond what may be in context history
+- Preserve any existing elements like images, links, or formatting that the user might have added directly via the GitHub website
 - Only modify the specific sections that need updating
 
 
 # Terminal
 
 Do not "cd" into the current project directory - you're already there!
-
-When using CLI tools that may use a pager, prefix with PAGER=cat to disable paging.
 
 When running a Rails command use "rails runner" and pass it the code instead of "rails console" which requires an interactive session.
 
