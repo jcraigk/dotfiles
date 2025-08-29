@@ -14,6 +14,8 @@ Branch names must be 5–25 characters, using only lowercase letters and dashes.
 
 Pull request (PR) titles and descriptions must be concise and imperative. PR descriptions must not exceed 300 words.
 
+If working on a Jira ticket, pull request titles must be prefixed with the ticket ID in brackets. Example: "[ABC-123] My title..."
+
 When updating a PR, preserve any attachments or images the user may have added outside of chat.
 
 

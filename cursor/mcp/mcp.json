@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "jira": {
+      "command": "docker",
+      "args": [
+        "run",
+        "--interactive",
+        "--rm",
+        "--env-file", "~/dotfiles/cursor/mcp/jira.env",
+        "ghcr.io/sooperset/mcp-atlassian:latest"
+      ]
+    },
+    "github": {
+      "command": "docker",
+      "args": [
+        "run",
+        "--interactive",
+        "--rm",
+        "--env-file", "~/dotfiles/cursor/mcp/github.env",
+        "ghcr.io/github/github-mcp-server:latest"
+      ]
+    }
+  }
+}

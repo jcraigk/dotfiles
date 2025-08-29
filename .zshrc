@@ -16,7 +16,7 @@ export PATH="$HOME/bin:$HOME/code/scripts:$HOME/.local/bin:/opt/homebrew/bin/:$P
 export EDITOR="cursor --wait"
 
 # Cursor-only: kill pagers so tools print plain output
-if [ "$TERM_PROGRAM" = "vscode" ]; then
+if [ "$CURSOR_AGENT" = "1" ]; then
   export PAGER=cat
   export GIT_PAGER=cat
   export MANPAGER=cat

@@ -88,7 +88,7 @@ drestart() {
 alias a="cursor ."
 crules() {
   mkdir -p ./.cursor/rules
-  for f in ~/dotfiles/app_config/cursor/rules/*.mdc; do
+  for f in ~/dotfiles/cursor/rules/*.mdc; do
     ln -sf "$f" ./.cursor/rules/
     echo "$(basename "$f")"
   done
