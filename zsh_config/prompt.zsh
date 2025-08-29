@@ -36,7 +36,8 @@ fast_git_info() {
     _PROMPT_GIT_ROOT=$(git rev-parse --show-toplevel 2>/dev/null)
     if [[ -n "$_PROMPT_GIT_ROOT" ]]; then
       # Get the relative path from git root
-      local current_dir=$PWD
+      # Resolve symlinks in PWD to match what git returns
+      local current_dir=$(cd "$PWD" && pwd -P)
       local relative_path=${current_dir#$_PROMPT_GIT_ROOT}
       
       if [[ -z "$relative_path" ]]; then

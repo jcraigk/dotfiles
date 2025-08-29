@@ -20,8 +20,6 @@ When updating a PR description on GitHub:
 
 Do not "cd" into the current project directory - you're already there!
 
-When running a Rails command use "rails runner" and pass it the code instead of "rails console" which requires an interactive session.
-
 
 # Coding style
 
