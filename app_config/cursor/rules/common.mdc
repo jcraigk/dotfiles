@@ -6,7 +6,7 @@ alwaysApply: true
 
 # Git
 
-ALWAYS ask before running `git commit`.
+NEVER run `git commit` without explicit instructions from the user.
 
 Commit messages must be a single line, 20–80 characters, in imperative mood.
 
@@ -41,11 +41,12 @@ Special commands are short, single words (like bash commands) that begin a chat 
 <command name="gp" arg="Branch name">
 1. Run the "gc" command
 2. git push
-3. Check if there's a pull request associated with the branch already and, if so, update the PR description and title if they don't already reflect the latest changes. If there is no PR, do not create one.
 </command>
 
 <command name="gpr" arg="PR title">
-1. Run the "gp" command but at step 3 create a PR if one doesn't already exist. 
+1. Run the "gp" command
+2. Create a PR if one doesn't already exist.
+3. If one does exist, update the description and title to reflect the latest changes, if necessary. Do not reveal the content was edited (avoid "NEW" and "UPDATE" language).
 </command>
 
 <command name="greview" arg="Pull request number or branch name">

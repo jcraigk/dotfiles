@@ -93,7 +93,7 @@ precmd() {
 
 # Override prompt for VSCode to show just the arrow
 if [ "$TERM_PROGRAM" = "vscode" ]; then
-  PROMPT='➜ '
+  PROMPT=''
 else
   PROMPT='$(build_prompt) ${FG[250]}➜%{$reset_color%} '
 fi
