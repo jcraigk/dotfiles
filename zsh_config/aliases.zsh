@@ -85,3 +85,9 @@ drestart() {
 
 # Tools
 alias a="cursor ."
+crules() {
+  for f in ~/dotfiles/app_config/cursor/rules/*.mdc; do
+    ln -sf "$f" ./.cursor/rules/
+    echo "$(basename "$f")"
+  done
+}

@@ -1,0 +1,26 @@
+---
+description: Rules specific to Gusto Embedded Payroll (GEP) development environment
+globs: ["**/*"]
+alwaysApply: true
+---
+
+## Atlassian MCP
+
+Our Atlassian Cloud ID is "3fd33630-4e39-4689-ad04-db32e3843117".
+
+Jira tickets look like "PREFIX-123". For example: "EMBC-306". When I specify something that looks like that, it's a Jira ticket.
+
+I will sometime use shorthand like "jira 306". This means "EMBC-306". EMBC is the default prefix.
+
+
+# Pre-commit Hooks
+
+Whenever a change is made to any file, you must run the precommit hooks and iteratively fix the issues before ending the session. If no changes were made to project files, skip this step altogether.
+
+When you are about to end a session after changing a file, do this:
+- Open a terminal and run: `lefthook run pre-commit`
+- If any hook fails (Rubocop, ESLint, etc.), carefully read the output.
+- Fix the code accordingly, then rerun `lefthook run pre-commit` until it exits successfully.
+- If the hook has a `stage_fixed: true` or `--fix` option (Rubocop autocorrect, ESLint --fix), apply those edits directly to the files instead of staging/committing.
+- Do NOT run `git commit`, `git push`, or stage files. Your role is only to edit files so that `lefthook run pre-commit` passes cleanly.
+- When all hooks pass, summarize what was fixed and only then finish.
