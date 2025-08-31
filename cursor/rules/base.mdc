@@ -1,5 +1,5 @@
 ---
-description: Rules to apply to all projects
+description: Rules for every session
 globs: ["**/*"]
 alwaysApply: true
 ---
@@ -21,14 +21,14 @@ When updating a PR, preserve any attachments or images the user may have added o
 
 # Terminal
 
-Do not run `cd` into the current project directory—you’re already there.
+Do not run `cd` into the current project directory - you're already there.
 
 Do not run `rails console`. Use `rails runner` instead.
 
 
 # Coding Style
 
-NEVER add comments to generated code unless there is a clear, justifiable reason. Good code speaks for itself.
+NEVER puts comments in Ruby or JavaScript code you generate. Zero comments. None.
 
 
 # Special Commands

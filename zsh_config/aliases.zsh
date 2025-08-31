@@ -2,6 +2,10 @@ alias dotfiles="cd ~/dotfiles && cursor ."
 
 # Shell
 alias ll="eza -al"
+pd() {
+  cd "$HOME/code/$1"
+}
+
 
 # Git
 alias gs="git status --short"
