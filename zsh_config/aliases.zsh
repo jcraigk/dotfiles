@@ -10,6 +10,7 @@ pd() {
 # Git
 alias gs="git status --short"
 alias gd="git diff"
+alias gdc="git diff --cached"
 alias gdl="git diff | delta --line-numbers"
 alias ga="git add -A"
 git_commit() {
