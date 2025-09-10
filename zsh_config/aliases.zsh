@@ -92,9 +92,13 @@ drestart() {
 # Tools
 alias a="cursor ."
 crules() {
+  echo "symlinking cursor config files..."
   mkdir -p ./.cursor/rules
   for f in ~/dotfiles/cursor/rules/*.mdc; do
     ln -sf "$f" ./.cursor/rules/
     echo "$(basename "$f")"
   done
+  ln -sf ~/dotfiles/cursor/commands ./.cursor/commands
+  echo "cursor/commands"
+  echo "...done"
 }
