@@ -24,3 +24,8 @@ When you are about to end a session after changing a file, do this:
 - If the hook has a `stage_fixed: true` or `--fix` option (Rubocop autocorrect, ESLint --fix), apply those edits directly to the files instead of staging/committing.
 - Do NOT run `git commit`, `git push`, or stage files. Your role is only to edit files so that `lefthook run pre-commit` passes cleanly.
 - When all hooks pass, summarize what was fixed and only then finish.
+
+
+# Pull Requests
+
+- If working on a Jira ticket, pull request titles must be prefixed with the ticket ID in brackets. Example: "[ABC-123] My title..."

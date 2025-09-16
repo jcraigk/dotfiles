@@ -14,15 +14,15 @@ Commit messages must be a single line, 20–80 characters, in imperative mood.
 
 Branch names must be 5–25 characters, using only lowercase letters and dashes.
 
-Pull request (PR) titles and descriptions must be concise and imperative. PR descriptions must not exceed 300 words.
-
-If working on a Jira ticket, pull request titles must be prefixed with the ticket ID in brackets. Example: "[ABC-123] My title..."
-
-When updating a PR, preserve any attachments or images the user may have added outside of chat.
-
 
 # Terminal
 
 NEVER `cd` into the current project directory to run a command - you're already there!
 
 NEVER run `rails console`. Use `rails runner` instead.
+
+Using rails runner:
+- When inserting Ruby code into `bin/rails runner`, wrap the whole snippet in single quotes unless you need shell interpolation.
+- If you must use double quotes, escape all Ruby globals like `$stdout` and `$stderr` as `\\$stdout` / `\\$stderr`.
+- Do not pipe `| cat` after runner commands.
+- For multi-line snippets, use a heredoc (`<<'RUBY'`) or a .rb file instead of inline double quotes.
