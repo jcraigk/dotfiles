@@ -9,6 +9,7 @@ source "${0:A:h}/zsh_config/aliases.zsh"
 
 # Tools
 source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+eval "$(zoxide init zsh)"
 
 # Environment
 export CLICOLOR=1;
