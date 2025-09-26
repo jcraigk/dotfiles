@@ -7,14 +7,14 @@ source "$ZSH/oh-my-zsh.sh"
 source "${0:A:h}/zsh_config/prompt.zsh"
 source "${0:A:h}/zsh_config/aliases.zsh"
 
-# Tools
-source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
-eval "$(zoxide init zsh)"
-
 # Environment
 export CLICOLOR=1;
 export PATH="$HOME/bin:$HOME/code/scripts:$HOME/.local/bin:/opt/homebrew/bin/:$PATH"
 export EDITOR="cursor --wait"
+
+# Tools
+source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+eval "$(zoxide init zsh)"
 
 # Cursor-only: kill pagers so tools print plain output
 if [ "$CURSOR_AGENT" = "1" ]; then
