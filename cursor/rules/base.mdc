@@ -26,3 +26,5 @@ Using rails runner:
 - If you must use double quotes, escape all Ruby globals like `$stdout` and `$stderr` as `\\$stdout` / `\\$stderr`.
 - Do not pipe `| cat` after runner commands.
 - For multi-line snippets, use a heredoc (`<<'RUBY'`) or a .rb file instead of inline double quotes.
+
+If you're having trouble with ruby versions when running ruby commands in a terminal, run "$(mise activate zsh)" first.
