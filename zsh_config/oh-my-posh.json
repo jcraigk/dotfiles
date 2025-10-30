@@ -6,17 +6,21 @@
       "alignment": "left",
       "segments": [
         {
-          "template": "{{ .Path | base }}",
+          "type": "command",
+          "style": "plain",
           "foreground": "#5fb3ff",
-          "type": "path",
-          "style": "plain"
+          "template": "{{ .Output }}",
+          "properties": {
+            "cache_duration": "none",
+            "command": "bash -lc 'if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then root=$(git rev-parse --show-toplevel); cd=$(pwd -P); rel=${cd#$root}; if [ -z \"$rel\" ]; then basename \"$root\"; else printf \"%s%s\" \"$(basename \"$root\")\" \"$rel\"; fi; else basename \"$(pwd -P)\"; fi'"
+          }
         },
         {
           "type": "git",
           "style": "plain",
           "foreground": "#5fb3ff",
           "foreground_templates": [
-            "{{ if or (.Working.Changed) (.Staging.Changed) }}#ff0000{{ else }}#808080{{ end }}"
+            "{{ if or (.Working.Changed) (.Staging.Changed) }}#cc6666{{ else }}#808080{{ end }}"
           ],
           "properties": {
             "fetch_status": true,
@@ -28,7 +32,7 @@
         },
         {
           "template": " \uf18e ",
-          "foreground": "#5fb3ff",
+          "foreground": "#a0a0a0",
           "type": "text",
           "style": "plain"
         }
