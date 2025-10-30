@@ -1,6 +1,5 @@
 ---
 description: Rules specific to Gusto Embedded Payroll (GEP) development environment
-globs: ["**/*"]
 alwaysApply: true
 ---
 
@@ -8,9 +7,11 @@ alwaysApply: true
 
 Our Atlassian Cloud ID is "3fd33630-4e39-4689-ad04-db32e3843117".
 
-Jira tickets look like "PREFIX-123". For example: "EMBC-306". When I specify something that looks like that, it's a Jira ticket.
+Our BuildKite org slug is 1355395. Our pipeline slug is zenpayroll.
 
-I will sometime use shorthand like "jira 306". This means "EMBC-306". EMBC is the default prefix.
+Jira tickets look like "PREFIX-x" Where x is an integer.
+
+I will sometime use shorthand like "jira x" where x is an integer. This means "EMBC-x" since EMBC is the default prefix.
 
 
 # Pre-commit Hooks
@@ -29,3 +30,8 @@ When you are about to end a session after changing a file, do this:
 # Pull Requests
 
 - If working on a Jira ticket, pull request titles must be prefixed with the ticket ID in brackets. Example: "[ABC-123] My title..."
+
+
+# Data
+
+Use Redash for querying production data. Use "_EDW PII Safe (Redshift)" database. Zenpayroll tables are prefixed with "zenpayroll_production_no_pii."

@@ -6,7 +6,6 @@ pd() {
   cd "$HOME/code/$1"
 }
 
-
 # Git
 alias gs="git status --short"
 alias gd="git diff"

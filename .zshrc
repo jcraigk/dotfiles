@@ -1,14 +1,4 @@
-# Oh My Zsh
-ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="muse"
-source "$ZSH/oh-my-zsh.sh"
-
-# Prompt and aliases
-source "${0:A:h}/zsh_config/prompt.zsh"
-source "${0:A:h}/zsh_config/aliases.zsh"
-
 # Environment
-export CLICOLOR=1;
 export PATH="$HOME/bin:$HOME/code/scripts:$HOME/.local/bin:/opt/homebrew/bin/:$PATH"
 export EDITOR="cursor --wait"
 
@@ -30,3 +20,9 @@ fi
 if [[ -f "${0:A:h}/zsh_config/local.zsh" ]]; then
   source "${0:A:h}/zsh_config/local.zsh"
 fi
+
+# Aliases
+source "${0:A:h}/zsh_config/aliases.zsh"
+
+# Oh-my-posh
+eval "$(oh-my-posh init zsh --config ~/dotfiles/zsh_config/oh-my-posh.json)"

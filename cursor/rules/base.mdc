@@ -1,6 +1,5 @@
 ---
 description: Rules for every session
-globs: ["**/*"]
 alwaysApply: true
 ---
 
@@ -8,11 +7,24 @@ alwaysApply: true
 
 CRITICAL: Never git commit without explicit instructions from me.
 
+Examples of what NOT to do:
+- ❌ "I'll commit these changes" (without being asked)
+- ❌ "Let me commit to save our progress"
+- ❌ "Committing the fixes now"
+
+Examples of CORRECT behavior:
+- ✅ "The changes are ready. Would you like me to commit?"
+- ✅ "All issues are fixed. Let me know if you want me to commit."
+
 CRITICAL: Comments in generated code and specs should be kept to bare minimum.
+DEFAULT TO NO COMMENTS. When in doubt, omit the comment.
+Each comment added should be justified as absolutely essential.
 
 Commit messages must be a single line, 20–80 characters, in imperative mood.
 
 Branch names must be 5–25 characters, using only lowercase letters and dashes.
+
+When creating pull requests, ALWAYS follow the pull request template for the project if it exists. Otherwise simply be concise and direct in pull request descriptions.
 
 
 # Terminal
