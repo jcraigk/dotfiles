@@ -12,7 +12,7 @@
           "template": "{{ .Output }}",
           "properties": {
             "cache_duration": "none",
-            "command": "bash -lc 'if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then root=$(git rev-parse --show-toplevel); cd=$(pwd -P); rel=${cd#$root}; if [ -z \"$rel\" ]; then basename \"$root\"; else printf \"%s%s\" \"$(basename \"$root\")\" \"$rel\"; fi; else basename \"$(pwd -P)\"; fi'"
+            "command": "bash -lc 'cd=$(pwd -P); if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then root=$(git rev-parse --show-toplevel); rel=${cd#$root}; if [ -z \"$rel\" ]; then basename \"$root\"; else printf \"%s%s\" \"$(basename \"$root\")\" \"$rel\"; fi; else if [ \"$cd\" = \"$HOME\" ]; then echo \"~\"; elif [[ \"$cd\" == \"$HOME\"/* ]]; then echo \"~${cd#$HOME}\"; else basename \"$cd\"; fi; fi'"
           }
         },
         {
