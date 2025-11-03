@@ -31,7 +31,7 @@
           "template": " {{ .Output }}",
           "properties": {
             "cache_duration": "none",
-            "command": "bash -lc 'if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then branch=$(git branch --show-current 2>/dev/null); if [ -n \"$branch\" ]; then len=${#branch}; if [ $len -gt 20 ]; then truncated=\"${branch:0:20}\"; ellipsis=$(printf \"\\uf141\"); branch=\"$truncated$ellipsis\"; fi; if ! git diff --quiet 2>/dev/null || ! git diff --cached --quiet 2>/dev/null; then color=\"#cc6666\"; else color=\"#808080\"; fi; printf \"<%s>\\uf418 %s</>\" \"$color\" \"$branch\"; fi; fi'"
+            "command": "bash -lc 'if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then branch=$(git branch --show-current 2>/dev/null); if [ -n \"$branch\" ]; then len=${#branch}; if [ $len -gt 20 ]; then truncated=\"${branch:0:20}\"; ellipsis=$(printf \"\"); branch=\"$truncated$ellipsis\"; fi; if ! git diff --quiet 2>/dev/null || ! git diff --cached --quiet 2>/dev/null; then color=\"#cc6666\"; else color=\"#808080\"; fi; printf \"<%s> %s</>\" \"$color\" \"$branch\"; fi; fi'"
           }
         },
         {
