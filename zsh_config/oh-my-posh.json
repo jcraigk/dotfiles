@@ -8,6 +8,15 @@
         {
           "type": "command",
           "style": "plain",
+          "template": "{{ if gt .Code 0 }}<#cc6666>{{ .Output }}</>{{ else }}<#808080>{{ .Output }}</>{{ end }} ",
+          "properties": {
+            "cache_duration": "none",
+            "command": "bash -c 'num=${TERMINAL_CMD_COUNT:-0}; square_icons=(\"󰎡\" \"󰎤\" \"󰎧\" \"󰎪\" \"󰎭\" \"󰎱\" \"󰎳\" \"󰎶\" \"󰎹\" \"󰎼\"); circle_icons=(\"󰰖\" \"󰲠\" \"󰲢\" \"󰲤\" \"󰲦\" \"󰲨\" \"󰲪\" \"󰲬\" \"󰲮\" \"󰲰\" \"󰿵\"); is_even=$((num % 2 == 0)); result=\"\"; for ((i=0; i<${#num}; i++)); do digit=${num:$i:1}; if [ $is_even -eq 1 ]; then result+=\"${circle_icons[$digit]}\"; else result+=\"${square_icons[$digit]}\"; fi; done; printf \"$result\"'"
+          }
+        },
+        {
+          "type": "command",
+          "style": "plain",
           "foreground": "#5fb3ff",
           "template": "{{ .Output }}",
           "properties": {
@@ -22,7 +31,7 @@
           "template": " {{ .Output }}",
           "properties": {
             "cache_duration": "none",
-            "command": "bash -lc 'if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then branch=$(git branch --show-current 2>/dev/null); if [ -n \"$branch\" ]; then len=${#branch}; if [ $len -gt 20 ]; then truncated=\"${branch:0:20}\"; ellipsis=$(printf \"\\uf141\"); branch=\"$truncated$ellipsis\"; fi; if ! git diff --quiet 2>/dev/null || ! git diff --cached --quiet 2>/dev/null; then color=\"#cc6666\"; else color=\"#808080\"; fi; printf \"\\uf418 <%s>%s</>\" \"$color\" \"$branch\"; fi; fi'"
+            "command": "bash -lc 'if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then branch=$(git branch --show-current 2>/dev/null); if [ -n \"$branch\" ]; then len=${#branch}; if [ $len -gt 20 ]; then truncated=\"${branch:0:20}\"; ellipsis=$(printf \"\\uf141\"); branch=\"$truncated$ellipsis\"; fi; if ! git diff --quiet 2>/dev/null || ! git diff --cached --quiet 2>/dev/null; then color=\"#cc6666\"; else color=\"#808080\"; fi; printf \"<%s>\\uf418 %s</>\" \"$color\" \"$branch\"; fi; fi'"
           }
         },
         {
@@ -31,7 +40,7 @@
           "template": " {{ .Output }} ",
           "properties": {
             "cache_duration": "none",
-            "command": "bash -c 'chars=(\"\" \"󱎖\" \"󰮔\" \"\" \"󰠠\" \"󱤅\" \"󰎆\" \"󰛿\" \"󱠇\" \"󱠆\"); idxfile=\"${HOME}/.oh-my-posh-char-idx\"; idx=$(cat \"$idxfile\" 2>/dev/null || echo 0); idx=$((idx + 1)); idx=$((idx % ${#chars[@]})); echo $idx > \"$idxfile\"; printf \"<#c0c0c0>${chars[$idx]}</>\"'"
+            "command": "bash -c 'num=${TERMINAL_CMD_COUNT:-0}; square_icons=(\"󰋌\" \"󰾔\" \"󰾔\" \"󰾔\" \"󰾔\" \"󰾔\" \"󰾔\" \"󰾔\" \"󰐆\" \"󰿠\"); circle_icons=(\"\" \"󱎖\" \"󰮔\" \"󰠠\" \"󱤅\" \"󰎆\" \"󱠇\" \"󱠆\" \"󰅡\" \"󰌡\" \"\" \"\"); is_even=$((num % 2 == 0)); if [ $is_even -eq 1 ]; then icons=(\"${circle_icons[@]}\"); else icons=(\"${square_icons[@]}\"); fi; idx=$((RANDOM % ${#icons[@]})); printf \"<#c0c0c0>${icons[$idx]}</>\"'"
           }
         }
       ]
