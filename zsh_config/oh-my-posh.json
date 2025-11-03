@@ -16,19 +16,14 @@
           }
         },
         {
-          "type": "git",
+          "type": "command",
           "style": "plain",
           "foreground": "#5fb3ff",
-          "foreground_templates": [
-            "{{ if or (.Working.Changed) (.Staging.Changed) }}#cc6666{{ else }}#808080{{ end }}"
-          ],
+          "template": " {{ .Output }}",
           "properties": {
-            "fetch_status": true,
-            "display_status": false,
-            "display_upstream_icon": false,
-            "branch_icon": ""
-          },
-          "template": " \uf418 <#808080>{{ .HEAD }}</>"
+            "cache_duration": "none",
+            "command": "bash -lc 'if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then branch=$(git branch --show-current 2>/dev/null); if [ -n \"$branch\" ]; then len=${#branch}; if [ $len -gt 20 ]; then truncated=\"${branch:0:20}\"; ellipsis=$(printf \"\\uf141\"); branch=\"$truncated$ellipsis\"; fi; if ! git diff --quiet 2>/dev/null || ! git diff --cached --quiet 2>/dev/null; then color=\"#cc6666\"; else color=\"#808080\"; fi; printf \"\\uf418 <%s>%s</>\" \"$color\" \"$branch\"; fi; fi'"
+          }
         },
         {
           "type": "command",
