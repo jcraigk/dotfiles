@@ -5,15 +5,6 @@
       "type": "prompt",
       "alignment": "left",
       "segments": [
-        // {
-        //   "type": "command",
-        //   "style": "plain",
-        //   "template": "{{ if gt .Code 0 }}<#cc6666>{{ .Output }}</>{{ else }}<#808080>{{ .Output }}</>{{ end }} ",
-        //   "properties": {
-        //     "cache_duration": "none",
-        //     "command": "bash -c 'num=${TERMINAL_CMD_COUNT:-0}; square_icons=(\"󰎡\" \"󰎤\" \"󰎧\" \"󰎪\" \"󰎭\" \"󰎱\" \"󰎳\" \"󰎶\" \"󰎹\" \"󰎼\"); circle_icons=(\"󰰖\" \"󰲠\" \"󰲢\" \"󰲤\" \"󰲦\" \"󰲨\" \"󰲪\" \"󰲬\" \"󰲮\" \"󰲰\"); is_even=$((num % 2 == 0)); result=\"\"; for ((i=0; i<${#num}; i++)); do digit=${num:$i:1}; if [ $is_even -eq 1 ]; then result+=\"${circle_icons[$digit]}\"; else result+=\"${square_icons[$digit]}\"; fi; done; printf \"$result\"'"
-        //   }
-        // },
         {
           "type": "command",
           "style": "plain",
@@ -40,7 +31,7 @@
           "template": " {{ .Output }} ",
           "properties": {
             "cache_duration": "none",
-            "command": "bash -c 'num=${TERMINAL_CMD_COUNT:-0}; square_icons=(\"󰋌\" \"󰛂\" \"󰇊\" \"󰇋\" \"󰇌\" \"󰇍\" \"󰇎\" \"󰇏\"); circle_icons=(\"\" \"󱎖\" \"󰠠\" \"󱤅\" \"󰎆\" \"󱠆\" \"\" \"\" \"\" \"\" \"\" \"󰊠\" \"󰢚\"); is_even=$((num % 2 == 0)); if [ $is_even -eq 1 ]; then icons=(\"${circle_icons[@]}\"); else icons=(\"${square_icons[@]}\"); fi; idx=$((RANDOM % ${#icons[@]})); printf \"<#c0c0c0>${icons[$idx]}</>\"'"
+            "command": "bash -c 'icons=(\"\" \"󱎖\" \"󰠠\" \"󱤅\" \"󰎆\" \"󱠆\" \"\" \"\" \"\" \"\" \"󰊠\" \"󰇊\" \"󰇋\" \"󰇌\" \"󰇍\" \"󰇎\" \"󰇏\"); idx=$((RANDOM % ${#icons[@]})); printf \"<#c0c0c0>${icons[$idx]}</>\"'"
           }
         }
       ]
