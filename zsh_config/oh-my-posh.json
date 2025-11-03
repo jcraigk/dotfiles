@@ -31,10 +31,13 @@
           "template": " \uf418 <#808080>{{ .HEAD }}</>"
         },
         {
-          "template": " \uf18e ",
-          "foreground": "#a0a0a0",
-          "type": "text",
-          "style": "plain"
+          "type": "command",
+          "style": "plain",
+          "template": " {{ .Output }} ",
+          "properties": {
+            "cache_duration": "none",
+            "command": "bash -c 'chars=(\"\" \"󱎖\" \"󰮔\" \"\" \"󰠠\" \"󱤅\" \"󰎆\" \"󰛿\" \"󱠇\" \"󱠆\"); idxfile=\"${HOME}/.oh-my-posh-char-idx\"; idx=$(cat \"$idxfile\" 2>/dev/null || echo 0); idx=$((idx + 1)); idx=$((idx % ${#chars[@]})); echo $idx > \"$idxfile\"; printf \"<#c0c0c0>${chars[$idx]}</>\"'"
+          }
         }
       ]
     }

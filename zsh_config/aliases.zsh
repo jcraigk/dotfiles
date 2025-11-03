@@ -12,6 +12,7 @@ alias gd="git diff"
 alias gdc="git diff --cached"
 alias gdl="git diff | delta --line-numbers"
 alias ga="git add -A"
+alias gap="git add -p"
 git_commit() {
   git commit -m "$1"
 }
