@@ -12,7 +12,7 @@
           "template": "{{ .Output }} ",
           "properties": {
             "cache_duration": "none",
-            "command": "bash -lc 'cd=$(pwd -P); if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then root=$(git rev-parse --show-toplevel); rel=${cd#$root}; if [ -z \"$rel\" ]; then basename \"$root\"; else printf \"%s%s\" \"$(basename \"$root\")\" \"$rel\"; fi; else if [ \"$cd\" = \"$HOME\" ]; then echo \" \"; elif [[ \"$cd\" == \"$HOME\"/* ]]; then echo \" ${cd#$HOME}\"; else IFS=\"/\" read -ra parts <<< \"$cd\"; count=${#parts[@]}; if [ $count -gt 3 ]; then echo \"/${parts[1]}/  /${parts[$count-1]}\"; else echo \"$cd\"; fi; fi; fi'"
+            "command": "bash -lc 'cd=$(pwd -P); if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then root=$(git rev-parse --show-toplevel); rel=${cd#$root}; if [ -z \"$rel\" ]; then basename \"$root\"; else printf \"%s%s\" \"$(basename \"$root\")\" \"$rel\"; fi; else if [ \"$cd\" = \"$HOME\" ]; then echo \" \"; elif [[ \"$cd\" == \"$HOME\"/* ]]; then echo \" ${cd#$HOME}\"; else IFS=\"/\" read -ra parts <<< \"$cd\"; count=${#parts[@]}; if [ $count -gt 3 ]; then echo \"/${parts[1]}/  /${parts[$count-1]}\"; else echo \"$cd\"; fi; fi; fi'"
           }
         },
         {
@@ -31,7 +31,7 @@
           "template": "{{ .Output }} ",
           "properties": {
             "cache_duration": "none",
-            "command": "bash -c 'if [ \"$(pwd -P)\" != \"$HOME\" ]; then icons=(\"\" \"\" \"\" \"\" \"󰊠\" \"󰇊\" \"󰇋\" \"󰇌\" \"󰇍\" \"󰇎\" \"󰇏\" \"\" \"󰴈\" \"\" \"󰌪\" \"\" \"󰹡\" \"\" \"󱎖\" \"󰠠\" \"󱤅\" \"󰎆\" \"󱠆\"); idx=$((RANDOM % ${#icons[@]})); printf \"<#c0c0c0>${icons[$idx]}</>\" ; fi'"
+            "command": "bash -c 'if [ \"$(pwd -P)\" != \"$HOME\" ]; then icons=(\"\" \"\" \"\" \"\" \"󰊠\" \"󰇊\" \"󰇋\" \"󰇌\" \"󰇍\" \"󰇎\" \"󰇏\" \"\" \"󰴈\" \"\" \"󰌪\" \"\" \"󰹡\" \"󱎖\" \"\" \"\" \"\" \"󰷚\" \"\" \"\" \"\" \"󱇪\" \"\" \"\" \"\" \"󰼁\" \"\" \"󱎶\" \"\" \"󰐱\" \"󰤖\" \"\" \"\" \"\" \"󱁂\" \"󰗺\" \"󰃠\" \"󰤄\" \"󱚡\" \"󰸼\" \"󰱯\" \"󰍎\" \"󰟞\" \"󱢣\" \"󱢧\" \"󱢫\" \"󱢯\" \"󱐋\" \"󰻿\"); idx=$((RANDOM % ${#icons[@]})); printf \"<#c0c0c0>${icons[$idx]}</>\" ; fi'"
           }
         }
       ]
