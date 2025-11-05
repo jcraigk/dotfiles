@@ -3,16 +3,22 @@ description: Rules for every session
 alwaysApply: true
 ---
 
+# General
+
+I am located in the Pacific timezone. When communicating times in analysis or reports, convert UTC to PT.
+
 # Git
 
 CRITICAL: Never git commit without explicit instructions from me.
 
 Examples of what NOT to do:
+
 - ❌ "I'll commit these changes" (without being asked)
 - ❌ "Let me commit to save our progress"
 - ❌ "Committing the fixes now"
 
 Examples of CORRECT behavior:
+
 - ✅ "The changes are ready. Would you like me to commit?"
 - ✅ "All issues are fixed. Let me know if you want me to commit."
 
@@ -26,7 +32,6 @@ Branch names must be 5–25 characters, using only lowercase letters and dashes.
 
 When creating pull requests, ALWAYS follow the pull request template for the project if it exists. Otherwise simply be concise and direct in pull request descriptions.
 
-
 # Terminal
 
 NEVER `cd` into the current project directory to run a command - you're already there!
@@ -34,6 +39,7 @@ NEVER `cd` into the current project directory to run a command - you're already 
 NEVER run `rails console`. Use `rails runner` instead.
 
 Using rails runner:
+
 - When inserting Ruby code into `bin/rails runner`, wrap the whole snippet in single quotes unless you need shell interpolation.
 - If you must use double quotes, escape all Ruby globals like `$stdout` and `$stderr` as `\\$stdout` / `\\$stderr`.
 - Do not pipe `| cat` after runner commands.
