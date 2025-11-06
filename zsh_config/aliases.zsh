@@ -47,6 +47,12 @@ git_squash() {
 alias gsq=git_squash
 alias gr="git rebase"
 alias gcss="git commit --amend --no-edit --no-verify"
+gdelworktrees() {
+  git worktree list --porcelain | \
+   grep 'worktree ' | awk '{print $2}' | \
+   grep -v "$(git rev-parse --show-toplevel)" | \
+   xargs -I {} bash -c 'echo "Removing {}" && git worktree remove --force "{}"'
+}
 
 # Rails
 alias br="bundle exec rspec"
