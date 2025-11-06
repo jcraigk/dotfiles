@@ -8,7 +8,10 @@ pd() {
 
 # Git
 alias gs="git status --short"
-alias gd="git diff"
+gd() {
+  git add -N .
+  git diff
+}
 alias gdc="git diff --cached"
 alias gdl="git diff | delta --line-numbers"
 alias ga="git add -A"
@@ -33,7 +36,7 @@ git_log() {
   git log -${1:-3}
 }
 alias gl=git_log
-git_squash() {
+gsq() {
   NUM=${1:-2}
   read -r -p "Commit and squash last $NUM commits? [y/N] " response
   if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
@@ -44,7 +47,6 @@ git_squash() {
     git commit --edit -m"$(git log --format=%B --reverse HEAD..HEAD@{1})"
   fi
 }
-alias gsq=git_squash
 alias gr="git rebase"
 alias gcss="git commit --amend --no-edit --no-verify"
 gdelworktrees() {
