@@ -10,7 +10,6 @@
   unmerged = 167 bold
 
 [core]
-  excludesfile = ~/.gitignore.global
   editor = vim
   pager = delta
 
