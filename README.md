@@ -5,7 +5,8 @@ Tools
 
 Fonts
 -----
-* Coding: [JetBrains Mono](https://www.jetbrains.com/lp/mono/)
+* Terminal: [JetBrains Mono Nerd Font](https://www.nerdfonts.com/font-downloads)
+* Editor: [MesloLGLDZ Nerd Font](https://www.nerdfonts.com/font-downloads)
 * Writing: [Poly](https://fonts.google.com/specimen/Poly)
 * Marketing: [Barlow Semi Condensed](https://fonts.google.com/specimen/Barlow+Semi+Condensed)
 
