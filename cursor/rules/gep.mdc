@@ -3,6 +3,11 @@ description: Rules specific to Gusto Embedded Payroll (GEP) development environm
 alwaysApply: true
 ---
 
+## Google Workspace
+
+My email address is justin.craigkuhn@gusto.com
+
+
 ## Datadog MCP
 
 If no results are being returned or the server is not available, run the following command and then try again: ~/workspace/gusto-cli/dist/gdev-mcp

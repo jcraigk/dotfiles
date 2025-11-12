@@ -11,20 +11,6 @@
         "ghcr.io/sooperset/mcp-atlassian:latest"
       ]
     },
-    "slack": {
-      "command": "docker",
-      "args": [
-        "run",
-        "-i",
-        "--rm",
-        "--env-file",
-        "~/dotfiles/cursor/mcp/slack.env",
-        "ghcr.io/korotovsky/slack-mcp-server:latest",
-        "mcp-server",
-        "--transport",
-        "stdio"
-      ]
-    },
     "github": {
       "command": "docker",
       "args": [
@@ -58,6 +44,15 @@
       "env": {
         "REDASH_API_KEY": "<SECRET>",
         "REDASH_URL": "https://redash.zp-int.com"
+      }
+    },
+    "google": {
+      "command": "uvx",
+      "args": ["workspace-mcp", "--tool-tier", "core"],
+      "env": {
+        "GOOGLE_OAUTH_CLIENT_ID": "<SECRET>",
+        "GOOGLE_OAUTH_CLIENT_SECRET": "<SECRET>",
+        "OAUTHLIB_INSECURE_TRANSPORT": "1"
       }
     }
   }
