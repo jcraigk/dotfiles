@@ -37,8 +37,8 @@ When you are about to end a session after changing a file, do this:
 
 # Pull Requests
 
-- If working on a Jira ticket, pull request titles must be prefixed with the ticket ID in brackets. Example: "[ABC-123] My title..."
+If working on a Jira ticket, pull request titles must be prefixed with the ticket ID in brackets. Example: "[ABC-123] My title..."
 
 # Data
 
-Use Redash for querying production data. Use "_EDW PII Safe (Redshift)" database. Zenpayroll tables are prefixed with "zenpayroll_production_no_pii."
+Use Redash for querying production data. Use "ZP Demo Read Replica (MySQL)" for the demo environment and "_EDW PII Safe" for production. Zenpayroll tables are prefixed with "zenpayroll_production_no_pii."

@@ -110,3 +110,33 @@ crules() {
   echo "cursor/commands"
   echo "...done"
 }
+
+
+gclean() {
+  if ! git rev-parse --git-dir > /dev/null 2>&1; then
+    echo "❌ Not a git repo"
+    return 1
+  fi
+
+  current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+  # Loop over all local branches
+  for branch in $(git for-each-ref --format='%(refname:short)' refs/heads/); do
+
+    # Skip main and current branch
+    if [ "$branch" = "main" ] || [ "$branch" = "$current_branch" ]; then
+      continue
+    fi
+
+    # Ask user
+    print -n "Delete \033[38;2;95;179;255m$branch\033[0m ? "
+    read -k 1 ans
+    echo
+    case "$ans" in
+      [Yy]* )
+        git branch -D "$branch"
+        ;;
+    esac
+  done
+}
+g

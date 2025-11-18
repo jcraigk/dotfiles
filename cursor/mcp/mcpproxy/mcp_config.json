@@ -1,0 +1,324 @@
+{
+    "listen": ":8080",
+    "enable_socket": true,
+    "data_dir": "/Users/justin.craigkuhn/.mcpproxy",
+    "enable_tray": true,
+    "debug_search": false,
+    "mcpServers": [
+      {
+        "name": "Atlassian",
+        "protocol": "stdio",
+        "command": "docker",
+        "args": [
+          "run",
+          "-i",
+          "--rm",
+          "-e", "CONFLUENCE_URL",
+          "-e", "CONFLUENCE_USERNAME",
+          "-e", "CONFLUENCE_API_TOKEN",
+          "-e", "JIRA_URL",
+          "-e", "JIRA_USERNAME",
+          "-e", "JIRA_API_TOKEN",
+          "ghcr.io/sooperset/mcp-atlassian:latest"
+        ],
+        "env": {
+          "CONFLUENCE_URL": "https://gustohq.atlassian.net/wiki",
+          "CONFLUENCE_USERNAME": "justin.craigkuhn@gusto.com",
+          "CONFLUENCE_API_TOKEN": "${keyring:atlassian_api_token}",
+          "JIRA_URL": "https://gustohq.atlassian.net",
+          "JIRA_USERNAME": "justin.craigkuhn@gusto.com",
+          "JIRA_API_TOKEN": "${keyring:atlassian_api_token}"
+        },
+        "enabled": true
+      },
+      {
+        "name": "BuildKite",
+        "protocol": "stdio",
+        "command": "docker",
+        "args": [
+          "run",
+          "-i",
+          "--rm",
+          "-e", "BUILDKITE_API_TOKEN",
+          "ghcr.io/buildkite/buildkite-mcp-server",
+          "stdio"
+        ],
+        "env": {
+          "BUILDKITE_API_TOKEN": "${keyring:buildkite_api_token}"
+        },
+        "enabled": true,
+        "created": "2025-11-13T22:43:11.350488-08:00",
+        "updated": "2025-11-14T01:59:23.025867-08:00"
+      },
+      {
+        "name": "Context7",
+        "url": "https://mcp.context7.com/mcp",
+        "protocol": "http",
+        "env": {
+          "CONTEXT7_API_KEY": "${keyring:context7_api_key}"
+        },
+        "enabled": true,
+        "created": "2025-11-13T22:51:22.357179-08:00",
+        "updated": "2025-11-14T01:59:23.034029-08:00"
+      },
+      {
+        "name": "Datadog",
+        "protocol": "stdio",
+        "command": "/Users/justin.craigkuhn/workspace/gusto-cli/dist/gdev-mcp",
+        "env": {
+          "DATADOG_API_KEY": "${keyring:datadog_api_key}",
+          "DATADOG_APP_KEY": "${keyring:datadog_app_key}",
+          "DATADOG_SITE": "datadoghq.com"
+        },
+        "enabled": true,
+        "created": "2025-11-13T22:54:24.889193-08:00",
+        "updated": "2025-11-14T01:59:23.039854-08:00"
+      },
+      {
+        "name": "DeepWiki",
+        "url": "https://mcp.deepwiki.com/sse",
+        "protocol": "sse",
+        "enabled": true,
+        "created": "2025-11-14T02:16:10.916553-08:00",
+        "updated": "2025-11-14T02:16:10.916563-08:00"
+      },
+      {
+        "name": "GitHub",
+        "protocol": "stdio",
+        "command": "docker",
+        "args": [
+          "run",
+          "-i",
+          "--rm",
+          "-e", "GITHUB_PERSONAL_ACCESS_TOKEN",
+          "ghcr.io/github/github-mcp-server:latest"
+        ],
+        "env": {
+          "GITHUB_PERSONAL_ACCESS_TOKEN": "${keyring:github_personal_access_token}"
+        },
+        "enabled": true,
+        "created": "2025-11-13T22:39:12.948101-08:00",
+        "updated": "2025-11-14T01:59:23.04653-08:00"
+      },
+      {
+        "name": "Glean (Slack)",
+        "url": "https://gusto-be.glean.com/mcp/default",
+        "protocol": "http",
+        "enabled": true,
+        "created": "2025-11-13T22:45:30.117224-08:00",
+        "updated": "2025-11-14T01:59:23.054476-08:00"
+      },
+      {
+        "name": "Google Workspace",
+        "protocol": "stdio",
+        "command": "/Users/justin.craigkuhn/.local/bin/uvx",
+        "args": [
+          "workspace-mcp",
+          "--tool-tier",
+          "core"
+        ],
+        "env": {
+          "GOOGLE_OAUTH_CLIENT_ID": "${keyring:google_oauth_client_id}",
+          "GOOGLE_OAUTH_CLIENT_SECRET": "${keyring:google_oauth_client_secret}",
+          "OAUTHLIB_INSECURE_TRANSPORT": "1"
+        },
+        "enabled": true,
+        "created": "2025-11-13T22:05:16.2259-08:00",
+        "updated": "2025-11-14T01:59:23.061569-08:00"
+      },
+      {
+        "name": "Redash",
+        "protocol": "stdio",
+        "command": "/Users/justin.craigkuhn/.local/share/mise/shims/npx",
+        "args": [
+          "-y",
+          "@suthio/redash-mcp"
+        ],
+        "env": {
+          "REDASH_API_KEY": "${keyring:redash_api_key}",
+          "REDASH_URL": "https://redash.zp-int.com"
+        },
+        "enabled": true,
+        "created": "2025-11-13T22:54:12.672758-08:00",
+        "updated": "2025-11-14T01:59:23.069507-08:00"
+      }
+    ],
+    "top_k": 5,
+    "tools_limit": 15,
+    "tool_response_limit": 20000,
+    "call_tool_timeout": "2m0s",
+    "environment": {
+      "inherit_system_safe": true,
+      "allowed_system_vars": [
+        "PATH",
+        "HOME",
+        "TMPDIR",
+        "TEMP",
+        "TMP",
+        "SHELL",
+        "TERM",
+        "LANG",
+        "USER",
+        "USERNAME",
+        "XDG_CONFIG_HOME",
+        "XDG_DATA_HOME",
+        "XDG_CACHE_HOME",
+        "XDG_RUNTIME_DIR",
+        "LC_ALL",
+        "LC_CTYPE",
+        "LC_NUMERIC",
+        "LC_TIME",
+        "LC_COLLATE",
+        "LC_MONETARY",
+        "LC_MESSAGES",
+        "LC_PAPER",
+        "LC_NAME",
+        "LC_ADDRESS",
+        "LC_TELEPHONE",
+        "LC_MEASUREMENT",
+        "LC_IDENTIFICATION"
+      ],
+      "custom_vars": {},
+      "enhance_path": false
+    },
+    "logging": {
+      "level": "info",
+      "enable_file": true,
+      "enable_console": true,
+      "filename": "main.log",
+      "max_size": 10,
+      "max_backups": 5,
+      "max_age": 30,
+      "compress": true,
+      "json_format": false
+    },
+    "read_only_mode": false,
+    "disable_management": false,
+    "allow_server_add": true,
+    "allow_server_remove": true,
+    "enable_prompts": true,
+    "check_server_repo": true,
+    "docker_isolation": {
+      "enabled": false,
+      "default_images": {
+        "bash": "alpine:3.18",
+        "binary": "alpine:3.18",
+        "cargo": "rust:1.75-slim",
+        "composer": "php:8.2-cli-alpine",
+        "gem": "ruby:3.2-alpine",
+        "go": "golang:1.21-alpine",
+        "node": "node:20",
+        "npm": "node:20",
+        "npx": "node:20",
+        "php": "php:8.2-cli-alpine",
+        "pip": "python:3.11",
+        "pipx": "python:3.11",
+        "python": "python:3.11",
+        "python3": "python:3.11",
+        "ruby": "ruby:3.2-alpine",
+        "rustc": "rust:1.75-slim",
+        "sh": "alpine:3.18",
+        "uvx": "python:3.11",
+        "yarn": "node:20"
+      },
+      "registry": "docker.io",
+      "network_mode": "bridge",
+      "memory_limit": "512m",
+      "cpu_limit": "1.0",
+      "timeout": "30s",
+      "log_max_size": "100m",
+      "log_max_files": "3"
+    },
+    "registries": [
+      {
+        "id": "pulse",
+        "name": "Pulse MCP",
+        "description": "Browse and discover MCP use-cases, servers, clients, and news",
+        "url": "https://www.pulsemcp.com/",
+        "servers_url": "https://api.pulsemcp.com/v0beta/servers",
+        "tags": [
+          "verified"
+        ],
+        "protocol": "custom/pulse"
+      },
+      {
+        "id": "docker-mcp-catalog",
+        "name": "Docker MCP Catalog",
+        "description": "A collection of secure, high-quality MCP servers as docker images",
+        "url": "https://hub.docker.com/catalogs/mcp",
+        "servers_url": "https://hub.docker.com/v2/repositories/mcp/",
+        "tags": [
+          "verified"
+        ],
+        "protocol": "custom/docker"
+      },
+      {
+        "id": "fleur",
+        "name": "Fleur",
+        "description": "Fleur is the app store for Claude",
+        "url": "https://www.fleurmcp.com/",
+        "servers_url": "https://raw.githubusercontent.com/fleuristes/app-registry/refs/heads/main/apps.json",
+        "tags": [
+          "verified"
+        ],
+        "protocol": "custom/fleur"
+      },
+      {
+        "id": "azure-mcp-demo",
+        "name": "Azure MCP Registry Demo",
+        "description": "A reference implementation of MCP registry using Azure API Center",
+        "url": "https://demo.registry.azure-mcp.net/",
+        "servers_url": "https://demo.registry.azure-mcp.net/v0/servers",
+        "tags": [
+          "verified",
+          "demo",
+          "azure",
+          "reference"
+        ],
+        "protocol": "mcp/v0"
+      },
+      {
+        "id": "remote-mcp-servers",
+        "name": "Remote MCP Servers",
+        "description": "Community-maintained list of remote Model Context Protocol servers",
+        "url": "https://remote-mcp-servers.com/",
+        "servers_url": "https://remote-mcp-servers.com/api/servers",
+        "tags": [
+          "verified",
+          "community",
+          "remote"
+        ],
+        "protocol": "custom/remote"
+      }
+    ],
+    "features": {
+      "enable_runtime": true,
+      "enable_event_bus": true,
+      "enable_sse": true,
+      "enable_observability": true,
+      "enable_health_checks": true,
+      "enable_metrics": true,
+      "enable_tracing": false,
+      "enable_oauth": true,
+      "enable_quarantine": false,
+      "enable_docker_isolation": false,
+      "enable_search": true,
+      "enable_caching": true,
+      "enable_async_storage": true,
+      "enable_web_ui": true,
+      "enable_tray": true,
+      "enable_debug_logging": false,
+      "enable_contract_tests": false
+    },
+    "tls": {
+      "enabled": false,
+      "require_client_cert": false,
+      "hsts": true
+    },
+    "tokenizer": {
+      "enabled": true,
+      "default_model": "gpt-4",
+      "encoding": "cl100k_base"
+    }
+  }
+  

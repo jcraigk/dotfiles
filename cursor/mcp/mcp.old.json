@@ -1,0 +1,59 @@
+{
+  "mcpServers": {
+    "atlassian": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--env-file",
+        "~/dotfiles/cursor/mcp/atlassian.env",
+        "ghcr.io/sooperset/mcp-atlassian:latest"
+      ]
+    },
+    "github": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--env-file",
+        "~/dotfiles/cursor/mcp/github.env",
+        "ghcr.io/github/github-mcp-server:latest"
+      ]
+    },
+    "buildkite-official-local": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--env-file",
+        "~/dotfiles/cursor/mcp/buildkite.env",
+        "ghcr.io/buildkite/buildkite-mcp-server",
+        "stdio"
+      ]
+    },
+    "glean": {
+      "type": "http",
+      "url": "https://gusto-be.glean.com/mcp/default"
+    },
+    "redash": {
+      "command": "npx",
+      "args": ["-y", "@suthio/redash-mcp"],
+      "env": {
+        "REDASH_API_KEY": "<SECRET>",
+        "REDASH_URL": "https://redash.zp-int.com"
+      }
+    },
+    "google": {
+      "command": "uvx",
+      "args": ["workspace-mcp", "--tool-tier", "core"],
+      "env": {
+        "GOOGLE_OAUTH_CLIENT_ID": "<SECRET>",
+        "GOOGLE_OAUTH_CLIENT_SECRET": "<SECRET>",
+        "OAUTHLIB_INSECURE_TRANSPORT": "1"
+      }
+    }
+  }
+}
