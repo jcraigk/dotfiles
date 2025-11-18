@@ -130,8 +130,7 @@ gclean() {
 
     # Ask user
     print -n "Delete \033[38;2;95;179;255m$branch\033[0m ? "
-    read -k 1 ans
-    echo
+    read ans
     case "$ans" in
       [Yy]* )
         git branch -D "$branch"
@@ -139,4 +138,3 @@ gclean() {
     esac
   done
 }
-g
