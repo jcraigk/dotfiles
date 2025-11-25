@@ -35,9 +35,9 @@ When you are about to end a session after changing a file, do this:
 - Do NOT run `git commit`, `git push`, or stage files. Your role is only to edit files so that `lefthook run pre-commit` passes cleanly.
 - When all hooks pass, summarize what was fixed and only then finish.
 
-# Pull Requests
+# Git
 
-If working on a Jira ticket, pull request titles must be prefixed with the ticket ID in brackets. Example: "[ABC-123] My title..."
+Commit messages and pull request titles must be a single line, 20–80 characters, in imperative mood and should be prefixed with the ticket ID in brackets. Example: "[ABC-123] Enforce permissions in UsersController"
 
 # Data
 

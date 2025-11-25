@@ -3,9 +3,13 @@ description: Rules for every session
 alwaysApply: true
 ---
 
+# Tools & MCP
+
+You have access to a local MCP Proxy server that can describe tools available from a wide array of providers. If the user asks for information from a service that you don't think you have access to, first query the MCP Proxy because you may already have access to the service.
+
 # General
 
-I am located in the Pacific timezone. When communicating times in analysis or reports, convert UTC to PT.
+I (the user) am located in the Pacific timezone. When communicating times in analysis or reports, convert UTC to PT.
 
 # Git
 

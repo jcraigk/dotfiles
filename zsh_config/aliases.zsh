@@ -104,13 +104,16 @@ crules() {
   mkdir -p ./.cursor/rules
   for f in ~/dotfiles/cursor/rules/*.mdc; do
     ln -sf "$f" ./.cursor/rules/
-    echo "$(basename "$f")"
+    echo "rules/$(basename "$f")"
   done
-  ln -sf ~/dotfiles/cursor/commands ./.cursor/commands
-  echo "cursor/commands"
+  mkdir -p ./.cursor/commands
+  for f in ~/dotfiles/cursor/commands/*; do
+    ln -sf "$f" ./.cursor/commands/
+    echo "commands/$(basename "$f")"
+  done
   echo "...done"
 }
-
+alias minspect="npx @modelcontextprotocol/inspector@latest http://localhost:8787/mcp"
 
 gclean() {
   if ! git rev-parse --git-dir > /dev/null 2>&1; then
@@ -120,6 +123,17 @@ gclean() {
 
   current_branch=$(git rev-parse --abbrev-ref HEAD)
 
+  # Get all worktrees with their branches
+  declare -A worktree_paths
+  while IFS= read -r line; do
+    if [[ $line == worktree* ]]; then
+      wt_path="${line#worktree }"
+    elif [[ $line == branch* ]]; then
+      wt_branch="${line#branch refs/heads/}"
+      worktree_paths[$wt_branch]="$wt_path"
+    fi
+  done < <(git worktree list --porcelain)
+
   # Loop over all local branches
   for branch in $(git for-each-ref --format='%(refname:short)' refs/heads/); do
 
@@ -128,11 +142,21 @@ gclean() {
       continue
     fi
 
-    # Ask user
-    print -n "Delete \033[38;2;95;179;255m$branch\033[0m ? "
+    # Check if branch has a worktree
+    if [[ -n "${worktree_paths[$branch]}" ]]; then
+      print -n "Delete \033[38;2;95;179;255m$branch\033[0m (with worktree at ${worktree_paths[$branch]})? "
+    else
+      print -n "Delete \033[38;2;95;179;255m$branch\033[0m ? "
+    fi
+    
     read ans
     case "$ans" in
       [Yy]* )
+        # Remove worktree first if it exists
+        if [[ -n "${worktree_paths[$branch]}" ]]; then
+          echo "  Removing worktree at ${worktree_paths[$branch]}"
+          git worktree remove --force "${worktree_paths[$branch]}"
+        fi
         git branch -D "$branch"
         ;;
     esac
