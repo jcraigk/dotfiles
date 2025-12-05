@@ -26,5 +26,6 @@ if [ "$CURSOR_AGENT" = "1" ]; then
   export PSQL_PAGER=cat
   export DELTA_PAGER=cat
   export LESS=
+  export DISABLE_SPRING=1
   eval "$(mise activate zsh)"
 fi

@@ -11,6 +11,9 @@ You have access to a local MCP Proxy server that can describe tools available fr
 
 I (the user) am located in the Pacific timezone. When communicating times in analysis or reports, convert UTC to PT.
 
+When I ask for markdown or a pull request description, give it to me as a code block so it's easy to copy from the chat window.
+
+
 # Git
 
 CRITICAL: Never git commit without explicit instructions from me.
