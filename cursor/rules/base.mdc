@@ -37,7 +37,7 @@ Commit messages must be a single line, 20–80 characters, in imperative mood.
 
 Branch names must be 5–25 characters, using only lowercase letters and dashes.
 
-When creating pull requests, ALWAYS follow the pull request template for the project if it exists. Otherwise simply be concise and direct in pull request descriptions.
+When creating pull requests, ALWAYS follow the pull request template in the project's .github folder if it exists. Otherwise simply be concise and direct in pull request descriptions.
 
 # Terminal
 
