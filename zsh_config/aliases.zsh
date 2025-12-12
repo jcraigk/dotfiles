@@ -102,11 +102,13 @@ alias a="cursor ."
 crules() {
   echo "symlinking cursor config files..."
   mkdir -p ./.cursor/rules
+  find ./.cursor/rules -maxdepth 1 -type l -delete
   for f in ~/dotfiles/cursor/rules/*.mdc; do
     ln -sf "$f" ./.cursor/rules/
     echo "rules/$(basename "$f")"
   done
   mkdir -p ./.cursor/commands
+  find ./.cursor/commands -maxdepth 1 -type l -delete
   for f in ~/dotfiles/cursor/commands/*; do
     ln -sf "$f" ./.cursor/commands/
     echo "commands/$(basename "$f")"
