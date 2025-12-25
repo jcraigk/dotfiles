@@ -6,6 +6,9 @@ pd() {
   cd "$HOME/code/$1"
 }
 
+# Mise
+alias run="mise run"
+
 # Git
 alias gs="git status --short"
 gd() {
@@ -68,11 +71,11 @@ rails_db_test_rebuild() {
 alias db-test-rebuild=rails_db_test_rebuild
 alias rclean=make_clean_with_rails_reset
 make_clean_with_rails_reset() {
-  make cleanforce
-  make services
+  run cleanforce
+  run services
   sleep 3
   rails db:reset
-  make dev
+  run dev
 }
 alias spec="RUBYOPT='-W0' rspec"
 alias railsc="bundle exec rails console"
@@ -150,7 +153,7 @@ gclean() {
     else
       print -n "Delete \033[38;2;95;179;255m$branch\033[0m ? "
     fi
-    
+
     read ans
     case "$ans" in
       [Yy]* )
