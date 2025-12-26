@@ -79,6 +79,7 @@ make_clean_with_rails_reset() {
 }
 alias spec="RUBYOPT='-W0' rspec"
 alias railsc="bundle exec rails console"
+alias bupdate="bundle update --all"
 
 # Docker
 alias dbash="docker compose run --service-ports app bash"
