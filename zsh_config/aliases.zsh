@@ -5,9 +5,8 @@ alias ll="eza -al"
 pd() {
   cd "$HOME/code/$1"
 }
-
-# Mise
 alias run="mise run"
+alias see="overmind connect"
 
 # Git
 alias gs="git status --short"
@@ -80,6 +79,7 @@ make_clean_with_rails_reset() {
 alias spec="RUBYOPT='-W0' rspec"
 alias railsc="bundle exec rails console"
 alias bupdate="bundle update --all"
+alias binstall="bundle install"
 
 # Docker
 alias dbash="docker compose run --service-ports app bash"
