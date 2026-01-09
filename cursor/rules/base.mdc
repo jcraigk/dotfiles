@@ -47,6 +47,7 @@ NEVER run `rails console`. Use `rails runner` instead.
 
 Using rails runner:
 
+- Use "$(mise activate zsh)" before the command to ensure Ruby is loaded.
 - When inserting Ruby code into `bin/rails runner`, wrap the whole snippet in single quotes unless you need shell interpolation.
 - If you must use double quotes, escape all Ruby globals like `$stdout` and `$stderr` as `\\$stdout` / `\\$stderr`.
 - Do not pipe `| cat` after runner commands.
