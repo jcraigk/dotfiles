@@ -41,4 +41,4 @@ Commit messages and pull request titles must be a single line, 20–80 character
 
 # Data
 
-Use Redash for querying production data. Use "ZP Demo Read Replica (MySQL)" for the demo environment and "_EDW PII Safe" for production. Zenpayroll tables are prefixed with "zenpayroll_production_no_pii."
+Use Redash for querying application data. Use "ZP Demo Read Replica (MySQL)" for the demo environment. If "ZP Read Replica (MySQL)" is availabe, use that for production, otherwise fall back to "_EDW PII Safe". Zenpayroll tables are prefixed with "zenpayroll_production_no_pii."
