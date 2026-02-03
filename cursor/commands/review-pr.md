@@ -4,6 +4,7 @@ This command may be followed by an optional argument, which is the pull request 
 2. If there are uncommited changes in the current branch, STOP and warn the user. Do not proceed.
 3. Checkout the associated branch if not already in it.
 4. Perform a comprehensive review and respond with the results in chat. Do not create an actual review on GitHub.
+5. Checkout the main branch when finished.
 
 
 ## Checklist

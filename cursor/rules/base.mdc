@@ -5,7 +5,8 @@ alwaysApply: true
 
 # Tools & MCP
 
-You have access to a local MCP Proxy server that can describe tools available from a wide array of providers. If the user asks for information from a service that you don't think you have access to, first query the MCP Proxy because you may already have access to the service.
+You have access to a local MCP Proxy server that can describe tools available from a wide array of providers. If the user asks for information from a service that you don't think you have access to, first query the MCP Proxy because you may already have access to the service. 
+
 
 # General
 
@@ -39,6 +40,12 @@ Branch names must be 5–25 characters, using only lowercase letters and dashes.
 
 When creating pull requests, ALWAYS follow the pull request template in the project's .github folder if it exists. Otherwise simply be concise and direct in pull request descriptions.
 
+
+# GitHub
+
+ALWAYS use MCP for GitHub interactions. DO NOT use "gh" CLI command. If MCP tooling is not available, stop and inform the user.
+
+
 # Terminal
 
 NEVER `cd` into the current project directory to run a command - you're already there!
@@ -54,3 +61,7 @@ Using rails runner:
 - For multi-line snippets, use a heredoc (`<<'RUBY'`) or a .rb file instead of inline double quotes.
 
 If you're having trouble with ruby versions when running ruby commands in a terminal, run "$(mise activate zsh)" first.
+
+# Ruby
+
+When writing Ruby ALWAYS use Ruby hash shorthand syntax. Bad: `{ foo: foo }`. Good: `{ foo: }`.
