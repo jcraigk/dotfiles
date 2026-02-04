@@ -7,15 +7,18 @@ source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-high
 eval "$(zoxide init zsh)"
 
 # Device-specific config
-if [[ -f "${0:A:h}/zsh_config/local.zsh" ]]; then
-  source "${0:A:h}/zsh_config/local.zsh"
+if [[ -f "$HOME/code/dotfiles/zsh_config/local.zsh" ]]; then
+  source "$HOME/code/dotfiles/zsh_config/local.zsh"
 fi
 
 # Aliases
-source "${0:A:h}/zsh_config/aliases.zsh"
+source "$HOME/code/dotfiles/zsh_config/aliases.zsh"
 
 # Oh My Posh shell prompt
-eval "$(oh-my-posh init zsh --config ~/dotfiles/zsh_config/oh-my-posh.json)"
+eval "$(oh-my-posh init zsh --config $HOME/code/dotfiles/zsh_config/oh-my-posh.json)"
+
+# Center prompt on empty Enter key press
+# source "$HOME/code/dotfiles/zsh_config/center-prompt.zsh"
 
 # Kill pagers in Cursor's terminal so tools print plain output
 # Re-activate mise for Cursor Agent to ensure shims are in PATH
