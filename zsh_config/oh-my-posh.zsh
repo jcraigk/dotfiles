@@ -15,9 +15,9 @@ function set_poshcontext() {
       export POSH_PATH="$(basename "$root")$rel"
     fi
   elif [[ "$cwd" = "$HOME" ]]; then
-    export POSH_PATH=" "
+    export POSH_PATH=""
   elif [[ "$cwd" == "$HOME"/* ]]; then
-    export POSH_PATH=" ${cwd#$HOME}"
+    export POSH_PATH=" ${cwd#$HOME}"
   else
     local -a parts=(${(s:/:)cwd})
     if (( ${#parts[@]} > 3 )); then
