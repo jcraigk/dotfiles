@@ -15,7 +15,7 @@ fi
 source "${0:A:h}/zsh_config/aliases.zsh"
 
 # Oh My Posh shell prompt
-eval "$(oh-my-posh init zsh --config ~/dotfiles/zsh_config/oh-my-posh.json)"
+source "${0:A:h}/zsh_config/oh-my-posh.zsh"
 
 # Kill pagers in Cursor's terminal so tools print plain output
 # Re-activate mise for Cursor Agent to ensure shims are in PATH
