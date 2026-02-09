@@ -17,7 +17,7 @@ When I ask for markdown or a pull request description, give it to me as a code b
 
 # Git
 
-CRITICAL: Never git commit without explicit instructions from me.
+CRITICAL: NEVER git commit without explicit instructions from me. Also NEVER include a "Co-authored by Cursor" or similar line in commit messages.
 
 Examples of what NOT to do:
 
@@ -34,7 +34,7 @@ CRITICAL: Comments in generated code and specs should be kept to bare minimum.
 DEFAULT TO NO COMMENTS. When in doubt, omit the comment.
 Each comment added should be justified as absolutely essential.
 
-Commit messages must be a single line, 20–80 characters, in imperative mood.
+Commit messages must be a single line, 20–80 characters, in imperative mood. NEVER use more than one line for a commit message.
 
 Branch names must be 5–25 characters, using only lowercase letters and dashes.
 
@@ -65,3 +65,5 @@ If you're having trouble with ruby versions when running ruby commands in a term
 # Ruby
 
 When writing Ruby ALWAYS use Ruby hash shorthand syntax. Bad: `{ foo: foo }`. Good: `{ foo: }`.
+
+If there seems to be a Ruby version mismatch while running terminal commands, use `mise exec`.
