@@ -6,33 +6,24 @@
       "alignment": "left",
       "segments": [
         {
-          "type": "command",
+          "type": "text",
           "style": "plain",
           "foreground": "#5fb3ff",
-          "template": "{{ .Output }} ",
-          "properties": {
-            "cache_duration": "none",
-            "command": "bash -lc 'cd=$(pwd -P); if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then root=$(git rev-parse --show-toplevel); rel=${cd#$root}; if [ -z \"$rel\" ]; then basename \"$root\"; else printf \"%s%s\" \"$(basename \"$root\")\" \"$rel\"; fi; else if [ \"$cd\" = \"$HOME\" ]; then echo \" \"; elif [[ \"$cd\" == \"$HOME\"/* ]]; then echo \" ${cd#$HOME}\"; else IFS=\"/\" read -ra parts <<< \"$cd\"; count=${#parts[@]}; if [ $count -gt 3 ]; then echo \"/${parts[1]}/  /${parts[$count-1]}\"; else echo \"$cd\"; fi; fi; fi'"
-          }
+          "template": "{{ .Env.POSH_PATH }} "
         },
         {
-          "type": "command",
+          "type": "text",
           "style": "plain",
-          "foreground": "#5fb3ff",
-          "template": "{{ .Output }} ",
-          "properties": {
-            "cache_duration": "none",
-            "command": "bash -lc 'if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then branch=$(git symbolic-ref --quiet --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null); if [ -n \"$branch\" ]; then len=${#branch}; if [ $len -gt 24 ]; then truncated=\"${branch:0:22}\"; ellipsis=$(printf \"\"); branch=\"$truncated$ellipsis\"; fi; if [ -n \"$(git status --porcelain --ignore-submodules=dirty 2>/dev/null)\" ]; then color=\"#cc6666\"; else color=\"#808080\"; fi; printf \"<%s> %s</>\" \"$color\" \"$branch\"; fi; fi'"
-          }
+          "foreground_templates": [
+            "{{ .Env.POSH_GIT_COLOR }}"
+          ],
+          "template": "{{ if .Env.POSH_GIT_BRANCH }}{{ .Env.POSH_GIT_BRANCH }} {{ end }}"
         },
         {
-          "type": "command",
+          "type": "text",
           "style": "plain",
-          "template": "{{ .Output }} ",
-          "properties": {
-            "cache_duration": "none",
-            "command": "bash -c 'if [ \"$(pwd -P)\" != \"$HOME\" ]; then icons=(\"󰇊\" \"󰇋\" \"󰇌\" \"󰇍\" \"󰇎\" \"󰇏\" \"󱢣\" \"󱢧\" \"󱢫\" \"󱢯\" \"\" \"󰊠\" \"󱚡\" \"\" \"󱇪\" \"󱎶\" \"\" \"\" \"\" \"\" \"\" \"󰴈\" \"\" \"󰹡\" \"\" \"󰷚\" \"\" \"\" \"󰌪\" \"\" \"\" \"\" \"\" \"󰃠\" \"\" \"\" \"󰹻\" \"\"); idx=$((RANDOM % ${#icons[@]})); printf \"<#c0c0c0>${icons[$idx]}</>\" ; fi'"
-          }
+          "foreground": "#c0c0c0",
+          "template": "{{ if .Env.POSH_ICON }}{{ .Env.POSH_ICON }} {{ end }}"
         }
       ]
     }
