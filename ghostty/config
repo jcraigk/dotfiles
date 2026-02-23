@@ -5,7 +5,6 @@ font-size = 16
 # Window
 window-padding-x = 8
 window-padding-y = 8
-
 # Icon
 macos-icon = chalkboard
 

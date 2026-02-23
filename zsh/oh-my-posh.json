@@ -9,7 +9,7 @@
           "type": "text",
           "style": "plain",
           "foreground": "#f1fa8c",
-          "template": "{{ if .Env.SSH_CONNECTION }}󰌗 {{ end }}"
+          "template": "{{ if .Env.SSH_CONNECTION }}󰌗 {{ .HostName }} {{ end }}"
         },
         {
           "type": "text",
