@@ -1,0 +1,14 @@
+# Font
+font-family = JetBrainsMono Nerd Font
+font-size = 16
+
+# Window
+window-padding-x = 8
+window-padding-y = 8
+
+# Cursor
+cursor-style = bar
+cursor-style-blink = true
+
+# Shell integration
+shell-integration = zsh

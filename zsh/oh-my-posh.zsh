@@ -1,5 +1,5 @@
 # Oh My Posh shell prompt
-eval "$(oh-my-posh init zsh --config ~/dotfiles/zsh_config/oh-my-posh.json)"
+eval "$(oh-my-posh init zsh --config ~/dotfiles/zsh/oh-my-posh.json)"
 
 # Custom prompt context (must be AFTER oh-my-posh init, which creates an empty stub)
 function set_poshcontext() {

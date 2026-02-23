@@ -1,4 +1,4 @@
 .CFUserTextEncoding
 .DS_Store
-zsh_config/local.zsh
+zsh/local.zsh
 *.env

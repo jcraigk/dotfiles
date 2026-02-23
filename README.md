@@ -22,12 +22,10 @@
 - [Karabiner-Elements](https://karabiner-elements.pqrs.org/)
 
 
-## Link relevant dotfiles
+## Setup
 
 ```bash
-ln -s ~/code/dotfiles/.gitconfig ./.gitconfig
-ln -s ~/code/dotfiles/.irbrc ./.irbrc
-ln -s ~/code/dotfiles/.zshrc ./.zshrc
+./install.sh
 ```
 
 
