@@ -12,3 +12,27 @@ cursor-style-blink = true
 
 # Shell integration
 shell-integration = zsh
+
+# Colors (matching Warp default dark theme)
+background = #000000
+foreground = #e4e4e4
+
+# Normal colors
+palette = 0=#000000
+palette = 1=#ff5f5f
+palette = 2=#5faf5f
+palette = 3=#d7af5f
+palette = 4=#5f87d7
+palette = 5=#af5faf
+palette = 6=#5fafaf
+palette = 7=#c6c6c6
+
+# Bright colors
+palette = 8=#585858
+palette = 9=#ff8787
+palette = 10=#87d787
+palette = 11=#ffd787
+palette = 12=#87afd7
+palette = 13=#d787d7
+palette = 14=#87d7d7
+palette = 15=#e4e4e4
