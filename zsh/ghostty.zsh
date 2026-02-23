@@ -18,7 +18,7 @@ function _draw_separator() {
     path_str="…${path_str: -24}"
   fi
   local left="${path_str:+ ${path_str} }"
-  [[ "$icon" == "$_sep_home_icon" ]] && left=""
+  [[ "$icon" == "$_sep_home_icon" ]] && left=" ${HOST%.local} "
   local right=" ${raw_ts/%[AP]M/${(L)raw_ts[-2,-1]}} "
 
   local pad=$(( COLUMNS / 4 ))
@@ -36,7 +36,7 @@ function _draw_separator() {
   local rl=$(( (right_zone - ${#right}) / 2 ))
   local rr=$(( right_zone - ${#right} - rl ))
 
-  print -P "%F{233}${(l:$pad:: :)}${(l:$ll::─:)}${left}${(l:$lr::─:)}${center}${(l:$rl::─:)}${right}${(l:$rr::─:)}%f"
+  print -P "%F{236}${(l:$pad:: :)}${(l:$ll::─:)}${left}${(l:$lr::─:)}${center}${(l:$rl::─:)}${right}${(l:$rr::─:)}%f"
 }
 
 function _save_separator_context() {
