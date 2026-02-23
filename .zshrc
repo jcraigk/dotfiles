@@ -23,7 +23,9 @@ if [[ -z "$SSH_CONNECTION" ]]; then
 fi
 
 command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
-command -v mise &>/dev/null && eval "$(mise activate --shims zsh)"
+if [[ "$(uname)" == "Darwin" ]]; then
+  command -v mise &>/dev/null && eval "$(mise activate --shims zsh)"
+fi
 
 # Device-specific config
 if [[ -f "$HOME/dotfiles/zsh/local.zsh" ]]; then
@@ -50,5 +52,5 @@ if [ "$CURSOR_AGENT" = "1" ]; then
   export DELTA_PAGER=cat
   export LESS=
   export DISABLE_SPRING=1
-  command -v mise &>/dev/null && eval "$(mise activate zsh)"
+  [[ "$(uname)" == "Darwin" ]] && command -v mise &>/dev/null && eval "$(mise activate zsh)"
 fi
