@@ -7,14 +7,11 @@ window-padding-x = 8
 window-padding-y = 8
 
 # Icon
-macos-icon = retro
+macos-icon = chalkboard
 
 # Cursor
 cursor-style = bar
 cursor-style-blink = true
-
-# Shell integration
-shell-integration = zsh
 
 # Jump between prompts (like Warp's command navigation)
 keybind = cmd+shift+up=jump_to_prompt:-1
