@@ -8,15 +8,17 @@ WORDCHARS=''
 command -v cursor &>/dev/null && export EDITOR="cursor --wait"
 
 # Tools
-_fsh_paths=(
-  /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
-  /usr/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
-  "$HOME/.local/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
-)
-for _fsh in "${_fsh_paths[@]}"; do
-  [[ -f "$_fsh" ]] && { source "$_fsh"; break; }
-done
-unset _fsh _fsh_paths
+if [[ -z "$SSH_CONNECTION" ]]; then
+  _fsh_paths=(
+    /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+    /usr/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+    "$HOME/.local/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+  )
+  for _fsh in "${_fsh_paths[@]}"; do
+    [[ -f "$_fsh" ]] && { source "$_fsh"; break; }
+  done
+  unset _fsh _fsh_paths
+fi
 
 command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 command -v mise &>/dev/null && eval "$(mise activate --shims zsh)"
