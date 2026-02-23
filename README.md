@@ -29,6 +29,35 @@
 ```
 
 
+## Linux
+
+Install zsh and set it as default shell:
+
+```bash
+sudo apt install zsh
+chsh -s $(which zsh)
+```
+
+Install tools:
+
+```bash
+curl -s https://ohmyposh.dev/install.sh | bash -s          # oh-my-posh
+curl https://mise.run | sh                                  # mise
+curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh  # zoxide
+sudo apt install eza                                        # eza (Ubuntu 24.04+)
+sudo apt install git-delta                                  # delta
+```
+
+Install zsh-fast-syntax-highlighting:
+
+```bash
+git clone --depth 1 https://github.com/zdharma-continuum/fast-syntax-highlighting.git \
+  ~/.local/share/zsh-fast-syntax-highlighting
+```
+
+Nerd Fonts must be installed on your **local machine** (the one you SSH from), not the remote box.
+
+
 ## Ignore a project's upstream `.cursor` folder
 
 ```bash
