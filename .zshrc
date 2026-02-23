@@ -23,9 +23,7 @@ if [[ -z "$SSH_CONNECTION" ]]; then
 fi
 
 command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
-if [[ "$(uname)" == "Darwin" ]]; then
-  command -v mise &>/dev/null && eval "$(mise activate --shims zsh)"
-fi
+command -v mise &>/dev/null && eval "$(mise activate --shims zsh)"
 
 # Aliases
 source "$HOME/dotfiles/zsh/aliases.zsh"
@@ -52,5 +50,5 @@ if [ "$CURSOR_AGENT" = "1" ]; then
   export DELTA_PAGER=cat
   export LESS=
   export DISABLE_SPRING=1
-  [[ "$(uname)" == "Darwin" ]] && command -v mise &>/dev/null && eval "$(mise activate zsh)"
+  command -v mise &>/dev/null && eval "$(mise activate zsh)"
 fi
