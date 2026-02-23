@@ -1,10 +1,12 @@
 # Environment
 export PATH="$HOME/bin:$HOME/code/scripts:$HOME/.local/bin:/opt/homebrew/bin/:$PATH"
+WORDCHARS=''
 export EDITOR="cursor --wait"
 
 # Tools
 source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 eval "$(zoxide init zsh)"
+eval "$(mise activate --shims zsh)"
 
 # Device-specific config
 if [[ -f "$HOME/dotfiles/zsh/local.zsh" ]]; then
