@@ -91,8 +91,8 @@ alias dokpub="git push dokku main:main"
 alias dps='docker ps --format "table {{.Names}}\t{{.ID}}\t{{.Image}}\t{{.Ports}}"'
 alias dpsa='docker ps --format "table {{.Names}}\t{{.ID}}\t{{.Image}}\t{{.Ports}}" -a'
 alias dspec="RAILS_ENV=test docker compose run app rspec"
-alias dstop="docker stop $(docker ps -aq)"
-alias dvolprune="docker volume rm $(docker volume ls -q | awk '!/_/' | tr '\n' ' ')"
+dstop() { docker stop $(docker ps -aq); }
+dvolprune() { docker volume rm $(docker volume ls -q | awk '!/_/' | tr '\n' ' '); }
 alias dx="docker exec -it"
 alias dxa="docker compose exec app"
 alias ld="lazydocker"
