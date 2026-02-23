@@ -27,14 +27,8 @@
   plus-style = "syntax #001400"
   plus-emph-style = "syntax #01590a"
 
-[include]
-  path = ~/.gitconfig.local
-
 [init]
   defaultBranch = main
-
-[url "git@github.com:"]
-  insteadOf = "https://github.com/"
 
 [user]
   email = jcraigk@gmail.com
@@ -45,3 +39,6 @@
 
 [push]
   default = current
+
+[include]
+  path = ~/.gitconfig.local
