@@ -1,6 +1,6 @@
 ## Tools
 - [Cursor](https://cursor.com/)
-- mise
+- [mise](https://mise.jdx.dev/)
 
 
 ## Fonts
