@@ -27,13 +27,13 @@ if [[ "$(uname)" == "Darwin" ]]; then
   command -v mise &>/dev/null && eval "$(mise activate --shims zsh)"
 fi
 
-# Device-specific config
+# Aliases
+source "$HOME/dotfiles/zsh/aliases.zsh"
+
+# Device-specific config (loaded last so it can override aliases/tools)
 if [[ -f "$HOME/dotfiles/zsh/local.zsh" ]]; then
   source "$HOME/dotfiles/zsh/local.zsh"
 fi
-
-# Aliases
-source "$HOME/dotfiles/zsh/aliases.zsh"
 
 # Oh My Posh shell prompt
 if command -v oh-my-posh &>/dev/null; then
