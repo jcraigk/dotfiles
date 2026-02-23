@@ -13,6 +13,10 @@ cursor-style-blink = true
 # Shell integration
 shell-integration = zsh
 
+# Jump between prompts (like Warp's command navigation)
+keybind = cmd+shift+up=jump_to_prompt:-1
+keybind = cmd+shift+down=jump_to_prompt:1
+
 # Colors (matching Warp default dark theme)
 background = #000000
 foreground = #e4e4e4

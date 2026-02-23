@@ -17,6 +17,9 @@ source "$HOME/dotfiles/zsh/aliases.zsh"
 # Oh My Posh shell prompt
 source "$HOME/dotfiles/zsh/oh-my-posh.zsh"
 
+# Ghostty terminal enhancements
+source "$HOME/dotfiles/zsh/ghostty.zsh"
+
 # Kill pagers in Cursor's terminal so tools print plain output
 # Re-activate mise for Cursor Agent to ensure shims are in PATH
 if [ "$CURSOR_AGENT" = "1" ]; then
