@@ -5,6 +5,8 @@ else
   export PATH="$HOME/bin:$HOME/code/scripts:$HOME/.local/bin:$PATH"
 fi
 WORDCHARS=''
+bindkey '^?' backward-delete-char
+bindkey '^H' backward-delete-char
 command -v cursor &>/dev/null && export EDITOR="cursor --wait"
 
 # Tools
