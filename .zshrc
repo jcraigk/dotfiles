@@ -21,6 +21,7 @@ if [[ -z "$SSH_CONNECTION" ]]; then
   done
   unset _fsh _fsh_paths
 fi
+zle_highlight=(paste:none)
 
 command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 command -v mise &>/dev/null && eval "$(mise activate --shims zsh)"

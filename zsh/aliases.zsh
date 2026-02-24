@@ -119,7 +119,7 @@ crules() {
   done
   echo "...done"
 }
-alias minspect="npx @modelcontextprotocol/inspector@latest http://localhost:8787/mcp"
+alias cc="claude --dangerously-skip-permissions"
 
 gclean() {
   if ! git rev-parse --git-dir > /dev/null 2>&1; then
