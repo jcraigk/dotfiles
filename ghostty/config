@@ -6,6 +6,7 @@ font-size = 16
 window-padding-x = 8
 window-padding-y = 8
 split-divider-color = #303030
+
 # Icon
 macos-icon = chalkboard
 
@@ -40,3 +41,6 @@ palette = 12=#87afd7
 palette = 13=#d787d7
 palette = 14=#87d7d7
 palette = 15=#e4e4e4
+
+# Keybindings
+keybind = shift+enter=text:\n
