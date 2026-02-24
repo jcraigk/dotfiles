@@ -13,28 +13,47 @@ function _draw_separator() {
   local icon="${_sep_prev_icon:-$_sep_home_icon}"
   local center="◇  ${icon}  ◇"
   local raw_ts="$(date +"%-b %-d, %-I:%M%p")"
-  local path_str="${_sep_prev_path}"
-  if (( ${#path_str} > 25 )); then
-    path_str="…${path_str: -24}"
-  fi
-  local left="${path_str:+ ${path_str} }"
-  [[ "$icon" == "$_sep_home_icon" ]] && left=" ${HOST%.local} "
   local right=" ${raw_ts/%[AP]M/${(L)raw_ts[-2,-1]}} "
-
-  local pad=$(( COLUMNS / 4 ))
-  local inner=$(( COLUMNS - pad * 2 ))
   local center_len=${#center}
+
+  local left_content
+  if [[ "$icon" == "$_sep_home_icon" ]]; then
+    left_content="${HOST%.local}"
+  else
+    left_content="${_sep_prev_path}"
+    if (( ${#left_content} > 25 )); then
+      left_content="…${left_content: -24}"
+    fi
+  fi
+
+  local pad=$(( COLUMNS / 8 ))
+  (( pad < 4 )) && pad=4
+  local inner=$(( COLUMNS - pad * 2 ))
+
   local left_zone=$(( (inner - center_len) / 2 ))
   local right_zone=$(( inner - center_len - left_zone ))
 
+  local max_left=$(( left_zone - 10 ))
+  if (( ${#left_content} > max_left )); then
+    (( max_left < 15 )) && max_left=15
+    left_content="${left_content:0:$max_left}"
+  fi
+
+  local left="${left_content:+ ${left_content} }"
+  local ll lr
   if [[ -n "$left" ]]; then
-    local ll=$(( (left_zone - ${#left}) / 2 ))
-    local lr=$(( left_zone - ${#left} - ll ))
+    ll=$(( (left_zone - ${#left}) / 2 ))
+    lr=$(( left_zone - ${#left} - ll ))
   else
-    local ll=$left_zone lr=0
+    ll=$left_zone lr=0
   fi
   local rl=$(( (right_zone - ${#right}) / 2 ))
   local rr=$(( right_zone - ${#right} - rl ))
+
+  (( ll < 0 )) && ll=0
+  (( lr < 0 )) && lr=0
+  (( rl < 0 )) && rl=0
+  (( rr < 0 )) && rr=0
 
   print -P "%F{236}${(l:$pad:: :)}${(l:$ll::─:)}${left}${(l:$lr::─:)}${center}${(l:$rl::─:)}${right}${(l:$rr::─:)}%f"
 }
