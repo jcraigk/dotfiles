@@ -1,7 +1,7 @@
 alias dotfiles="cd ~/dotfiles && cursor ."
 
 # Shell
-alias ll="eza -al"
+alias ll="eza -al --hyperlink"
 pd() {
   cd "$HOME/code/$1"
 }
