@@ -58,6 +58,14 @@ git clone --depth 1 https://github.com/zdharma-continuum/fast-syntax-highlightin
 Nerd Fonts must be installed on your **local machine** (the one you SSH from), not the remote box.
 
 
+## Ghostty
+
+Install tip instead of downloading official release.
+
+```
+brew install --cask ghostty@tip  
+```
+
 ## Ignore a project's upstream `.cursor` folder
 
 ```bash
