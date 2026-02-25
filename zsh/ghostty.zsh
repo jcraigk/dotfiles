@@ -55,7 +55,7 @@ function _draw_separator() {
   (( rl < 0 )) && rl=0
   (( rr < 0 )) && rr=0
 
-  print -P "%F{236}${(l:$pad:: :)}${(l:$ll::─:)}${left}${(l:$lr::─:)}${center}${(l:$rl::─:)}${right}${(l:$rr::─:)}%f"
+  print -P "%F{236}${(l:$pad:: :)}${(l:$ll::─:)}${left}${(l:$lr::─:)}${center}${(l:$rl::─:)}${right}${(l:$rr::─:)}%f\n"
 }
 
 function _save_separator_context() {
