@@ -22,6 +22,10 @@ cursor-opacity = 1
 keybind = cmd+shift+up=jump_to_prompt:-1
 keybind = cmd+shift+down=jump_to_prompt:1
 
+# Selection
+selection-background = #303050
+selection-foreground = cell-foreground
+
 # Colors (matching Warp default dark theme)
 background = #000000
 foreground = #e4e4e4
