@@ -4,6 +4,8 @@ font-size = 16
 adjust-cell-height = 5%
 
 # Window
+window-height = 9999
+window-width = 9999
 window-padding-x = 8
 window-padding-y = 8
 split-divider-color = #303030

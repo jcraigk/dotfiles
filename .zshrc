@@ -43,8 +43,8 @@ if [[ -f "$HOME/dotfiles/zsh/local.zsh" ]]; then
   source "$HOME/dotfiles/zsh/local.zsh"
 fi
 
-# Oh My Posh shell prompt
-if command -v oh-my-posh &>/dev/null; then
+# Oh My Posh shell prompt (skip in Ghostty dev builds)
+if command -v oh-my-posh &>/dev/null && [[ -z "$GHOSTTY_DEV" ]]; then
   source "$HOME/dotfiles/zsh/oh-my-posh.zsh"
 fi
 

@@ -63,5 +63,8 @@ function _save_separator_context() {
   _sep_prev_path="$POSH_PATH"
 }
 
-precmd_functions+=(_draw_separator)
-precmd_functions+=(_save_separator_context)
+# Skip shell-drawn separators in dev builds (command-blocks draws its own)
+if [[ -z "$GHOSTTY_DEV" ]]; then
+  precmd_functions+=(_draw_separator)
+  precmd_functions+=(_save_separator_context)
+fi

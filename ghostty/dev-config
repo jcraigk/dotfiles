@@ -1,0 +1,3 @@
+config-file = /Users/justin.craigkuhn/.config/ghostty/config
+command-blocks = true
+env = GHOSTTY_DEV=1
