@@ -64,7 +64,7 @@ RED="\033[38;2;224;108;117m"
 # Progress bar healthy state
 GREEN="\033[38;2;152;195;121m"
 # Brand
-GUSTO_CORAL="\033[1;38;2;245;93;72m"
+GUSTO_CORAL="\033[1;38;2;200;65;55m"
 # AWS
 MUSTARD="\033[38;2;170;150;90m"
 # Utility

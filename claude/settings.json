@@ -1,4 +1,13 @@
 {
+  "awsAuthRefresh": "aws sso login --profile bedrock-users",
+  "env": {
+    "AWS_REGION": "us-west-2",
+    "AWS_PROFILE": "bedrock-users",
+    "CLAUDE_CODE_USE_BEDROCK": "true",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "us.anthropic.claude-opus-4-6-v1",
+    "ANTHROPIC_MODEL": "us.anthropic.claude-opus-4-6-v1"
+  },
+  "model": "opus",
   "hooks": {
     "Stop": [
       {
@@ -11,7 +20,13 @@
       }
     ]
   },
-  "alwaysThinkingEnabled": true,
+  "enabledPlugins": {
+    "gusto-essentials@gusto-claude-code": true,
+    "gusto-dev@gusto-claude-code": true,
+    "ci-cd-tools@gusto-claude-code": true,
+    "gusto-setup-wizard@gusto-claude-code": false
+  },
+  "alwaysThinkingEnabled": false,
   "skipDangerousModePermissionPrompt": true,
   "statusLine": {
     "type": "command",
