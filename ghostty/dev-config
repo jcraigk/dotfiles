@@ -1,3 +1,11 @@
 config-file = /Users/justin.craigkuhn/.config/ghostty/config
-command-blocks = true
 env = GHOSTTY_DEV=1
+
+# Command Blocks
+command-blocks = true
+command-blocks-padding-footer = 25
+command-blocks-padding-header = 25
+command-blocks-padding-left = 12
+command-blocks-padding-right = 8
+command-blocks-stripe-width = 4
+command-blocks-separator-color = #303030

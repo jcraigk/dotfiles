@@ -2,3 +2,4 @@
 .DS_Store
 zsh/local.zsh
 *.env
+.claude/
