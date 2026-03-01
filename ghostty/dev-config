@@ -9,3 +9,7 @@ command-blocks-padding-left = 12
 command-blocks-padding-right = 8
 command-blocks-stripe-width = 4
 command-blocks-separator-color = #303030
+command-blocks-stripe-success = #5faf5f
+command-blocks-stripe-error = #ff5f5f
+command-blocks-tint-error = #2d0606
+command-blocks-tint-success = #061906
