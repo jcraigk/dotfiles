@@ -794,7 +794,6 @@ LEAD_ICONS=(
   $(printf '\xee\xbd\xb6')          # U+EF76
   $(printf '\xef\x80\x93')          # U+F013  gear
   $(printf '\xef\x8b\x9c')          # U+F2DC  snowflake
-  $(printf '\xee\x88\xaf')          # U+E22F
   $(printf '\xee\x8f\xa0')          # U+E3E0
   $(printf '\xef\x86\xbb')          # U+F1BB  tree
   $(printf '\xf3\xb0\xb9\xbb')     # U+F0E7B
@@ -803,10 +802,8 @@ LEAD_ICONS=(
   $(printf '\xee\xb8\x95')          # U+EE15
   $(printf '\xf3\xb0\x9a\xa9')     # U+F06A9
   $(printf '\xf3\xb0\x8c\xaa')     # U+F032A
-  $(printf '\xf3\xb0\x96\x9f')     # U+F059F
   $(printf '\xee\xbc\x9d')          # U+EF1D
   $(printf '\xef\x86\x88')          # U+F188  bug
-  $(printf '\xf3\xb0\xb6\xb4')     # U+F0DB4
   $(printf '\xef\x80\x84')          # U+F004  heart
   $(printf '\xef\x86\xb0')          # U+F1B0  paw
   $(printf '\xf3\xb0\xa9\x83')     # U+F0A43
@@ -830,6 +827,18 @@ LEAD_ICONS=(
   $(printf '\xf3\xb0\x8b\xb8')     # U+F02F8
   $(printf '\xf3\xb0\x9f\x9e')     # U+F07DE
   $(printf '\xee\xbe\xa7')          # U+EFA7
+  $(printf '\xee\xbb\xb7')          # U+EEF7
+  $(printf '\xee\xbb\xad')          # U+EEED
+  $(printf '\xf3\xb0\x87\xa5')     # U+F01E5
+  $(printf '\xee\xb7\x9c')          # U+EDDC
+  $(printf '\xee\xb7\xb8')          # U+EDF8
+  $(printf '\xee\xb9\x81')          # U+EE41
+  $(printf '\xef\x83\xa7')          # U+F0E7  bolt
+  $(printf '\xee\xbc\x90')          # U+EF10
+  $(printf '\xef\x89\xa7')          # U+F267
+  $(printf '\xef\x84\xb5')          # U+F135  rocket
+  $(printf '\xee\x8a\x81')          # U+E281
+  $(printf '\xf3\xb0\x99\xb4')     # U+F0674
 )
 # Use session_id hash as stable seed so icon stays consistent per session
 if [[ -n "$session_id" ]]; then
@@ -927,21 +936,29 @@ _render_bar() {
       _fill_icon_a=$(printf '\xee\xad\xb0')  # U+EB70
       _fill_icon_b=$(printf '\xef\x91\x8a')  # U+F44A
       ;;
-    exp)
-      _fill_icon_a=$(printf '\xef\x91\x84')  # placeholder
-      _fill_icon_b=$(printf '\xef\x91\x84')  # placeholder
+    sparkle)
+      _fill_icon_a=$(printf '\xf3\xb1\x8d\xbf')  # U+F137F
+      _fill_icon_b=$(printf '\xc2\xb7')            # U+00B7 middle dot (bullet)
       ;;
     dot_chain)
       _fill_icon_a=$(printf '\xef\x85\x81')  # U+F141 ellipsis (nf-fa-ellipsis_h)
       _fill_icon_b=$(printf '\xef\x85\x81')  # U+F141 ellipsis (repeated)
       ;;
-    cookies)
-      _fill_icon_a=$(printf '\xee\x8c\xab')  # U+E32B
+    donuts)
+      _fill_icon_a=$(printf '\xee\x89\xb3')  # U+E273
       _fill_icon_b=$(printf '\xc2\xb7')      # U+00B7 middle dot (bullet)
       ;;
     soundwaves)
       _fill_icon_a=$(printf '\xf3\xb1\x91\xbd')  # U+F147D
       _fill_icon_b=$(printf '\xf3\xb1\x91\xbd')  # U+F147D (repeated)
+      ;;
+    pulse)
+      _fill_icon_a=$(printf '\xee\x88\xb4')  # U+E234
+      _fill_icon_b=$(printf '\xee\x88\xb4')  # U+E234 (repeated)
+      ;;
+    infinity_loop)
+      _fill_icon_a=$(printf '\xef\x93\xa6')  # U+F4E6
+      _fill_icon_b=$(printf '\xc2\xb7')    # U+00B7 middle dot (bullet)
       ;;
     *)
       _fill_icon_a=$(printf '\xee\xbc\x96')  # U+EF16 (fallback to wind)
@@ -1017,7 +1034,7 @@ _render_bar() {
 }
 
 # Select texture per session (stable like the icon)
-BAR_TEXTURES=(wind thick_dots sin_wave jagged_wave beads arrows dot_chain cookies soundwaves)
+BAR_TEXTURES=(wind thick_dots sin_wave jagged_wave beads arrows dot_chain soundwaves pulse sparkle infinity_loop)
 BAR_TEXTURE="${BAR_TEXTURES[$((_icon_hash % ${#BAR_TEXTURES[@]}))]}"
 
 # In compact/minimal mode, fold cost into the bar label (no row 3 to show it)
@@ -1040,7 +1057,7 @@ fi
 
 # ── DEBUG: 10 dummy progress bars (0%–90%, random icon + texture each) ──
 if [[ "$_SL_DEBUG" == "true" ]]; then
-  _TEST_TEXTURES=(wind thick_dots sin_wave jagged_wave beads arrows dot_chain cookies soundwaves)
+  _TEST_TEXTURES=(wind thick_dots sin_wave jagged_wave beads arrows dot_chain soundwaves pulse sparkle infinity_loop)
   # Realistic used/total token pairs for labels
   _TEST_USED=(0 18 41 63 82 105 124 148 167 189)
   _TEST_TOTAL=(200 200 200 200 200 200 200 200 200 200)
@@ -1065,11 +1082,6 @@ if [[ "$_SL_DEBUG" == "true" ]]; then
     _test_texture="${_TEST_TEXTURES[$_test_tex_idx]}"
     _render_bar "$_test_pct" "$_test_label" "" "$_test_texture"
   done
-  # Experimental texture test bars
-  BAR_LEAD_ICON="${LEAD_ICONS[$((_icon_hash % ${#LEAD_ICONS[@]}))]}"
-  _render_bar 55 "dot_chain 55%" "" "dot_chain"
-  _render_bar 55 "cookies 55%" "" "cookies"
-  _render_bar 55 "soundwaves 55%" "" "soundwaves"
   # Restore session lead icon after debug bars
   BAR_LEAD_ICON="${LEAD_ICONS[$((_icon_hash % ${#LEAD_ICONS[@]}))]}"
 fi
