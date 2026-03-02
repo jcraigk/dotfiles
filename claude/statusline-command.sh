@@ -3,6 +3,29 @@
 # Read JSON input from stdin
 input=$(cat)
 
+# ── Layout mode & width from state file ──────────────────────────
+_SL_STATE_FILE="$HOME/.claude/statusline-state.json"
+if [[ -f "$_SL_STATE_FILE" ]]; then
+  _SL_STATE=$(cat "$_SL_STATE_FILE")
+  _SL_MODE=$(echo "$_SL_STATE" | grep -o '"mode"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | sed 's/.*"\([^"]*\)"/\1/')
+  _SL_WIDTH=$(echo "$_SL_STATE" | grep -o '"width"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | sed 's/.*"\([^"]*\)"/\1/')
+  _SL_DEBUG=$(echo "$_SL_STATE" | grep -o '"debug"[[:space:]]*:[[:space:]]*[a-z]*' | head -1 | sed 's/.*:[[:space:]]*//')
+  _SL_LOGOS=$(echo "$_SL_STATE" | grep -o '"logos"[[:space:]]*:[[:space:]]*[a-z]*' | head -1 | sed 's/.*:[[:space:]]*//')
+  _SL_STYLE=$(echo "$_SL_STATE" | grep -o '"style"[[:space:]]*:[[:space:]]*[a-z]*' | head -1 | sed 's/.*:[[:space:]]*//')
+  _SL_FLAIR=$(echo "$_SL_STATE" | grep -o '"flair"[[:space:]]*:[[:space:]]*[a-z]*' | head -1 | sed 's/.*:[[:space:]]*//')
+fi
+_SL_MODE="${_SL_MODE:-full}"
+_SL_WIDTH="${_SL_WIDTH:-auto}"
+_SL_DEBUG="${_SL_DEBUG:-false}"
+_SL_LOGOS="${_SL_LOGOS:-true}"
+_SL_STYLE="${_SL_STYLE:-true}"
+_SL_FLAIR="${_SL_FLAIR:-true}"
+# Migrate: if mode was "debug" from old state, treat as full + debug on
+if [[ "$_SL_MODE" == "debug" ]]; then
+  _SL_MODE="full"
+  _SL_DEBUG="true"
+fi
+
 # ── Extract fields from Claude Code JSON ──────────────────────────
 cwd=$(echo "$input" | jq -r '.workspace.current_dir // empty')
 project_dir=$(echo "$input" | jq -r '.workspace.project_dir // empty')
@@ -27,6 +50,7 @@ cost=$(echo "$input" | jq -r '.cost.total_cost_usd // empty')
 total_duration_ms=$(echo "$input" | jq -r '.cost.total_duration_ms // empty')
 total_api_ms=$(echo "$input" | jq -r '.cost.total_api_duration_ms // empty')
 output_style=$(echo "$input" | jq -r '.output_style.name // empty')
+session_id=$(echo "$input" | jq -r '.session_id // empty')
 # lines_added/lines_removed: computed from git diff below (not from Claude's cost fields)
 
 # Context window — may or may not be present
@@ -201,7 +225,7 @@ _fmt_duration() {
 # ── MCP servers segment ─────────────────────────────────────────
 mcp_segment=""
 if (( mcp_enabled > 0 )); then
-  mcp_icon=$(printf '\xf3\xb1\x81\xa4')  # U+F1064
+  mcp_icon=$(printf '\xf3\xb1\x81\xa4')  # U+F1064 (surrogate pair \uDB84\uDC64)
   mcp_segment="\033[38;2;120;135;155m${mcp_icon} ${mcp_enabled} MCP${RESET}"
 fi
 
@@ -294,7 +318,7 @@ else
 fi
 
 # Context label for embedding in progress bar
-ctx_label="${used_fmt}/${size_fmt} (${pct}%)"
+ctx_label="${used_fmt}/${size_fmt} ${pct}%"
 
 # ── Logo segment ──────────────────────────────────────────────────
 logo_icon=$(printf '\xf3\xb1\x80\x86')  # U+F1006
@@ -337,9 +361,14 @@ _justified_row() {
 }
 
 # ── Total row width = bar max + 2 caps, capped at terminal ───────
-MAX_BAR=80
-ROW_WIDTH=$(( MAX_BAR + 2 ))
 term_width=$(tput cols 2>/dev/null || echo 80)
+if [[ "$_SL_WIDTH" != "auto" && "$_SL_WIDTH" =~ ^[0-9]+$ ]]; then
+  MAX_BAR=$_SL_WIDTH
+else
+  MAX_BAR=$(( term_width - 2 ))
+  (( MAX_BAR > 80 )) && MAX_BAR=80
+fi
+ROW_WIDTH=$(( MAX_BAR + 2 ))
 (( ROW_WIDTH > term_width )) && ROW_WIDTH=$term_width
 
 # ── Row 1: proactive budget-based truncation ──────────────────────
@@ -360,7 +389,7 @@ model_icon=$(printf '\xef\x94\x9b')  # U+F51B
 
 # Build model text (may include style)
 model_text="$model"
-if [[ -n "$output_style" && "$output_style" != "default" ]]; then
+if [[ "$_SL_STYLE" == "true" && -n "$output_style" && "$output_style" != "default" ]]; then
   model_text+=" (${output_style})"
 fi
 
@@ -458,17 +487,20 @@ if [[ -n "$model_segment" ]]; then
   row1_left+="$model_segment"
 fi
 
-_justified_row "$ROW_WIDTH" "$row1_left" "$row1_right"
+# Row 1: folder/branch/model + dirty (full, compact & debug — not minimal)
+if [[ "$_SL_MODE" != "minimal" ]]; then
+  _justified_row "$ROW_WIDTH" "$row1_left" "$row1_right"
+fi
 
 # ── Build time + cost segments for row 3 ─────────────────────────
 time_segment=""
 cost_icon=$(printf '\xef\x85\x95')       # U+F155 dollar
-time_icon=$(printf '\xee\xbc\xac')       # U+EF2C cloud+lightning
+time_icon=$(printf '\xf3\xb0\x80\x82')   # U+F0002
 
 TIME_COLOR="\033[38;2;120;135;155m"  # muted slate-blue
 if [[ -n "$total_api_ms" && "$total_api_ms" -gt 999 ]] 2>/dev/null; then
   api_fmt=$(_fmt_duration "$total_api_ms")
-  time_segment="${TIME_COLOR}${time_icon} ${api_fmt}${RESET}"
+  time_segment="${TIME_COLOR}${api_fmt}${RESET}"
 fi
 
 COST_COLOR="${DARK_GREEN}"
@@ -480,13 +512,18 @@ fi
 
 # ── Row 3 (built here, printed last): left: gusto · bedrock · mcp | right: time · cost
 row3_left="\033[0m"
-[[ -n "$logo_segment" ]] && row3_left+="$logo_segment"
-if [[ -n "$sso_segment" ]]; then
-  [[ -n "$logo_segment" ]] && row3_left+="${BULLET}"
-  row3_left+="$sso_segment"
+row3_left_has_content=false
+if [[ "$_SL_LOGOS" == "true" ]]; then
+  [[ -n "$logo_segment" ]] && { row3_left+="$logo_segment"; row3_left_has_content=true; }
+  if [[ -n "$sso_segment" ]]; then
+    [[ "$row3_left_has_content" == "true" ]] && row3_left+="${BULLET}"
+    row3_left+="$sso_segment"
+    row3_left_has_content=true
+  fi
 fi
 if [[ -n "$mcp_segment" ]]; then
-  row3_left+="${BULLET}${mcp_segment}"
+  [[ "$row3_left_has_content" == "true" ]] && row3_left+="${BULLET}"
+  row3_left+="${mcp_segment}"
 fi
 
 row3_right="\033[0m"
@@ -497,117 +534,376 @@ fi
 [[ -n "$cost_segment" ]] && row3_right+="$cost_segment"
 
 # ── Row 2: progress bar with Powerline caps ─────────────────────
-bar_width=$(tput cols 2>/dev/null || echo 80)
+bar_width=$ROW_WIDTH
 
-# Bar fill colors (background) — solid color based on percentage
-GREEN_BG="\033[48;2;80;110;72m"
-ALERT_BG="\033[48;2;220;175;100m"
-RED_BG="\033[48;2;224;108;117m"
+# Bar fill colors — 10-tier gradient: green → amber → red
+# Each tier: BG (fill background), FG (powerline cap foreground), TEXT (label text)
+#   0–10%  soft green
+#   11–20% green
+#   21–30% deeper green
+#   31–40% green-gold transition
+#   41–50% warm gold
+#   51–60% amber
+#   61–70% deep amber
+#   71–80% amber-red transition
+#   81–90% soft red
+#   91–100% red
+TIER_BG=(
+  "\033[48;2;65;100;62m"    # 0–10   soft green
+  "\033[48;2;80;110;72m"    # 11–20  green
+  "\033[48;2;95;115;68m"    # 21–30  deeper green
+  "\033[48;2;130;130;65m"   # 31–40  green-gold
+  "\033[48;2;170;150;70m"   # 41–50  warm gold
+  "\033[48;2;195;160;75m"   # 51–60  amber
+  "\033[48;2;210;155;80m"   # 61–70  deep amber
+  "\033[48;2;215;135;90m"   # 71–80  amber-red
+  "\033[48;2;220;115;100m"  # 81–90  soft red
+  "\033[48;2;224;108;117m"  # 91–100 red
+)
+TIER_FG=(
+  "\033[38;2;65;100;62m"
+  "\033[38;2;80;110;72m"
+  "\033[38;2;95;115;68m"
+  "\033[38;2;130;130;65m"
+  "\033[38;2;170;150;70m"
+  "\033[38;2;195;160;75m"
+  "\033[38;2;210;155;80m"
+  "\033[38;2;215;135;90m"
+  "\033[38;2;220;115;100m"
+  "\033[38;2;224;108;117m"
+)
+# Label + lead icon: halfway between full contrast and wind subtlety
+TIER_TEXT=(
+  "\033[38;2;120;140;126m"  # 0–10
+  "\033[38;2;128;145;131m"  # 11–20
+  "\033[38;2;135;148;129m"  # 21–30
+  "\033[38;2;153;155;128m"  # 31–40
+  "\033[38;2;93;80;38m"     # 41–50
+  "\033[38;2;105;85;40m"    # 51–60
+  "\033[38;2;113;83;43m"    # 61–70
+  "\033[38;2;113;74;55m"    # 71–80
+  "\033[38;2;115;64;60m"    # 81–90
+  "\033[38;2;117;61;69m"    # 91–100
+)
+# Wind icons: darker than fill BG (~40 units)
+TIER_WIND=(
+  "\033[38;2;30;62;27m"     # 0–10
+  "\033[38;2;42;72;34m"     # 11–20
+  "\033[38;2;57;77;30m"     # 21–30
+  "\033[38;2;92;92;28m"     # 31–40
+  "\033[38;2;132;112;32m"   # 41–50
+  "\033[38;2;157;122;37m"   # 51–60
+  "\033[38;2;172;117;42m"   # 61–70
+  "\033[38;2;177;97;52m"    # 71–80
+  "\033[38;2;182;77;62m"    # 81–90
+  "\033[38;2;186;70;79m"    # 91–100
+)
+# Lead icon: darker than wind (~70 units below fill BG)
+TIER_LEAD=(
+  "\033[38;2;10;38;7m"      # 0–10
+  "\033[38;2;18;48;10m"     # 11–20
+  "\033[38;2;33;53;6m"      # 21–30
+  "\033[38;2;68;68;4m"      # 31–40
+  "\033[38;2;108;88;8m"     # 41–50
+  "\033[38;2;133;98;13m"    # 51–60
+  "\033[38;2;148;93;18m"    # 61–70
+  "\033[38;2;153;73;28m"    # 71–80
+  "\033[38;2;158;53;38m"    # 81–90
+  "\033[38;2;162;46;55m"    # 91–100
+)
 EMPTY_BG="\033[48;2;35;38;45m"
-BRIGHT_FG="\033[38;2;200;205;215m"  # bright text on dark filled bg
-DARK_FG="\033[38;2;40;35;30m"      # dark text on bright filled bg (alert)
-LIGHT_FG="\033[38;2;85;90;100m"    # dim text on empty bg
-
-# Matching foreground colors for Powerline caps
-GREEN_FG="\033[38;2;80;110;72m"
-ALERT_BAR_FG="\033[38;2;220;175;100m"
-RED_FG="\033[38;2;224;108;117m"
 EMPTY_FG="\033[38;2;35;38;45m"
-
-# Pick solid fill color based on percentage thresholds
-if (( pct >= 70 )); then
-  FILL_BG="$RED_BG"; FILL_FG="$RED_FG"; FILL_TEXT="$BRIGHT_FG"
-elif (( pct >= 40 )); then
-  FILL_BG="$ALERT_BG"; FILL_FG="$ALERT_BAR_FG"; FILL_TEXT="$DARK_FG"
-else
-  FILL_BG="$GREEN_BG"; FILL_FG="$GREEN_FG"; FILL_TEXT="$BRIGHT_FG"
-fi
+LIGHT_FG="\033[38;2;85;90;100m"    # dim text on empty bg
 
 # Powerline semicircle glyphs
 PL_RIGHT=$(printf '\xee\x82\xb4')  # U+E0B4 right semicircle (closing cap)
 PL_LEFT=$(printf '\xee\x82\xb6')   # U+E0B6 left semicircle (opening cap)
 
-# Bar area: fixed width, max 80
-bar_area=$(( bar_width - 2 ))
-(( bar_area > MAX_BAR )) && bar_area=$MAX_BAR
-(( bar_area < 20 )) && bar_area=20
-
-# When partially filled, one cell is consumed by the inner transition cap
-has_inner_cap=0
-if (( pct > 0 && pct < 100 )); then
-  has_inner_cap=1
-fi
-body_area=$(( bar_area - has_inner_cap ))
-
-filled=$(( body_area * pct / 100 ))
-(( filled > body_area )) && filled=$body_area
-
-# Padded label centered in the full bar_area (visual width)
-ctx_label_padded="  ${ctx_label}  "
-label_len=${#ctx_label_padded}
-label_start=$(( (bar_area - label_len) / 2 ))
-(( label_start < 0 )) && label_start=0
-label_end=$(( label_start + label_len ))
-
-# Outer cap colors
-if (( filled > 0 || (pct > 0 && has_inner_cap == 0) )); then
-  left_cap_fg="$FILL_FG"
+# ── Random lead icon (selected once per session) ─────────────────
+LEAD_ICONS=(
+  $(printf '\xef\x83\x83')          # U+F0C3  flask
+  $(printf '\xef\x87\xa2')          # U+F1E2  bomb
+  $(printf '\xf3\xb0\xb4\x88')     # U+F0D08
+  $(printf '\xee\xbe\x80')          # U+EF80
+  $(printf '\xee\xbd\xb6')          # U+EF76
+  $(printf '\xef\x80\x93')          # U+F013  gear
+  $(printf '\xef\x8b\x9c')          # U+F2DC  snowflake
+  $(printf '\xee\x88\xaf')          # U+E22F
+  $(printf '\xee\x8f\xa0')          # U+E3E0
+  $(printf '\xef\x86\xbb')          # U+F1BB  tree
+  $(printf '\xf3\xb0\xb9\xbb')     # U+F0E7B
+  $(printf '\xef\x81\x83')          # U+F043  tint
+  $(printf '\xee\xb9\x86')          # U+EE46
+  $(printf '\xee\xb8\x95')          # U+EE15
+  $(printf '\xf3\xb0\x9a\xa9')     # U+F06A9
+  $(printf '\xf3\xb0\x8c\xaa')     # U+F032A
+  $(printf '\xf3\xb0\x96\x9f')     # U+F059F
+  $(printf '\xee\xbc\x9d')          # U+EF1D
+  $(printf '\xef\x86\x88')          # U+F188  bug
+  $(printf '\xf3\xb0\xb6\xb4')     # U+F0DB4
+  $(printf '\xef\x80\x84')          # U+F004  heart
+  $(printf '\xef\x86\xb0')          # U+F1B0  paw
+  $(printf '\xf3\xb0\xa9\x83')     # U+F0A43
+  $(printf '\xf3\xb0\x9e\x87')     # U+F0787
+  $(printf '\xf3\xb0\xae\xad')     # U+F0BAD
+  $(printf '\xf3\xb0\x8a\xa0')     # U+F02A0
+  $(printf '\xf3\xb0\x87\x8a')     # U+F01CA
+  $(printf '\xf3\xb0\x87\x8b')     # U+F01CB
+  $(printf '\xf3\xb0\x87\x8c')     # U+F01CC
+  $(printf '\xf3\xb0\x87\x8d')     # U+F01CD
+  $(printf '\xf3\xb0\x87\x8e')     # U+F01CE
+  $(printf '\xf3\xb0\x87\x8f')     # U+F01CF
+  $(printf '\xee\xba\x98')          # U+EE98
+  $(printf '\xf3\xb0\xad\xb9')     # U+F0B79
+  $(printf '\xee\x8a\x9b')          # U+E29B
+  $(printf '\xee\xbd\x99')          # U+EF59
+  $(printf '\xf3\xb1\xa8\xa7')     # U+F1A27
+  $(printf '\xee\xb5\xa1')          # U+ED61
+  $(printf '\xef\x80\x85')          # U+F005
+  $(printf '\xf3\xb0\xbb\x83')     # U+F0EC3
+  $(printf '\xf3\xb0\x8b\xb8')     # U+F02F8
+  $(printf '\xf3\xb0\x9f\x9e')     # U+F07DE
+  $(printf '\xee\xbe\xa7')          # U+EFA7
+)
+# Use session_id hash as stable seed so icon stays consistent per session
+if [[ -n "$session_id" ]]; then
+  _icon_hash=$(cksum <<< "$session_id" | cut -d' ' -f1)
 else
-  left_cap_fg="$EMPTY_FG"
+  _icon_hash=$PPID
 fi
+BAR_LEAD_ICON="${LEAD_ICONS[$((_icon_hash % ${#LEAD_ICONS[@]}))]}"
 
-if (( pct >= 100 )); then
-  right_cap_fg="$FILL_FG"
-else
-  right_cap_fg="$EMPTY_FG"
-fi
+# ── _render_bar: render a progress bar given pct and label ──────
+# Usage: _render_bar <pct> <label> [suffix_colored] [texture]
+# Textures: "wind" (default), or named texture from BAR_TEXTURES
+_render_bar() {
+  local _pct=$1
+  local _label="$2"
+  local _suffix="${3:-}"
+  local _texture="${4:-wind}"
 
-# Build bar body with solid fill color
-bar=""
-vis=0  # visual position (0..bar_area-1)
-body_i=0  # body cell index (0..body_area-1)
-while (( vis < bar_area )); do
-  # Insert inner transition cap at the fill boundary
-  if (( has_inner_cap && body_i == filled )); then
-    if (( vis >= label_start && vis < label_end )); then
-      char_idx=$(( vis - label_start ))
-      c="${ctx_label_padded:$char_idx:1}"
-      bar+="${EMPTY_BG}${LIGHT_FG}${c}"
-    else
-      bar+="${EMPTY_BG}${FILL_FG}${PL_RIGHT}"
-    fi
-    has_inner_cap=0
-    (( vis++ ))
-    continue
+  # Pick fill color from 10-tier gradient based on percentage
+  local _tier_idx=$(( _pct / 10 ))
+  (( _tier_idx > 9 )) && _tier_idx=9
+  (( _tier_idx < 0 )) && _tier_idx=0
+  local _FILL_BG="${TIER_BG[$_tier_idx]}"
+  local _FILL_FG="${TIER_FG[$_tier_idx]}"
+  local _FILL_TEXT="${TIER_TEXT[$_tier_idx]}"
+  local _FILL_ICON_FG="$EMPTY_FG"  # lead icon: same dark grey as unfilled bar
+  local _WIND_FG="${TIER_WIND[$_tier_idx]}"  # wind icons: darker than fill
+  local _LEAD_FG="${TIER_LEAD[$_tier_idx]}"  # lead icon: slightly darker than wind
+
+  # Bar area: fixed width, max 80
+  local _bar_area=$(( bar_width - 2 ))
+  (( _bar_area > MAX_BAR )) && _bar_area=$MAX_BAR
+  (( _bar_area < 20 )) && _bar_area=20
+
+  # When partially filled, one cell is consumed by the inner transition cap
+  local _has_inner_cap=0
+  if (( _pct > 0 && _pct < 100 )); then
+    _has_inner_cap=1
   fi
+  local _body_area=$(( _bar_area - _has_inner_cap ))
 
-  if (( vis >= label_start && vis < label_end )); then
-    char_idx=$(( vis - label_start ))
-    c="${ctx_label_padded:$char_idx:1}"
-    if (( body_i < filled )); then
-      bar+="${FILL_BG}${FILL_TEXT}${c}"
-    else
-      bar+="${EMPTY_BG}${LIGHT_FG}${c}"
-    fi
+  local _filled=$(( _body_area * _pct / 100 ))
+  (( _filled > _body_area )) && _filled=$_body_area
+
+  # Padded label centered in the full bar_area (visual width)
+  local _label_padded=" ${_label} "
+  local _label_len=${#_label_padded}
+  local _label_start=$(( (_bar_area - _label_len) / 2 ))
+  (( _label_start < 0 )) && _label_start=0
+  local _label_end=$(( _label_start + _label_len ))
+
+  # Outer cap colors
+  local _left_cap_fg _right_cap_fg
+  if (( _filled > 0 || (_pct > 0 && _has_inner_cap == 0) )); then
+    _left_cap_fg="$_FILL_FG"
   else
-    if (( body_i < filled )); then
-      bar+="${FILL_BG} "
-    else
-      bar+="${EMPTY_BG} "
-    fi
+    _left_cap_fg="$EMPTY_FG"
   fi
-  (( body_i++ ))
-  (( vis++ ))
-done
 
-# Assemble row 2: progress bar + optional warning
-printf '\n%b%b%b%b%b' \
-  "${RESET}${left_cap_fg}${PL_LEFT}" \
-  "${bar}" \
-  "${RESET}${right_cap_fg}${PL_RIGHT}" \
-  "${suffix_colored}" \
-  "${RESET}"
+  if (( _pct >= 100 )); then
+    _right_cap_fg="$_FILL_FG"
+  else
+    _right_cap_fg="$EMPTY_FG"
+  fi
 
-# Row 3: gusto + SSO | time + cost (justified)
-printf '\n'
-_justified_row "$ROW_WIDTH" "$row3_left" "$row3_right"
+  # Build bar body with solid fill color
+  local _bar=""
+  local _vis=0  # visual position (0..bar_area-1)
+  local _body_i=0  # body cell index (0..body_area-1)
+  local _fill_icon_a _fill_icon_b _fill_icon_c _fill_cycle=2
+  local _lead_icon="$BAR_LEAD_ICON"
+  # Select texture icons
+  case "$_texture" in
+    wind)
+      _fill_icon_a=$(printf '\xee\xbc\x96')  # U+EF16
+      _fill_icon_b=$(printf '\xee\x8d\x8b')  # U+E34B
+      ;;
+    thick_dots)
+      _fill_icon_a=$(printf '\xef\x91\x84')  # U+F444
+      _fill_icon_b=$(printf '\xc2\xb7')      # U+00B7 middle dot
+      ;;
+    sin_wave)
+      _fill_icon_a=$(printf '\xf3\xb1\x91\xb9')  # U+F1479
+      _fill_icon_b=$(printf '\xf3\xb1\x91\xb9')  # U+F1479
+      ;;
+    jagged_wave)
+      _fill_icon_a=$(printf '\xee\xbe\x9d')  # U+EF9D
+      _fill_icon_b=$(printf '\xee\xbe\x9d')  # U+EF9D
+      ;;
+    beads)
+      _fill_icon_a=$(printf '\xef\x85\xb2')  # U+F172
+      _fill_icon_b=$(printf '\xef\x92\x8b')  # U+F48B
+      ;;
+    arrows)
+      _fill_icon_a=$(printf '\xee\xad\xb0')  # U+EB70
+      _fill_icon_b=$(printf '\xef\x91\x8a')  # U+F44A
+      ;;
+    exp)
+      _fill_icon_a=$(printf '\xef\x91\x84')  # placeholder
+      _fill_icon_b=$(printf '\xef\x91\x84')  # placeholder
+      ;;
+    dot_chain)
+      _fill_icon_a=$(printf '\xef\x85\x81')  # U+F141 ellipsis (nf-fa-ellipsis_h)
+      _fill_icon_b=$(printf '\xef\x85\x81')  # U+F141 ellipsis (repeated)
+      ;;
+    cookies)
+      _fill_icon_a=$(printf '\xee\x8c\xab')  # U+E32B
+      _fill_icon_b=$(printf '\xc2\xb7')      # U+00B7 middle dot (bullet)
+      ;;
+    soundwaves)
+      _fill_icon_a=$(printf '\xf3\xb1\x91\xbd')  # U+F147D
+      _fill_icon_b=$(printf '\xf3\xb1\x91\xbd')  # U+F147D (repeated)
+      ;;
+    *)
+      _fill_icon_a=$(printf '\xee\xbc\x96')  # U+EF16 (fallback to wind)
+      _fill_icon_b=$(printf '\xee\x8d\x8b')  # U+E34B
+      ;;
+  esac
+  local _lead_done=0
+  while (( _vis < _bar_area )); do
+    # Insert inner transition cap at the fill boundary
+    if (( _has_inner_cap && _body_i == _filled )); then
+      if (( _vis >= _label_start && _vis < _label_end )); then
+        local _ci=$(( _vis - _label_start ))
+        local _ch="${_label_padded:$_ci:1}"
+        _bar+="${EMPTY_BG}${LIGHT_FG}${_ch}"
+      else
+        _bar+="${EMPTY_BG}${_FILL_FG}${PL_RIGHT}"
+      fi
+      _has_inner_cap=0
+      (( _vis++ ))
+      continue
+    fi
+
+    if (( _vis >= _label_start && _vis < _label_end )); then
+      local _ci=$(( _vis - _label_start ))
+      local _ch="${_label_padded:$_ci:1}"
+      if (( _body_i < _filled )); then
+        _bar+="${_FILL_BG}${_FILL_TEXT}${_ch}"
+      else
+        _bar+="${EMPTY_BG}${LIGHT_FG}${_ch}"
+      fi
+    else
+      if (( _body_i < _filled )); then
+        if [[ "$_SL_FLAIR" != "true" ]]; then
+          # Plain solid fill — no lead icon or texture
+          _bar+="${_FILL_BG} "
+        elif (( _lead_done == 0 )); then
+          _bar+="${_FILL_BG}${_LEAD_FG}${_lead_icon}"
+          _lead_done=1
+        elif (( _lead_done == 1 )); then
+          # One space after lead icon before texture starts
+          _bar+="${_FILL_BG} "
+          _lead_done=2
+        else
+          # At label boundary, use the small icon to avoid oversized glyphs next to whitespace
+          local _at_label_edge=0
+          (( _vis == _label_start - 1 || _vis == _label_end )) && _at_label_edge=1
+          local _ci_mod=$(( _body_i % _fill_cycle ))
+          if (( _at_label_edge )); then
+            _bar+="${_FILL_BG}${_WIND_FG}${_fill_icon_b}"
+          elif (( _ci_mod == 0 )); then
+            _bar+="${_FILL_BG}${_WIND_FG}${_fill_icon_a}"
+          elif (( _ci_mod == 1 )); then
+            _bar+="${_FILL_BG}${_WIND_FG}${_fill_icon_b}"
+          else
+            _bar+="${_FILL_BG}${_WIND_FG}${_fill_icon_c}"
+          fi
+        fi
+      else
+        _bar+="${EMPTY_BG} "
+      fi
+    fi
+    (( _body_i++ ))
+    (( _vis++ ))
+  done
+
+  # Assemble and print the bar
+  printf '\n%b%b%b%b%b' \
+    "${RESET}${_left_cap_fg}${PL_LEFT}" \
+    "${_bar}" \
+    "${RESET}${_right_cap_fg}${PL_RIGHT}" \
+    "${_suffix}" \
+    "${RESET}"
+}
+
+# Select texture per session (stable like the icon)
+BAR_TEXTURES=(wind thick_dots sin_wave jagged_wave beads arrows dot_chain cookies soundwaves)
+BAR_TEXTURE="${BAR_TEXTURES[$((_icon_hash % ${#BAR_TEXTURES[@]}))]}"
+
+# In compact/minimal mode, fold cost into the bar label (no row 3 to show it)
+# Format: "used/size pct% $cost" — simple spaces, no separators
+_bar_label="$ctx_label"
+if [[ "$_SL_MODE" == "compact" || "$_SL_MODE" == "minimal" ]]; then
+  if [[ -n "$formatted_cost" && "$formatted_cost" != "0.00" ]]; then
+    _bar_label="${ctx_label} \$${formatted_cost}"
+  fi
+fi
+
+# Render the real progress bar
+_render_bar "$pct" "$_bar_label" "$suffix_colored" "$BAR_TEXTURE"
+
+# Row 3: gusto + SSO | time + cost (full mode only)
+if [[ "$_SL_MODE" == "full" ]]; then
+  printf '\n'
+  _justified_row "$ROW_WIDTH" "$row3_left" "$row3_right"
+fi
+
+# ── DEBUG: 10 dummy progress bars (0%–90%, random icon + texture each) ──
+if [[ "$_SL_DEBUG" == "true" ]]; then
+  _TEST_TEXTURES=(wind thick_dots sin_wave jagged_wave beads arrows dot_chain cookies soundwaves)
+  # Realistic used/total token pairs for labels
+  _TEST_USED=(0 18 41 63 82 105 124 148 167 189)
+  _TEST_TOTAL=(200 200 200 200 200 200 200 200 200 200)
+  # Fake costs for compact mode debug bars
+  _TEST_COST=(0.00 0.12 0.38 0.71 1.04 1.55 2.03 2.89 3.47 4.22)
+  for _ti in $(seq 0 9); do
+    _test_pct=$(( _ti * 10 ))
+    _test_used="${_TEST_USED[$_ti]}k"
+    _test_size="${_TEST_TOTAL[$_ti]}k"
+    _test_label="${_test_used}/${_test_size} ${_test_pct}%"
+    # In compact/minimal mode, append cost to match the real bar format
+    if [[ ("$_SL_MODE" == "compact" || "$_SL_MODE" == "minimal") && "${_TEST_COST[$_ti]}" != "0.00" ]]; then
+      _test_label="${_test_label} \$${_TEST_COST[$_ti]}"
+    fi
+    # Deterministic but varied: mix loop index with session hash for pseudo-random
+    _test_seed=$(( (_icon_hash + _ti * 7919) % 65521 ))
+    # Pick a random lead icon for this bar
+    _test_icon_idx=$(( _test_seed % ${#LEAD_ICONS[@]} ))
+    BAR_LEAD_ICON="${LEAD_ICONS[$_test_icon_idx]}"
+    # Pick a random texture for this bar
+    _test_tex_idx=$(( (_test_seed / ${#LEAD_ICONS[@]}) % ${#_TEST_TEXTURES[@]} ))
+    _test_texture="${_TEST_TEXTURES[$_test_tex_idx]}"
+    _render_bar "$_test_pct" "$_test_label" "" "$_test_texture"
+  done
+  # Experimental texture test bars
+  BAR_LEAD_ICON="${LEAD_ICONS[$((_icon_hash % ${#LEAD_ICONS[@]}))]}"
+  _render_bar 55 "dot_chain 55%" "" "dot_chain"
+  _render_bar 55 "cookies 55%" "" "cookies"
+  _render_bar 55 "soundwaves 55%" "" "soundwaves"
+  # Restore session lead icon after debug bars
+  BAR_LEAD_ICON="${LEAD_ICONS[$((_icon_hash % ${#LEAD_ICONS[@]}))]}"
+fi
