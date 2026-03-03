@@ -393,16 +393,16 @@ _justified_row() {
   printf '%b%s%b%b' "$left_str" "$pad" "$right_str" "${RESET}"
 }
 
-# ── Total row width = bar max + 2 caps, capped at terminal ───────
-term_width=$(tput cols 2>/dev/null || echo 80)
+# ── Total row width = bar max + 2 caps ────────────────────────────
+# Limits: min 50, default 80, max 150 (enforced here regardless of state)
 if [[ "$_SL_WIDTH" != "auto" && "$_SL_WIDTH" =~ ^[0-9]+$ ]]; then
   MAX_BAR=$_SL_WIDTH
+  (( MAX_BAR < 50 )) && MAX_BAR=50
+  (( MAX_BAR > 150 )) && MAX_BAR=150
 else
-  MAX_BAR=$(( term_width - 2 ))
-  (( MAX_BAR > 80 )) && MAX_BAR=80
+  MAX_BAR=80
 fi
 ROW_WIDTH=$(( MAX_BAR + 2 ))
-(( ROW_WIDTH > term_width )) && ROW_WIDTH=$term_width
 
 # ── Row 1: proactive budget-based truncation ──────────────────────
 # Right side (dirty segment) is never truncated — measure it first

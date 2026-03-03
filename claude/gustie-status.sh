@@ -72,10 +72,10 @@ while [[ $# -gt 0 ]]; do
       fi
       if [[ "$2" == "auto" ]]; then
         next_width="auto"
-      elif [[ "$2" =~ ^[0-9]+$ ]] && (( $2 >= 20 && $2 <= 200 )); then
+      elif [[ "$2" =~ ^[0-9]+$ ]] && (( $2 >= 50 && $2 <= 150 )); then
         next_width="$2"
       else
-        printf '\033[38;2;224;108;117m✗ Width must be 20–200 or "auto"\033[0m\n'
+        printf '\033[38;2;224;108;117m✗ Width must be 50–150 or "auto"\033[0m\n'
         exit 1
       fi
       shift 2
