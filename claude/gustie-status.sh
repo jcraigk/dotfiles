@@ -10,7 +10,7 @@
 #   gustie-status logos                # toggle Gusto/Bedrock logos on/off (independent of mode)
 #   gustie-status style                # toggle output style label on/off (independent of mode)
 #   gustie-status flair                # toggle progress bar decorations on/off (icon + texture)
-#   gustie-status color                # cycle color mode: default → mono → dim → default
+#   gustie-status color                # cycle color mode: default → mono → muted → default
 #   gustie-status --width 60           # set bar width to 60
 #   gustie-status --width auto         # reset to auto (terminal width)
 #   gustie-status compact --width 50   # set mode and width together
@@ -24,29 +24,29 @@ VALID_MODES="full compact minimal"
 # Ensure the directory exists
 mkdir -p "$(dirname "$STATE_FILE")"
 
-# Read current state (defaults: mode=full, width=auto, debug=false, logos=true, style=true, flair=true, color_mode=default)
+# Read current state (defaults: mode=full, width=auto, debug=false, logos=true, style=true, flair=true, color=default)
 current_mode="full"
 current_width="auto"
 current_debug="false"
 current_logos="true"
-current_style="true"
+current_style="concise"
 current_flair="true"
-current_color_mode="default"
+current_color="default"
 if [[ -f "$STATE_FILE" ]]; then
   current_mode=$(cat "$STATE_FILE" | grep -o '"mode"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | sed 's/.*"\([^"]*\)"/\1/')
   current_width=$(cat "$STATE_FILE" | grep -o '"width"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | sed 's/.*"\([^"]*\)"/\1/')
   current_debug=$(cat "$STATE_FILE" | grep -o '"debug"[[:space:]]*:[[:space:]]*[a-z]*' | head -1 | sed 's/.*:[[:space:]]*//')
   current_logos=$(cat "$STATE_FILE" | grep -o '"logos"[[:space:]]*:[[:space:]]*[a-z]*' | head -1 | sed 's/.*:[[:space:]]*//')
-  current_style=$(cat "$STATE_FILE" | grep -o '"style"[[:space:]]*:[[:space:]]*[a-z]*' | head -1 | sed 's/.*:[[:space:]]*//')
+  current_style=$(cat "$STATE_FILE" | grep -o '"style"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | sed 's/.*"\([^"]*\)"/\1/')
   current_flair=$(cat "$STATE_FILE" | grep -o '"flair"[[:space:]]*:[[:space:]]*[a-z]*' | head -1 | sed 's/.*:[[:space:]]*//')
-  current_color_mode=$(cat "$STATE_FILE" | grep -o '"color_mode"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | sed 's/.*"\([^"]*\)"/\1/')
+  current_color=$(cat "$STATE_FILE" | grep -o '"color"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | sed 's/.*"\([^"]*\)"/\1/')
   current_mode="${current_mode:-full}"
   current_width="${current_width:-auto}"
   current_debug="${current_debug:-false}"
   current_logos="${current_logos:-true}"
-  current_style="${current_style:-true}"
+  current_style="${current_style:-concise}"
   current_flair="${current_flair:-true}"
-  current_color_mode="${current_color_mode:-default}"
+  current_color="${current_color:-default}"
   # Migrate: if mode was "debug", reset to "full" and enable debug flag
   if [[ "$current_mode" == "debug" ]]; then
     current_mode="full"
@@ -107,7 +107,7 @@ while [[ $# -gt 0 ]]; do
           printf '\033[38;2;224;108;117m✗ Unknown mode "%s"\033[0m\n' "$1"
           printf '  Valid modes: %s\n' "$VALID_MODES"
           printf '  Toggles: debug, logos, style, flair, color\n'
-          printf '  Options: --width <20–200|auto>\n'
+          printf '  Options: --width <50–150|auto>\n'
           exit 1
         fi
         next_mode="$1"
@@ -137,14 +137,14 @@ if [[ "$toggle_logos" == "true" ]]; then
   fi
 fi
 
-# Handle style toggle separately
+# Handle style cycle: concise → verbose → off → concise
 next_style="$current_style"
 if [[ "$toggle_style" == "true" ]]; then
-  if [[ "$current_style" == "true" ]]; then
-    next_style="false"
-  else
-    next_style="true"
-  fi
+  case "$current_style" in
+    concise)  next_style="verbose" ;;
+    verbose)  next_style="off" ;;
+    *)        next_style="concise" ;;
+  esac
 fi
 
 # Handle flair toggle separately
@@ -157,14 +157,14 @@ if [[ "$toggle_flair" == "true" ]]; then
   fi
 fi
 
-# Handle color mode cycle: default → mono → dim → default
-next_color_mode="$current_color_mode"
+# Handle color cycle: default → mono → muted → default
+next_color="$current_color"
 if [[ "$toggle_color" == "true" ]]; then
-  case "$current_color_mode" in
-    default) next_color_mode="mono" ;;
-    mono)    next_color_mode="dim" ;;
-    dim)     next_color_mode="default" ;;
-    *)       next_color_mode="default" ;;
+  case "$current_color" in
+    default) next_color="mono" ;;
+    mono)    next_color="muted" ;;
+    muted)   next_color="default" ;;
+    *)       next_color="default" ;;
   esac
 fi
 
@@ -183,7 +183,7 @@ next_width="${next_width:-$current_width}"
 
 # Write new state
 cat > "$STATE_FILE" << EOF
-{"mode": "$next_mode", "width": "$next_width", "debug": $next_debug, "logos": $next_logos, "style": $next_style, "flair": $next_flair, "color_mode": "$next_color_mode"}
+{"mode": "$next_mode", "width": "$next_width", "debug": $next_debug, "logos": $next_logos, "style": "$next_style", "flair": $next_flair, "color": "$next_color"}
 EOF
 
 # ── Visual feedback ──────────────────────────────────────────────
@@ -219,8 +219,10 @@ else
   printf " ${DIM}logos: off${RST}"
 fi
 
-if [[ "$next_style" == "true" ]]; then
-  printf " ${GREEN}style: on${RST}"
+if [[ "$next_style" == "concise" ]]; then
+  printf " ${GREEN}style: concise${RST}"
+elif [[ "$next_style" == "verbose" ]]; then
+  printf " ${GREEN}style: verbose${RST}"
 else
   printf " ${DIM}style: off${RST}"
 fi
@@ -231,11 +233,11 @@ else
   printf " ${DIM}flair: off${RST}"
 fi
 
-if [[ "$next_color_mode" == "default" ]]; then
+if [[ "$next_color" == "default" ]]; then
   printf " ${DIM}color: default${RST}"
-elif [[ "$next_color_mode" == "mono" ]]; then
+elif [[ "$next_color" == "mono" ]]; then
   printf " ${GREEN}color: mono${RST}"
-elif [[ "$next_color_mode" == "dim" ]]; then
-  printf " ${GREEN}color: dim${RST}"
+elif [[ "$next_color" == "muted" ]]; then
+  printf " ${GREEN}color: muted${RST}"
 fi
 printf '\n'

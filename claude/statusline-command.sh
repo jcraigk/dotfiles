@@ -11,15 +11,15 @@ if [[ -f "$_SL_STATE_FILE" ]]; then
   _SL_WIDTH=$(echo "$_SL_STATE" | grep -o '"width"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | sed 's/.*"\([^"]*\)"/\1/')
   _SL_DEBUG=$(echo "$_SL_STATE" | grep -o '"debug"[[:space:]]*:[[:space:]]*[a-z]*' | head -1 | sed 's/.*:[[:space:]]*//')
   _SL_LOGOS=$(echo "$_SL_STATE" | grep -o '"logos"[[:space:]]*:[[:space:]]*[a-z]*' | head -1 | sed 's/.*:[[:space:]]*//')
-  _SL_STYLE=$(echo "$_SL_STATE" | grep -o '"style"[[:space:]]*:[[:space:]]*[a-z]*' | head -1 | sed 's/.*:[[:space:]]*//')
+  _SL_STYLE=$(echo "$_SL_STATE" | grep -o '"style"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | sed 's/.*"\([^"]*\)"/\1/')
   _SL_FLAIR=$(echo "$_SL_STATE" | grep -o '"flair"[[:space:]]*:[[:space:]]*[a-z]*' | head -1 | sed 's/.*:[[:space:]]*//')
-  _SL_COLOR_MODE=$(echo "$_SL_STATE" | grep -o '"color_mode"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | sed 's/.*"\([^"]*\)"/\1/')
+  _SL_COLOR_MODE=$(echo "$_SL_STATE" | grep -o '"color"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | sed 's/.*"\([^"]*\)"/\1/')
 fi
 _SL_MODE="${_SL_MODE:-full}"
 _SL_WIDTH="${_SL_WIDTH:-auto}"
 _SL_DEBUG="${_SL_DEBUG:-false}"
 _SL_LOGOS="${_SL_LOGOS:-true}"
-_SL_STYLE="${_SL_STYLE:-true}"
+_SL_STYLE="${_SL_STYLE:-concise}"
 _SL_FLAIR="${_SL_FLAIR:-true}"
 _SL_COLOR_MODE="${_SL_COLOR_MODE:-default}"
 # Migrate: if mode was "debug" from old state, treat as full + debug on
@@ -113,8 +113,8 @@ if [[ "$_SL_COLOR_MODE" == "mono" ]]; then
   GUSTO_CORAL="\033[1;38;2;200;200;200m"
   MUSTARD="\033[38;2;160;160;160m"
   DIM="\033[38;2;90;90;90m"
-elif [[ "$_SL_COLOR_MODE" == "dim" ]]; then
-  # Dimmed: same hues, ~40% saturation
+elif [[ "$_SL_COLOR_MODE" == "muted" ]]; then
+  # Muted: same hues, ~40% saturation
   BLUE="\033[38;2;140;170;210m"
   MAGENTA="\033[38;2;170;145;185m"
   CYAN="\033[38;2;130;165;170m"
@@ -422,8 +422,19 @@ model_icon=$(printf '\xef\x94\x9b')  # U+F51B
 
 # Build model text (may include style)
 model_text="$model"
-if [[ "$_SL_STYLE" == "true" && -n "$output_style" && "$output_style" != "default" ]]; then
-  model_text+=" (${output_style})"
+style_suffix=""  # colored suffix appended after model_text in the segment
+if [[ -n "$output_style" && "$output_style" != "default" ]]; then
+  if [[ "$_SL_STYLE" == "verbose" ]]; then
+    model_text+=" (${output_style})"
+  elif [[ "$_SL_STYLE" == "concise" ]]; then
+    # Nerd Font icons for known style initials, fallback to uppercase letter
+    _style_lower="$(tr '[:upper:]' '[:lower:]' <<< "${output_style:0:1}")"
+    case "$_style_lower" in
+      e) style_suffix=" $(printf '\xf3\xb0\xac\x8c')" ;;  # U+F0B0C for Explanatory
+      l) style_suffix=" $(printf '\xf3\xb0\xac\x93')" ;;  # U+F0B13 for Learning
+      *) style_suffix=" $(tr '[:lower:]' '[:upper:]' <<< "$_style_lower")" ;;
+    esac
+  fi
 fi
 
 # Calculate chrome: folder_icon(2) + [bullet(3) + branch_icon(2) if branch] + bullet(3) + model_icon(2)
@@ -435,7 +446,8 @@ text_budget=$(( left_budget - chrome ))
 (( text_budget < 10 )) && text_budget=10
 
 # Allocate: path/branch get priority, model gets the remainder
-model_text_len=${#model_text}
+style_suffix_len=${#style_suffix}
+model_text_len=$(( ${#model_text} + style_suffix_len ))
 path_len=${#folder_name}
 branch_len=${#branch}
 path_branch_len=$(( path_len + branch_len ))
@@ -486,10 +498,12 @@ if (( path_branch_len > pb_budget )); then
   fi
 fi
 
-# Truncate model text if needed (drop style first, then truncate name)
+# Truncate model text if needed (drop style/suffix first, then truncate name)
 if (( model_text_len > model_budget )); then
-  # Step 1: drop the style parens
+  # Step 1: drop the style parens or abbreviated suffix
   model_text="$model"
+  style_suffix=""
+  style_suffix_len=0
   model_text_len=${#model_text}
   # Step 2: truncate model name if still too long
   if (( model_text_len > model_budget )); then
@@ -509,7 +523,7 @@ fi
 # Assemble model segment
 model_segment=""
 if [[ -n "$model_text" ]]; then
-  model_segment="${CYAN}${model_icon} ${model_text}${RESET}"
+  model_segment="${CYAN}${model_icon} ${model_text}${style_suffix}${RESET}"
 fi
 
 # Build row 1 left
@@ -714,8 +728,8 @@ if [[ "$_SL_COLOR_MODE" == "mono" ]]; then
   EMPTY_BG="\033[48;2;38;38;38m"
   EMPTY_FG="\033[38;2;38;38;38m"
   LIGHT_FG="\033[38;2;90;90;90m"
-elif [[ "$_SL_COLOR_MODE" == "dim" ]]; then
-  # Dimmed gradient: same hue progression, reduced saturation (~40%)
+elif [[ "$_SL_COLOR_MODE" == "muted" ]]; then
+  # Muted gradient: same hue progression, reduced saturation (~40%)
   TIER_BG=(
     "\033[48;2;70;85;68m"     # 0–10   muted green
     "\033[48;2;80;92;76m"     # 11–20
@@ -805,7 +819,6 @@ LEAD_ICONS=(
   $(printf '\xee\xbc\x9d')          # U+EF1D
   $(printf '\xef\x86\x88')          # U+F188  bug
   $(printf '\xef\x80\x84')          # U+F004  heart
-  $(printf '\xef\x86\xb0')          # U+F1B0  paw
   $(printf '\xf3\xb0\xa9\x83')     # U+F0A43
   $(printf '\xf3\xb0\x9e\x87')     # U+F0787
   $(printf '\xf3\xb0\xae\xad')     # U+F0BAD
@@ -827,11 +840,8 @@ LEAD_ICONS=(
   $(printf '\xf3\xb0\x8b\xb8')     # U+F02F8
   $(printf '\xf3\xb0\x9f\x9e')     # U+F07DE
   $(printf '\xee\xbe\xa7')          # U+EFA7
-  $(printf '\xee\xbb\xb7')          # U+EEF7
-  $(printf '\xee\xbb\xad')          # U+EEED
   $(printf '\xf3\xb0\x87\xa5')     # U+F01E5
   $(printf '\xee\xb7\x9c')          # U+EDDC
-  $(printf '\xee\xb7\xb8')          # U+EDF8
   $(printf '\xee\xb9\x81')          # U+EE41
   $(printf '\xef\x83\xa7')          # U+F0E7  bolt
   $(printf '\xee\xbc\x90')          # U+EF10
@@ -839,6 +849,11 @@ LEAD_ICONS=(
   $(printf '\xef\x84\xb5')          # U+F135  rocket
   $(printf '\xee\x8a\x81')          # U+E281
   $(printf '\xf3\xb0\x99\xb4')     # U+F0674
+  $(printf '\xee\xbc\xae')          # U+EF2E
+  $(printf '\xf3\xb0\x92\xb7')     # U+F04B7
+  $(printf '\xf3\xb0\x9f\xa2')     # U+F07E2
+  $(printf '\xee\xba\x9c')          # U+EE9C
+  $(printf '\xf3\xb0\xaf\xb8')     # U+F0BF8
 )
 # Use session_id hash as stable seed so icon stays consistent per session
 if [[ -n "$session_id" ]]; then
