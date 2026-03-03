@@ -1,5 +1,17 @@
+# Dev overlay — inherits base config, adds command-blocks options.
+# Usage: ghostty --config-file=~/dotfiles/ghostty/dev-config
+# Note: gbuild alias uses dev-xdg/ghostty/config instead (standalone).
 config-file = /Users/justin.craigkuhn/.config/ghostty/config
+
+# Icon (distinguish dev build)
+macos-icon = xray
+
 env = GHOSTTY_DEV=1
+
+# Block navigation/collapse keybindings (dev only)
+keybind = up=goto_block_previous
+keybind = down=goto_block_next
+keybind = left=toggle_block_collapse
 
 # Command Blocks
 command-blocks = true
@@ -11,5 +23,9 @@ command-blocks-stripe-width = 4
 command-blocks-separator-color = #303030
 command-blocks-stripe-success = #5faf5f
 command-blocks-stripe-error = #ff5f5f
+command-blocks-stripe-signal = #d7af5f
 command-blocks-tint-error = #2d0606
 command-blocks-tint-success = #061906
+command-blocks-tint-signal = #2d1f06
+command-blocks-collapse-preview-lines = 0
+command-blocks-auto-collapse-threshold = 1

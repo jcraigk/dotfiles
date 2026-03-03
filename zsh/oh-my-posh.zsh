@@ -32,7 +32,7 @@ function set_poshcontext() {
     local branch=$(git symbolic-ref --quiet --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)
     if [[ -n "$branch" ]]; then
       if (( ${#branch} > 24 )); then
-        branch="${branch:0:22}…"
+        branch="…${branch: -22}"
       fi
       if [[ -n "$(git status --porcelain --ignore-submodules=dirty 2>/dev/null)" ]]; then
         export POSH_GIT_COLOR="#cc6666"
