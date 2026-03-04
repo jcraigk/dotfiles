@@ -60,5 +60,5 @@ if [ "$CURSOR_AGENT" = "1" ]; then
   export DELTA_PAGER=cat
   export LESS=
   export DISABLE_SPRING=1
-  command -v mise &>/dev/null && eval "$(mise activate --shims zsh)"
+  command -v mise &>/dev/null && eval "$(mise activate zsh --shims)"
 fi
