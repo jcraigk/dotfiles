@@ -7,29 +7,56 @@
     "ANTHROPIC_DEFAULT_OPUS_MODEL": "us.anthropic.claude-opus-4-6-v1",
     "ANTHROPIC_MODEL": "us.anthropic.claude-opus-4-6-v1"
   },
-  "model": "opus",
   "hooks": {
     "Stop": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "bash /Users/justin.craigkuhn/workspace/cursor-chimes/scripts/play-chime.sh"
+            "command": "bash /Users/justin.craigkuhn/workspace/agent-chimes/scripts/play-chime.sh"
+          },
+          {
+            "type": "command",
+            "command": "bash /Users/justin.craigkuhn/workspace/dotfiles/scripts/claude-tab-notify.sh"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/justin.craigkuhn/workspace/dotfiles/scripts/claude-tab-notify.sh"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/justin.craigkuhn/workspace/dotfiles/scripts/claude-tab-notify.sh"
           }
         ]
       }
     ]
   },
-  "enabledPlugins": {
-    "gusto-essentials@gusto-claude-code": true,
-    "gusto-dev@gusto-claude-code": true,
-    "ci-cd-tools@gusto-claude-code": true,
-    "gusto-setup-wizard@gusto-claude-code": false
-  },
-  "alwaysThinkingEnabled": false,
-  "skipDangerousModePermissionPrompt": true,
   "statusLine": {
     "type": "command",
-    "command": "bash /Users/justin.craigkuhn/.claude/statusline-command.sh"
+    "command": "bash /Users/justin.craigkuhn/workspace/claude-code/plugins/gustie-status/scripts/statusline-command.sh"
+  },
+  "enabledPlugins": {},
+  "outputStyle": "explanatory",
+  "alwaysThinkingEnabled": false,
+  "skipDangerousModePermissionPrompt": true,
+  "extraKnownMarketplaces": {
+    "gusto-claude-code": {
+      "source": {
+        "source": "github",
+        "repo": "gusto/claude-code"
+      }
+    }
   }
 }
