@@ -8,7 +8,7 @@
         {
           "type": "text",
           "style": "plain",
-          "foreground": "#B8860B",
+          "foreground": "#C6961A",
           "template": "{{ if .Env.SSH_CONNECTION }}󰌗 <b>{{ .HostName }}</b> {{ end }}"
         },
         {
