@@ -103,6 +103,7 @@ drestart() {
 
 # Tools
 alias a="cursor ."
+alias c="code ."
 crules() {
   echo "symlinking cursor config files..."
   mkdir -p ./.cursor/rules
