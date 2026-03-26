@@ -1,7 +1,6 @@
 # Font
 font-family = JetBrainsMono Nerd Font
 font-size = 16
-adjust-cell-height = 5%
 
 # Window
 window-height = 9999
@@ -19,10 +18,6 @@ cursor-style-blink = true
 adjust-cursor-thickness = 4
 cursor-color = #c0c0c0
 cursor-opacity = 1
-
-# Jump between prompts (like Warp's command navigation)
-keybind = cmd+shift+up=jump_to_prompt:-1
-keybind = cmd+shift+down=jump_to_prompt:1
 
 # Selection
 selection-background = #303050
