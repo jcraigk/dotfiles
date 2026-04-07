@@ -1,4 +1,4 @@
-alias dotfiles="cd ~/dotfiles && cursor ."
+alias dotfiles="cd ~/dotfiles && code ."
 
 # Shell
 alias ll="eza -al --hyperlink"
@@ -102,8 +102,7 @@ drestart() {
 }
 
 # Tools
-alias a="cursor ."
-alias c="code ."
+alias a="code ."
 crules() {
   echo "symlinking cursor config files..."
   mkdir -p ./.cursor/rules

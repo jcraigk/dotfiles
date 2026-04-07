@@ -1,5 +1,5 @@
 ## Tools
-- [Cursor](https://cursor.com/)
+- [VSCode](https://code.visualstudio.com/)
 - [mise](https://mise.jdx.dev/)
 
 

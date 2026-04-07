@@ -16,7 +16,7 @@ fi
 WORDCHARS=''
 bindkey '^?' backward-delete-char
 bindkey '^H' backward-delete-char
-command -v cursor &>/dev/null && export EDITOR="cursor --wait"
+command -v code &>/dev/null && export EDITOR="code --wait"
 
 # Tools
 if [[ -z "$SSH_CONNECTION" ]]; then
@@ -51,14 +51,14 @@ fi
 # Ghostty terminal enhancements
 source "$HOME/dotfiles/zsh/ghostty.zsh"
 
-# Kill pagers in Cursor's terminal so tools print plain output
-if [ "$CURSOR_AGENT" = "1" ]; then
-  export PAGER=cat
-  export GIT_PAGER=cat
-  export MANPAGER=cat
-  export PSQL_PAGER=cat
-  export DELTA_PAGER=cat
-  export LESS=
-  export DISABLE_SPRING=1
-  command -v mise &>/dev/null && eval "$(mise activate zsh --shims)"
-fi
+# # Kill pagers in Cursor's terminal so tools print plain output
+# if [ "$CURSOR_AGENT" = "1" ]; then
+#   export PAGER=cat
+#   export GIT_PAGER=cat
+#   export MANPAGER=cat
+#   export PSQL_PAGER=cat
+#   export DELTA_PAGER=cat
+#   export LESS=
+#   export DISABLE_SPRING=1
+#   command -v mise &>/dev/null && eval "$(mise activate zsh --shims)"
+# fi

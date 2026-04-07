@@ -10,7 +10,7 @@
   unmerged = 167 bold
 
 [core]
-  editor = cursor --wait
+  editor = code --wait
   pager = delta
   excludesFile = ~/.gitignore.global
 
