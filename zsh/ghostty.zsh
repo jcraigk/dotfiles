@@ -64,7 +64,8 @@ function _save_separator_context() {
 }
 
 # Skip shell-drawn separators in dev builds (command-blocks draws its own)
-if [[ -z "$GHOSTTY_DEV" ]]; then
+# and in Warp (which renders its own command blocks/separators).
+if [[ -z "$GHOSTTY_DEV" && "$TERM_PROGRAM" != "WarpTerminal" ]]; then
   precmd_functions+=(_draw_separator)
   precmd_functions+=(_save_separator_context)
 fi
