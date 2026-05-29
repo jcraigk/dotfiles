@@ -63,9 +63,8 @@ function _save_separator_context() {
   _sep_prev_path="$POSH_PATH"
 }
 
-# Skip shell-drawn separators in dev builds (command-blocks draws its own)
-# and in Warp (which renders its own command blocks/separators).
-if [[ -z "$GHOSTTY_DEV" && "$TERM_PROGRAM" != "WarpTerminal" ]]; then
-  precmd_functions+=(_draw_separator)
-  precmd_functions+=(_save_separator_context)
-fi
+# Command separator disabled for now. Uncomment to re-enable.
+# if [[ -z "$GHOSTTY_DEV" && "$TERM_PROGRAM" != "WarpTerminal" ]]; then
+#   precmd_functions+=(_draw_separator)
+#   precmd_functions+=(_save_separator_context)
+# fi
