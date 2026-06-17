@@ -1,3 +1,6 @@
+# Scrub stale mise activation state inherited from a parent process (e.g. VS Code's
+unset __MISE_DIFF __MISE_ORIG_PATH __MISE_SESSION MISE_SHELL
+
 # History
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=50000
@@ -49,16 +52,9 @@ if command -v oh-my-posh &>/dev/null; then
 fi
 
 # Ghostty terminal enhancements
-source "$HOME/dotfiles/zsh/ghostty.zsh"
+# source "$HOME/dotfiles/zsh/ghostty.zsh"
 
-# # Kill pagers in Cursor's terminal so tools print plain output
-# if [ "$CURSOR_AGENT" = "1" ]; then
-#   export PAGER=cat
-#   export GIT_PAGER=cat
-#   export MANPAGER=cat
-#   export PSQL_PAGER=cat
-#   export DELTA_PAGER=cat
-#   export LESS=
-#   export DISABLE_SPRING=1
-#   command -v mise &>/dev/null && eval "$(mise activate zsh --shims)"
-# fi
+# VS Code / Claude Code shell integration
+if [[ "$TERM_PROGRAM" == "vscode" ]]; then
+  . "$(code --locate-shell-integration-path zsh)" 2>/dev/null
+fi
