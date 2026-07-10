@@ -119,7 +119,7 @@ crules() {
   done
   echo "...done"
 }
-alias cc="claude --dangerously-skip-permissions"
+alias cc="claude --dangerously-skip-permissions --model claude-opus-4-8"
 alias gustie-status="$HOME/dotfiles/claude/gustie-status.sh"
 
 gclean() {

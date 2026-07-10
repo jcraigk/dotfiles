@@ -1,0 +1,34 @@
+// Place your key bindings in this file to override the defaults
+[
+  {
+    "key": "shift+enter",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": { "text": "\u001b\r" },
+    "when": "terminalFocus"
+  },
+  {
+    "key": "cmd+p",
+    "command": "-workbench.action.quickOpenNavigateNextInFilePicker",
+    "when": "inFilesPicker && inQuickOpen"
+  },
+  {
+    "key": "cmd+p",
+    "command": "workbench.action.showAllSymbols"
+  },
+  {
+    "key": "cmd+t",
+    "command": "-workbench.action.showAllSymbols"
+  },
+  {
+    "key": "cmd+t",
+    "command": "workbench.action.quickOpen"
+  },
+  {
+    "key": "cmd+p",
+    "command": "-workbench.action.quickOpen"
+  },
+  {
+    "key": "cmd+shift+f",
+    "command": "search.action.openNewEditor"
+  }
+]
