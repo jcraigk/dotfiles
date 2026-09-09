@@ -1,6 +1,7 @@
 alias dotfiles="cd ~/dotfiles && code ."
 
 # Shell
+alias nosleep="caffeinate -di -t 28800 & disown"
 alias ll="eza -al --hyperlink"
 pd() {
   cd "$HOME/code/$1"
