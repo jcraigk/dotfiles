@@ -11,11 +11,17 @@
 
 
 ## Brew
+Installed by `install.sh` on macOS (along with Homebrew itself):
 - awscli
-- delta (diffs)
 - eza (ls)
-- zsh
+- git-delta (diffs)
+- mise
+- oh-my-posh (prompt)
+- zoxide (cd)
 - zsh-fast-syntax-highlighting
+- font-jetbrains-mono-nerd-font (cask)
+
+macOS already ships zsh at `/bin/zsh` as the default shell, so no zsh install is needed.
 
 
 ## OS
